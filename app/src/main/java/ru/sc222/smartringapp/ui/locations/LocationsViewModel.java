@@ -10,7 +10,7 @@ public class LocationsViewModel extends ViewModel {
 
     public LocationsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is commands fragment");
+        mText.setValue("This is locations fragment");
     }
 
     public LiveData<String> getText() {
