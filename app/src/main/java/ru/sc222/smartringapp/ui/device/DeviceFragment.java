@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp.ui.home;
+package ru.sc222.smartringapp.ui.device;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import ru.sc222.smartringapp.R;
 
-public class HomeFragment extends Fragment {
+public class DeviceFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private DeviceViewModel deviceViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(this, new Observer<String>() {
+        deviceViewModel =
+                ViewModelProviders.of(this).get(DeviceViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_device, container, false);
+        final TextView textView = root.findViewById(R.id.text_device);
+        deviceViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

@@ -1,16 +1,16 @@
-package ru.sc222.smartringapp.ui.notifications;
+package ru.sc222.smartringapp.ui.device;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class DeviceViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public DeviceViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("This is device fragment");
     }
 
     public LiveData<String> getText() {

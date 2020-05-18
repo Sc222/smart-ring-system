@@ -1,16 +1,16 @@
-package ru.sc222.smartringapp.ui.dashboard;
+package ru.sc222.smartringapp.ui.commands;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DashboardViewModel extends ViewModel {
+public class CommandsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public CommandsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("This is commands fragment");
     }
 
     public LiveData<String> getText() {

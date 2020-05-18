@@ -1,16 +1,16 @@
-package ru.sc222.smartringapp.ui.home;
+package ru.sc222.smartringapp.ui.locations;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class LocationsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public LocationsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("This is commands fragment");
     }
 
     public LiveData<String> getText() {

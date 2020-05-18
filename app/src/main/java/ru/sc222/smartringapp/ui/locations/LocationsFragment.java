@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp.ui.dashboard;
+package ru.sc222.smartringapp.ui.locations;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import ru.sc222.smartringapp.R;
 
-public class DashboardFragment extends Fragment {
+public class LocationsFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    private LocationsViewModel locationsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(this, new Observer<String>() {
+        locationsViewModel =
+                ViewModelProviders.of(this).get(LocationsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_locations, container, false);
+        final TextView textView = root.findViewById(R.id.text_locations);
+        locationsViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
