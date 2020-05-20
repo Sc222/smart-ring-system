@@ -5,12 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--todo move into appbar layout ant make it colidable-->
+    <!--todo move into appbar layout and make it collidable-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:layout_collapseMode="pin">
+        android:background="@color/colorPrimary">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/main_card"
@@ -50,8 +49,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/card_horizontal_padding"
                     android:layout_weight="65"
-                    android:gravity="left"
-                    android:orientation="vertical">
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/card_horizontal_padding">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="wrap_content"
@@ -62,17 +62,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
-                            android:text="Smart Ring"
+                            android:text="@string/smart_ring"
                             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                            android:textColor="@color/colorAccent" />
+                            android:textColor="@color/colorAccent"
+                            android:layout_marginStart="4dp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:drawableLeft="@drawable/ic_bluetooth_secondary_24dp"
-                            android:text="connected"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                            android:text="@string/device_connected"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:drawableStart="@drawable/ic_bluetooth_secondary_24dp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
@@ -80,7 +82,8 @@
                             android:layout_marginTop="8dp"
                             android:drawableLeft="@drawable/ic_battery_secondary_24dp"
                             android:text="100%"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:drawableStart="@drawable/ic_battery_secondary_24dp" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -101,7 +104,6 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/card_horizontal_margin"
             android:layout_marginTop="@dimen/card_vertical_margin"
@@ -111,7 +113,7 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/card_horizontal_padding"
                 android:paddingTop="@dimen/card_vertical_padding"
@@ -121,8 +123,8 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="Used actions"
+                    android:gravity="start"
+                    android:text="@string/used_actions"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/colorAccent" />
 
@@ -130,28 +132,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Single Click"
+                    android:text="@string/single_click"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Double Click"
+                    android:text="@string/double_click"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Tripple Click"
+                    android:text="@string/triple_click"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Long Press"
+                    android:text="@string/long_press"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.cardview.widget.CardView>
@@ -160,7 +162,6 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/card_horizontal_margin"
             android:layout_marginTop="@dimen/card_vertical_margin"
@@ -170,7 +171,7 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/card_horizontal_padding"
                 android:paddingTop="@dimen/card_vertical_padding"
@@ -180,8 +181,8 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="Device settings"
+                    android:gravity="start"
+                    android:text="@string/device_settings"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/colorAccent" />
 
@@ -189,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Delay between clicks"
+                    android:text="@string/delay_between_clicks"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 <androidx.appcompat.widget.AppCompatSeekBar
@@ -203,7 +204,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Long press duration"
+                    android:text="@string/long_press_duration"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 <androidx.appcompat.widget.AppCompatSeekBar
@@ -218,7 +219,6 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/card_horizontal_margin"
             android:layout_marginTop="@dimen/card_vertical_margin"
@@ -244,7 +244,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Disconnect device"
+                    android:text="@string/disconnect_device"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@android:color/white"
                     android:textSize="22sp" />
