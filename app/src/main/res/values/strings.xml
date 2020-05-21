@@ -31,4 +31,6 @@
     <string name="smart_ring">Smart Ring</string>
     <string name="disconnect_device">Disconnect device</string>
     <string name="title_activity_add_location">Add new location</string>
+    <string name="location_info">Location Info</string>
+    <string name="name">Name</string>
 </resources>

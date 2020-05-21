@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <com.google.android.material.appbar.AppBarLayout
@@ -13,30 +14,307 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            app:titleTextColor="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@color/colorPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="?actionBarSize">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp">
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/card_horizontal_margin"
+                android:layout_marginTop="@dimen/card_vertical_margin"
+                android:layout_marginRight="@dimen/card_horizontal_margin"
+                app:cardCornerRadius="15dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/card_horizontal_padding"
+                    android:paddingTop="@dimen/card_vertical_padding"
+                    android:paddingRight="@dimen/card_horizontal_padding"
+                    android:paddingBottom="@dimen/card_vertical_padding">
 
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/location_info"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/colorAccent" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_field_name"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:helperText="Name of the location"
+                        android:hint="@string/name">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_field_location"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:helperText="Where location is situated"
+                        android:hint="Geoposition">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_vertical_padding">
 
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/drop_down_menu_border_usual"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/spinner_background"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingLeft="4dp"
+                                android:paddingTop="12dp"
+                                android:paddingRight="4dp"
+                                android:paddingBottom="12dp"
+                                android:spinnerMode="dropdown"
+                                tools:listitem="@android:layout/simple_spinner_item" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:layout_marginTop="-4dp"
+                            android:background="@android:color/background_light"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:text="Background"
+                            android:textColor="@color/light_gray"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/card_horizontal_margin"
+                android:layout_marginTop="@dimen/card_vertical_margin"
+                android:layout_marginRight="@dimen/card_horizontal_margin"
+                android:layout_marginBottom="@dimen/card_vertical_margin"
+                app:cardCornerRadius="15dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/card_horizontal_padding"
+                    android:paddingTop="@dimen/card_vertical_padding"
+                    android:paddingRight="@dimen/card_horizontal_padding"
+                    android:paddingBottom="@dimen/card_vertical_padding">
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Actions"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/colorAccent" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/drop_down_menu_border_usual"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/spinner_single_click"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingLeft="4dp"
+                                android:paddingTop="12dp"
+                                android:paddingRight="4dp"
+                                android:paddingBottom="12dp"
+                                android:spinnerMode="dropdown"
+                                tools:listitem="@android:layout/simple_spinner_item" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:layout_marginTop="-4dp"
+                            android:background="@android:color/background_light"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:text="Single click"
+                            android:textColor="@color/light_gray"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_vertical_padding">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/drop_down_menu_border_usual"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/spinner_double_click"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingLeft="4dp"
+                                android:paddingTop="12dp"
+                                android:paddingRight="4dp"
+                                android:paddingBottom="12dp"
+                                android:spinnerMode="dropdown"
+                                tools:listitem="@android:layout/simple_spinner_item" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:layout_marginTop="-4dp"
+                            android:background="@android:color/background_light"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:text="Double click"
+                            android:textColor="@color/light_gray"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_vertical_padding">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/drop_down_menu_border_usual"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/spinner_triple_click"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingLeft="4dp"
+                                android:paddingTop="12dp"
+                                android:paddingRight="4dp"
+                                android:paddingBottom="12dp"
+                                android:spinnerMode="dropdown"
+                                tools:listitem="@android:layout/simple_spinner_item" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:layout_marginTop="-4dp"
+                            android:background="@android:color/background_light"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:text="Triple click"
+                            android:textColor="@color/light_gray"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_vertical_padding">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/drop_down_menu_border_usual"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/spinner_long_press"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingLeft="4dp"
+                                android:paddingTop="12dp"
+                                android:paddingRight="4dp"
+                                android:paddingBottom="12dp"
+                                android:spinnerMode="dropdown"
+                                tools:listitem="@android:layout/simple_spinner_item" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:layout_marginTop="-4dp"
+                            android:background="@android:color/background_light"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:text="Long press"
+                            android:textColor="@color/light_gray"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -44,8 +322,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:tint="@android:color/white"
-        android:src="@drawable/ic_ok_24dp" />
+        android:src="@drawable/ic_ok_24dp"
+        android:tint="@android:color/white" />
     <!--todo !!! turn on vectordrawable compat in gradle-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
