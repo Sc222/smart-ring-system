@@ -39,7 +39,6 @@ public class LocationsFragment extends Fragment {
                 startActivity(intent);
                // AddLocationFragment bottomSheetFragment = new AddLocationFragment();
                // bottomSheetFragment.show(getFragmentManager(), bottomSheetFragment.getTag());
-
             }
         });
         //final TextView textView = root.findViewById(R.id.text_locations);
