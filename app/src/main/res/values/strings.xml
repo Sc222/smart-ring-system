@@ -33,4 +33,9 @@
     <string name="title_activity_add_location">Add new location</string>
     <string name="location_info">Location Info</string>
     <string name="name">Name</string>
+    <string name="actions">Actions</string>
+    <string name="background">Background</string>
+    <string name="geoposition">Geoposition</string>
+    <string name="input_helper_location_geoposition">Where location is situated</string>
+    <string name="input_helper_location_name">Name of the location</string>
 </resources>

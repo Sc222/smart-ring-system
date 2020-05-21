@@ -64,7 +64,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        app:helperText="Name of the location"
+                        app:helperText="@string/input_helper_location_name"
                         android:hint="@string/name">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -79,8 +79,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        app:helperText="Where location is situated"
-                        android:hint="Geoposition">
+                        app:helperText="@string/input_helper_location_geoposition"
+                        android:hint="@string/geoposition">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
@@ -122,7 +122,7 @@
                             android:background="@android:color/background_light"
                             android:paddingLeft="3dp"
                             android:paddingRight="3dp"
-                            android:text="Background"
+                            android:text="@string/background"
                             android:textColor="@color/light_gray"
                             android:textSize="12sp" />
                     </RelativeLayout>
@@ -153,7 +153,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Actions"
+                        android:text="@string/actions"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textColor="@color/colorAccent" />
 
@@ -190,7 +190,7 @@
                             android:background="@android:color/background_light"
                             android:paddingLeft="3dp"
                             android:paddingRight="3dp"
-                            android:text="Single click"
+                            android:text="@string/single_click"
                             android:textColor="@color/light_gray"
                             android:textSize="12sp" />
                     </RelativeLayout>
@@ -228,7 +228,7 @@
                             android:background="@android:color/background_light"
                             android:paddingLeft="3dp"
                             android:paddingRight="3dp"
-                            android:text="Double click"
+                            android:text="@string/double_click"
                             android:textColor="@color/light_gray"
                             android:textSize="12sp" />
                     </RelativeLayout>
@@ -266,7 +266,7 @@
                             android:background="@android:color/background_light"
                             android:paddingLeft="3dp"
                             android:paddingRight="3dp"
-                            android:text="Triple click"
+                            android:text="@string/triple_click"
                             android:textColor="@color/light_gray"
                             android:textSize="12sp" />
                     </RelativeLayout>
@@ -304,7 +304,7 @@
                             android:background="@android:color/background_light"
                             android:paddingLeft="3dp"
                             android:paddingRight="3dp"
-                            android:text="Long press"
+                            android:text="@string/long_press"
                             android:textColor="@color/light_gray"
                             android:textSize="12sp" />
                     </RelativeLayout>
