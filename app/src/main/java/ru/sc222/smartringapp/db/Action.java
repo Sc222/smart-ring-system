@@ -12,9 +12,15 @@ public class Action {
 
     @PrimaryKey
     public long actionId;
-    public String actionName; //включить чайник и так далее (сделать какой-то класс???)
+    public String actionCategory; //Освещение, бытовая техника и т.д.
+    public String actionDescription;  //включить чайник и так далее (сделать какой-то класс???)
+    //todo ---long action code or something like this
 
-    public Action(String actionName) {
-        this.actionName = actionName;
+    public int icon; //id of icon drawable
+
+    public Action(String actionCategory, String actionDescription, int icon) {
+        this.actionCategory = actionCategory;
+        this.actionDescription = actionDescription;
+        this.icon = icon;
     }
 }

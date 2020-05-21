@@ -19,7 +19,7 @@ import static android.database.sqlite.SQLiteDatabase.CONFLICT_IGNORE;
 
 
 //todo device class
-@Database(entities = {Action.class, Location.class}, version = 1)
+@Database(entities = {Action.class, Location.class}, version = 1, exportSchema = true)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase ourInstance = null;
 
@@ -41,19 +41,13 @@ public abstract class AppDatabase extends RoomDatabase {
         public void onCreate (SupportSQLiteDatabase db) {
             // todo prepopulate here
             Log.e("oncreate","prepopulate");
-
             Action[] actions = new Action[]{
-                    new Action("Поставить чайник"),
-                    new Action("Включить свет в прихожей"),
-                    new Action("Включить свет в гостиной"),
-                    new Action("Включить свет в спальне"),
-                    new Action("Выключить свет в прихожей"),
-                    new Action("Выключить свет в гостиной"),
-                    new Action("Выключить свет в спальне"),
-                    new Action("Включить телевизор"),
-                    new Action("Выключить телевизор"),
-                    new Action("Включить компьютер"),
-                    new Action("Выключить компьютер"),
+                    new Action("Развлечения","Включить телевизор",R.drawable.ic_action_tv),
+                    new Action("Работа","Включить компьютер",R.drawable.ic_action_pc),
+                    new Action("Освещение","Включить свет в прихожей",R.drawable.ic_action_light_1),
+                    new Action("Освещение","Включить свет в гостиной",R.drawable.ic_action_light_2),
+                    new Action("Освещение","Включить свет в спальне",R.drawable.ic_action_light_3),
+                    new Action("Питание","Включить чайник",R.drawable.ic_action_kettle)
             };
             for (Action action:actions) {
                 InsertAction(db, action);
@@ -69,7 +63,9 @@ public abstract class AppDatabase extends RoomDatabase {
     //todo refactor
     private static void InsertAction(SupportSQLiteDatabase db, Action action) {
         ContentValues cv = new ContentValues();
-        cv.put("actionName",action.actionName);
+        cv.put("actionCategory",action.actionCategory);
+        cv.put("actionDescription",action.actionDescription);
+        cv.put("icon",action.icon);
         db.insert("Action",CONFLICT_IGNORE,cv);
     }
 
