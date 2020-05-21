@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -16,7 +19,13 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.sc222.smartringapp.db.Action;
+import ru.sc222.smartringapp.db.AppDatabase;
+import ru.sc222.smartringapp.db.Location;
+
 public class AddLocationActivity extends AppCompatActivity {
+
+    private AddLocationViewModel addLocationViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,21 +51,45 @@ public class AddLocationActivity extends AppCompatActivity {
         backgrounds.add("Поле");
         setupSpinner(spinnerBackground, backgrounds);
 
-        AppCompatSpinner spinnerSingleClick = findViewById(R.id.spinner_single_click);
-        AppCompatSpinner spinnerDoubleClick = findViewById(R.id.spinner_double_click);
-        AppCompatSpinner spinnerTripleClick = findViewById(R.id.spinner_triple_click);
-        AppCompatSpinner spinnerLongPress = findViewById(R.id.spinner_long_press);
-        List<String> actions = new ArrayList<>();
-        actions.add("Не назначено");
-        actions.add("Включить свет");
-        actions.add("Поставить чайник");
-        actions.add("Включить телевизор");
-        actions.add("Включить компьютер");
-        setupSpinner(spinnerSingleClick, actions);
-        setupSpinner(spinnerDoubleClick, actions);
-        setupSpinner(spinnerTripleClick, actions);
-        setupSpinner(spinnerLongPress, actions);
+        final AppCompatSpinner spinnerSingleClick = findViewById(R.id.spinner_single_click);
+        final AppCompatSpinner spinnerDoubleClick = findViewById(R.id.spinner_double_click);
+        final AppCompatSpinner spinnerTripleClick = findViewById(R.id.spinner_triple_click);
+        final AppCompatSpinner spinnerLongPress = findViewById(R.id.spinner_long_press);
 
+
+        //get actions
+        addLocationViewModel =
+                ViewModelProviders.of(this).get(AddLocationViewModel.class);
+
+        addLocationViewModel.getActions().observe(this, new Observer<List<Action>>() {
+            @Override
+            public void onChanged(@Nullable List<Action> actions) {
+                List<String> actionDescriptions = new ArrayList<>(); //todo code it using linq
+                actionDescriptions.add(Action.NOT_DEFINED);
+                for (Action action : actions) {
+                    actionDescriptions.add(action.actionDescription);
+                }
+                //set actions when they are loaded from db
+                setupSpinner(spinnerSingleClick, actionDescriptions);
+                setupSpinner(spinnerDoubleClick, actionDescriptions);
+                setupSpinner(spinnerTripleClick, actionDescriptions);
+                setupSpinner(spinnerLongPress, actionDescriptions);
+            }
+        });
+
+        addLocationViewModel.getIsLocationAdded().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLocationAdded) {
+                if(isLocationAdded)
+                {
+                    finish(); //todo is it ok or i should launch parent activity manually?
+                }
+            }
+        });
+
+        //load actions from db
+        AddLocationDbLoader addLocationDbLoader = new AddLocationDbLoader(addLocationViewModel, AppDatabase.getInstance(this));
+        addLocationDbLoader.execute();
 
         final TextInputLayout textFieldName = findViewById(R.id.text_field_name);
         final TextInputLayout textFieldLocation = findViewById(R.id.text_field_location);
@@ -66,7 +99,7 @@ public class AddLocationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String name = textFieldName.getEditText().getText().toString();
-                String location = textFieldLocation.getEditText().getText().toString();
+                String address = textFieldLocation.getEditText().getText().toString();
 
                 if (name.equals("")) {
                     textFieldName.setError("Укажите название локации");
@@ -74,19 +107,31 @@ public class AddLocationActivity extends AppCompatActivity {
                     textFieldName.setErrorEnabled(false);
                 }
 
-                if (location.equals("")) {
+                if (address.equals("")) {
                     textFieldLocation.setError("Укажите местоположение локации");
                 } else {
                     textFieldLocation.setErrorEnabled(false);
                 }
 
+                if(!name.equals("")&&!address.equals("")) {
+                    Location location = new Location(
+                            name,
+                            address,
+                            R.color.colorPrimary,
+                            spinnerSingleClick.getSelectedItem().toString(),
+                            spinnerDoubleClick.getSelectedItem().toString(),
+                            spinnerTripleClick.getSelectedItem().toString(),
+                            spinnerLongPress.getSelectedItem().toString());
+
+                    AddLocationDbSaver addLocationDbSaver = new AddLocationDbSaver(addLocationViewModel,AppDatabase.getInstance(getApplicationContext()));
+                    addLocationDbSaver.execute(location);
+                }
 
                 //processInput();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+               //         .setAction("Action", null).show();
             }
         });
-
     }
 
     private void setupSpinner(AppCompatSpinner spinner, List<String> entries) {

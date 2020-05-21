@@ -43,8 +43,6 @@ public class CommandsFragment extends Fragment {
                     imageView.setImageResource(action.icon);
                     textViewCategory.setText(action.actionCategory);
                     textViewDescription.setText(action.actionDescription);
-
-
                     cardContainer.addView(card);
                     //todo code here
                 }
@@ -54,7 +52,7 @@ public class CommandsFragment extends Fragment {
         });
 
 
-        CommandsLoader commandsLoader = new CommandsLoader(commandsViewModel, AppDatabase.getInstance(getContext()));
+        CommandsDbLoader commandsLoader = new CommandsDbLoader(commandsViewModel, AppDatabase.getInstance(getContext()));
         commandsLoader.execute();
         return root;
     }

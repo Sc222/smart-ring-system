@@ -17,4 +17,14 @@ public class Location {
     public String doubleClickAction;
     public String tripleClickAction;
     public String longClickAction;
+
+    public Location(String locationName, String locationAddress, int locationBackground, String singleClickAction, String doubleClickAction, String tripleClickAction, String longClickAction) {
+        this.locationName = locationName;
+        this.locationAddress = locationAddress;
+        this.locationBackground = locationBackground;
+        this.singleClickAction = singleClickAction;
+        this.doubleClickAction = doubleClickAction;
+        this.tripleClickAction = tripleClickAction;
+        this.longClickAction = longClickAction;
+    }
 }

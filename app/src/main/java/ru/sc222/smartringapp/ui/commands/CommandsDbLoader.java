@@ -7,12 +7,12 @@ import java.util.List;
 import ru.sc222.smartringapp.db.Action;
 import ru.sc222.smartringapp.db.AppDatabase;
 
-public class CommandsLoader extends AsyncTask<String,Integer,List<Action>> {
+public class CommandsDbLoader extends AsyncTask<String,Integer,List<Action>> {
 
     private CommandsViewModel model;
     private AppDatabase db;
 
-    public CommandsLoader(CommandsViewModel model,AppDatabase db)
+    public CommandsDbLoader(CommandsViewModel model, AppDatabase db)
     {
         this.model=model;
         this.db=db;
