@@ -2,6 +2,7 @@ package ru.sc222.smartringapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -9,12 +10,16 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import ru.sc222.smartringapp.utils.PreferenceUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +39,23 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        // navView.setSelectedItemId(R.id.navigation_device);
+        navController.navigate(PreferenceUtils.getCurrentNavigationItem(this));
+
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                switch (destination.getId()) {
+                    case R.id.navigation_location:
+                    case R.id.navigation_commands:
+                    case R.id.navigation_device:
+                        PreferenceUtils.saveCurrentNavigationItem(getApplicationContext(), destination.getId());
+                        break;
+                }
+            }
+        });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,14 +66,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Toast.makeText(this,item.getItemId()+" was selected",Toast.LENGTH_SHORT).show();
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.nav_settings:
-                Intent intent=new Intent(this,SettingsActivity.class);
+                Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
