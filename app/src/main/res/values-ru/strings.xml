@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Smart Ring App</string>
+    <string name="actions">Действия</string>
+    <string name="background">Фоновое изображение</string>
+    <string name="category_main">Основные</string>
+    <string name="dark_mode">Темная тема</string>
+    <string name="delay_between_clicks">Задержка между нажатиями</string>
+    <string name="device_connected">подключено</string>
+    <string name="device_settings">Настройки устройства</string>
+    <string name="disconnect_device">Отсоединить устройство</string>
+    <string name="double_click">Двойное нажатие</string>
+    <string name="geoposition">Местоположение</string>
+    <string name="input_helper_location_geoposition">Где локация расположена</string>
+    <string name="input_helper_location_name">Название локации</string>
+    <string name="location_info">Информация о локации</string>
+    <string name="long_press">Длинное нажатие</string>
+    <string name="long_press_duration">Длительность длинного нажатия</string>
+    <string name="name">Название</string>
+    <string name="single_click">Одно нажатие</string>
+    <string name="smart_ring">Smart Ring</string>
+    <string name="title_activity_add_location">Новая локация</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="title_commands">Команды</string>
+    <string name="title_device">Устройство</string>
+    <string name="title_locations">Локации</string>
+    <string name="title_settings">Настройки</string>
+    <string name="triple_click">Тройное нажатие</string>
+    <string name="used_actions">Используемые действия</string>
+</resources>

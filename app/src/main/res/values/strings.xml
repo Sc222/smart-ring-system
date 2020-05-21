@@ -8,17 +8,11 @@
 
     <!-- Preference Categories -->
     <string name="category_main">Main</string>
-    <string name="sync_header">Sync</string>
 
     <!-- Theme Preferences -->
     <string name="dark_mode">Dark mode</string>
 
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="device_settings">Device settings</string>
     <string name="delay_between_clicks">Delay between clicks</string>
     <string name="long_press_duration">Long press duration</string>
