@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:id="@+id/main_card"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
-    android:layout_gravity="center"
     android:layout_marginLeft="@dimen/card_horizontal_margin"
     android:layout_marginRight="@dimen/card_horizontal_margin"
     android:layout_marginBottom="@dimen/card_vertical_margin"
-    app:cardCornerRadius="15dp"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:cardCornerRadius="15dp">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -22,12 +21,14 @@
         android:paddingBottom="@dimen/card_vertical_padding">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="25"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_action_light_3" />
+            app:srcCompat="@drawable/ic_action_light_3"
+            app:tint="@color/colorPrimary" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="0dp"
@@ -44,20 +45,21 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginLeft="4dp"
                     android:text="Lighting"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/colorAccent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                   android:text="Turn on light at the living room"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:layout_marginTop="6dp"
+                    android:text="Turn on light at the living room"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textSize="16sp" />
 
                 <!--todo "command is used by 0 locations, something like this"-->
             </androidx.appcompat.widget.LinearLayoutCompat>
