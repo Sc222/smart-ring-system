@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         // navView.setSelectedItemId(R.id.navigation_device);
-        navController.navigate(PreferenceUtils.getCurrentNavigationItem(this));
+       // navController.navigate(PreferenceUtils.getCurrentNavigationItem(this));
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
