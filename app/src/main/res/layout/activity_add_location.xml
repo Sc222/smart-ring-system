@@ -64,8 +64,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        app:helperText="@string/input_helper_location_name"
-                        android:hint="@string/name">
+                        android:hint="@string/name"
+                        app:helperText="@string/input_helper_location_name">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
@@ -79,8 +79,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        app:helperText="@string/input_helper_location_geoposition"
-                        android:hint="@string/geoposition">
+                        android:hint="@string/geoposition"
+                        app:helperText="@string/input_helper_location_geoposition">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
@@ -118,6 +118,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="9dp"
+                            android:layout_marginStart="9dp"
                             android:layout_marginTop="-4dp"
                             android:background="@android:color/background_light"
                             android:paddingLeft="3dp"
@@ -186,6 +187,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="9dp"
+                            android:layout_marginStart="9dp"
                             android:layout_marginTop="-4dp"
                             android:background="@android:color/background_light"
                             android:paddingLeft="3dp"
@@ -224,6 +226,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="9dp"
+                            android:layout_marginStart="9dp"
                             android:layout_marginTop="-4dp"
                             android:background="@android:color/background_light"
                             android:paddingLeft="3dp"
@@ -262,6 +265,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="9dp"
+                            android:layout_marginStart="9dp"
                             android:layout_marginTop="-4dp"
                             android:background="@android:color/background_light"
                             android:paddingLeft="3dp"
@@ -300,6 +304,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="9dp"
+                            android:layout_marginStart="9dp"
                             android:layout_marginTop="-4dp"
                             android:background="@android:color/background_light"
                             android:paddingLeft="3dp"

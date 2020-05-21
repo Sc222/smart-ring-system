@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#5499c7</color>
     <color name="colorPrimaryDark">#2471a3</color>
-    <color name="colorAccent">#5499c7</color><!--#45b39d-->
+    <color name="colorAccent">#5499c7</color> <!--#45b39d-->
     <color name="colorWarning">#ec7063</color>
     <color name="separator_color">#e6e6e6</color>
     <color name="light_gray">#848484</color>

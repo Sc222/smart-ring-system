@@ -45,7 +45,7 @@ public class AddLocationActivity extends AppCompatActivity {
         AppCompatSpinner spinnerSingleClick = findViewById(R.id.spinner_single_click);
         AppCompatSpinner spinnerDoubleClick = findViewById(R.id.spinner_double_click);
         AppCompatSpinner spinnerTripleClick = findViewById(R.id.spinner_triple_click);
-        AppCompatSpinner spinnerLongPress =  findViewById(R.id.spinner_long_press);
+        AppCompatSpinner spinnerLongPress = findViewById(R.id.spinner_long_press);
         List<String> actions = new ArrayList<>();
         actions.add("Не назначено");
         actions.add("Включить свет");
@@ -58,8 +58,8 @@ public class AddLocationActivity extends AppCompatActivity {
         setupSpinner(spinnerLongPress, actions);
 
 
-        final TextInputLayout textFieldName=findViewById(R.id.text_field_name);
-        final TextInputLayout textFieldLocation=findViewById(R.id.text_field_location);
+        final TextInputLayout textFieldName = findViewById(R.id.text_field_name);
+        final TextInputLayout textFieldLocation = findViewById(R.id.text_field_location);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -68,17 +68,15 @@ public class AddLocationActivity extends AppCompatActivity {
                 String name = textFieldName.getEditText().getText().toString();
                 String location = textFieldLocation.getEditText().getText().toString();
 
-                if(name.equals("")) {
+                if (name.equals("")) {
                     textFieldName.setError("Укажите название локации");
-                }
-                else {
+                } else {
                     textFieldName.setErrorEnabled(false);
                 }
 
-                if(location.equals("")) {
+                if (location.equals("")) {
                     textFieldLocation.setError("Укажите местоположение локации");
-                }
-                else {
+                } else {
                     textFieldLocation.setErrorEnabled(false);
                 }
 

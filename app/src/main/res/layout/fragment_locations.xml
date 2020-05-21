@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -24,12 +23,12 @@
                     android:id="@+id/main_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="true"
-                    android:clickable="true"
                     android:layout_marginLeft="@dimen/card_horizontal_margin"
                     android:layout_marginTop="@dimen/card_vertical_margin"
                     android:layout_marginRight="@dimen/card_horizontal_margin"
                     android:layout_marginBottom="@dimen/card_vertical_margin"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:foreground="?selectableItemBackground"
                     app:cardCornerRadius="15dp">
 
@@ -62,17 +61,17 @@
                                 android:layout_marginLeft="4dp"
                                 android:layout_weight="40"
                                 android:ellipsize="end"
+                                android:gravity="top"
                                 android:maxLines="1"
                                 android:text="Outside"
-                                android:gravity="top"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                                 android:textColor="@android:color/white" />
 
                             <Space
-                                android:visibility="visible"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight="20" />
+                                android:layout_weight="20"
+                                android:visibility="visible" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
