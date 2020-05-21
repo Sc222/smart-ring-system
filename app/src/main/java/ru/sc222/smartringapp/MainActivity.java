@@ -18,6 +18,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.List;
+
+import ru.sc222.smartringapp.db.Action;
+import ru.sc222.smartringapp.db.AppDatabase;
 import ru.sc222.smartringapp.utils.PreferenceUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+     //   AppDatabase db =  AppDatabase.getInstance(this);
+     //   List<Action> actions = db.actionDao().getAll();
+     //   Log.e("test",actions.get(0).actionName);
     }
 
 

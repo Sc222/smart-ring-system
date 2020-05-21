@@ -12,7 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.List;
+
 import ru.sc222.smartringapp.R;
+import ru.sc222.smartringapp.db.Action;
+import ru.sc222.smartringapp.db.AppDatabase;
 
 public class CommandsFragment extends Fragment {
 
@@ -24,12 +28,17 @@ public class CommandsFragment extends Fragment {
                 ViewModelProviders.of(this).get(CommandsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_commands, container, false);
         final TextView textView = root.findViewById(R.id.text_commands);
-        commandsViewModel.getText().observe(this, new Observer<String>() {
+        commandsViewModel.getActions().observe(getViewLifecycleOwner(), new Observer<List<Action>>() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onChanged(@Nullable List<Action> actions) {
+                if(actions.size()>0)
+                    textView.setText(actions.get(0).actionName);
             }
         });
+
+
+        CommandsLoader commandsLoader= new CommandsLoader(commandsViewModel, AppDatabase.getInstance(getContext()));
+        commandsLoader.execute();
         return root;
     }
 }
