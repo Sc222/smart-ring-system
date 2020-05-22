@@ -10,7 +10,7 @@ public class Action {
     public static String NOT_DEFINED = "Не назначено";
 
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public long actionId;
     public String actionCategory; //Освещение, бытовая техника и т.д.
     public String actionDescription;  //включить чайник и так далее (сделать какой-то класс???)

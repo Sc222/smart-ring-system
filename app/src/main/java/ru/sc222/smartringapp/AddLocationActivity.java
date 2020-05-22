@@ -44,12 +44,9 @@ public class AddLocationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        AppCompatSpinner spinnerBackground = findViewById(R.id.spinner_background);
-        List<String> backgrounds = new ArrayList<>();
-        backgrounds.add("Основной цвет");
-        backgrounds.add("Лес");
-        backgrounds.add("Поле");
-        setupSpinner(spinnerBackground, backgrounds);
+        final AppCompatSpinner spinnerBackground = findViewById(R.id.spinner_background);
+        //backgrounds.add("Поле");
+        setupSpinner(spinnerBackground, Location.backgroundNames);
 
         final AppCompatSpinner spinnerSingleClick = findViewById(R.id.spinner_single_click);
         final AppCompatSpinner spinnerDoubleClick = findViewById(R.id.spinner_double_click);
@@ -117,7 +114,7 @@ public class AddLocationActivity extends AppCompatActivity {
                     Location location = new Location(
                             name,
                             address,
-                            R.color.colorPrimary,
+                            Location.backgrounds[spinnerBackground.getSelectedItemPosition()],
                             spinnerSingleClick.getSelectedItem().toString(),
                             spinnerDoubleClick.getSelectedItem().toString(),
                             spinnerTripleClick.getSelectedItem().toString(),
