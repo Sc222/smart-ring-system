@@ -32,4 +32,5 @@
     <string name="geoposition">Geoposition</string>
     <string name="input_helper_location_geoposition">Where location is situated</string>
     <string name="input_helper_location_name">Name of the location</string>
+    <string name="format_commands_count">%d commands</string>
 </resources>
