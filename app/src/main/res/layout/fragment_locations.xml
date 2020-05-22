@@ -13,13 +13,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <!--todo check constraintlayout guides and remove bottom padding-->
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/card_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="50dp">
+                android:layout_marginTop="@dimen/card_vertical_margin"
+                android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
+               <!-- <androidx.cardview.widget.CardView
                     android:id="@+id/main_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -99,10 +100,10 @@
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
                     </FrameLayout>
-                </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>-->
 
 
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 

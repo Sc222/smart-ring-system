@@ -44,13 +44,9 @@ public class CommandsFragment extends Fragment {
                     textViewCategory.setText(action.actionCategory);
                     textViewDescription.setText(action.actionDescription);
                     cardContainer.addView(card);
-                    //todo code here
                 }
-                //if(actions.size()>0)
-                //    textView.setText(actions.get(0).actionName);
             }
         });
-
 
         CommandsDbLoader commandsLoader = new CommandsDbLoader(commandsViewModel, AppDatabase.getInstance(getContext()));
         commandsLoader.execute();

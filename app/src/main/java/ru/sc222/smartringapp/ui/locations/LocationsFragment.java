@@ -8,13 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 import ru.sc222.smartringapp.AddLocationActivity;
 import ru.sc222.smartringapp.R;
+import ru.sc222.smartringapp.db.Action;
+import ru.sc222.smartringapp.db.AppDatabase;
+import ru.sc222.smartringapp.db.Location;
+import ru.sc222.smartringapp.ui.commands.CommandsDbLoader;
 
 public class LocationsFragment extends Fragment {
 
@@ -36,13 +47,31 @@ public class LocationsFragment extends Fragment {
                 // bottomSheetFragment.show(getFragmentManager(), bottomSheetFragment.getTag());
             }
         });
-        //final TextView textView = root.findViewById(R.id.text_locations);
-        //locationsViewModel.getText().observe(this, new Observer<String>() {
-        //    @Override
-        //    public void onChanged(@Nullable String s) {
-        //        textView.setText(s);
-        //    }
-        //});
+
+        //todo replace with recyclerlayout in the future
+        final LinearLayoutCompat cardContainer = root.findViewById(R.id.card_container);
+        locationsViewModel.getLocations().observe(getViewLifecycleOwner(), new Observer<List<Location>>() {
+            @Override
+            public void onChanged(@Nullable List<Location> locations) {
+                Log.e("locations updated","!!!UPDATED!!!");
+                for (Location location : locations) {
+                    View card = LayoutInflater.from(getContext()).inflate(R.layout.card_location, cardContainer, false);
+                    AppCompatImageView imageView=card.findViewById(R.id.location_bg);
+                    AppCompatTextView textViewName=card.findViewById(R.id.text_name);
+                    AppCompatTextView textViewAddress=card.findViewById(R.id.text_address);
+                    AppCompatTextView textViewCommandsCount=card.findViewById(R.id.text_commands_count);
+                    imageView.setImageResource(location.locationBackground);
+                    textViewName.setText(location.locationName);
+                    textViewAddress.setText(location.locationAddress);
+                    textViewCommandsCount.setText(String.format(getString(R.string.format_commands_count), location.getCommandsCount()));
+                    cardContainer.addView(card);
+                }
+            }
+        });
+
+        LocationsDbLoader locationsDbLoader = new LocationsDbLoader(locationsViewModel, AppDatabase.getInstance(getContext()));
+        locationsDbLoader.execute();
+
         return root;
     }
 

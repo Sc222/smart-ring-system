@@ -8,7 +8,7 @@ import ru.sc222.smartringapp.db.Action;
 import ru.sc222.smartringapp.db.AppDatabase;
 
 public class CommandsDbLoader extends AsyncTask<String,Integer,List<Action>> {
-
+    //todo use interfaces and merge "loaders" into one class
     private CommandsViewModel model;
     private AppDatabase db;
 

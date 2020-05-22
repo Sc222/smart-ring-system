@@ -16,10 +16,10 @@ public class Location {
 
     //todo background class or dictionary
     @Ignore
-    public static final int[] backgrounds={R.color.colorPrimary,R.drawable.location_outside_bg};
+    public static final int[] backgrounds={R.drawable.location_blue_bg,R.drawable.location_green_bg,R.drawable.location_purple_bg,R.drawable.location_outside_bg};
 
-    @Ignore
-    public static final List<String> backgroundNames= Arrays.asList("Основной цвет", "Лес");
+    @Ignore //todo pictures
+    public static final List<String> backgroundNames= Arrays.asList("Голубой цвет", "Зеленый цвет","Фиолетовый цвет", "Лес");
 
     @PrimaryKey(autoGenerate = true)
     public long locationId;

@@ -79,7 +79,8 @@ public class AddLocationActivity extends AppCompatActivity {
             public void onChanged(Boolean isLocationAdded) {
                 if(isLocationAdded)
                 {
-                    finish(); //todo is it ok or i should launch parent activity manually?
+                    AddLocationActivity.super.onBackPressed();
+                   // finish(); //todo is it ok or i should launch parent activity manually?
                 }
             }
         });
