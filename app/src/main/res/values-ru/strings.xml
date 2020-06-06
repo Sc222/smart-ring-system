@@ -27,5 +27,5 @@
     <string name="title_settings">Настройки</string>
     <string name="triple_click">Тройное нажатие</string>
     <string name="used_actions">Используемые действия</string>
-    <string name="format_commands_count">%d команд</string>
+    <string name="format_commands_count">%d команды</string>
 </resources>

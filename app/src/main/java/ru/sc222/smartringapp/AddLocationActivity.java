@@ -1,5 +1,6 @@
 package ru.sc222.smartringapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -79,7 +80,10 @@ public class AddLocationActivity extends AppCompatActivity {
             public void onChanged(Boolean isLocationAdded) {
                 if(isLocationAdded)
                 {
-                    AddLocationActivity.super.onBackPressed();
+                    //todo workaround, use go back to parent
+                    Intent parent = new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(parent);
+                   // AddLocationActivity.super.onBackPressed();
                    // finish(); //todo is it ok or i should launch parent activity manually?
                 }
             }

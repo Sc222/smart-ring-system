@@ -63,7 +63,10 @@ public class LocationsFragment extends Fragment {
                     imageView.setImageResource(location.locationBackground);
                     textViewName.setText(location.locationName);
                     textViewAddress.setText(location.locationAddress);
-                    textViewCommandsCount.setText(String.format(getString(R.string.format_commands_count), location.getCommandsCount()));
+                    if(location.getCommandsCount()==0) //todo workaround remove later
+                        textViewCommandsCount.setText(String.format("%d команд", location.getCommandsCount()));
+                    else
+                        textViewCommandsCount.setText(String.format(getString(R.string.format_commands_count), location.getCommandsCount()));
                     cardContainer.addView(card);
                 }
             }
