@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP LTC4124
+D 100mA Wireless Li-Ion Charger with Low Battery Disconnect 
+K lifepo charger PMIC USB
+$ENDCMP
+#
+#End Doc Library
