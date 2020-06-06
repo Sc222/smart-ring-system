@@ -495,7 +495,7 @@ $EndComp
 Wire Wire Line
 	3300 5150 3950 5150
 Text Label 3950 4950 2    50   ~ 0
-VSUP
+V_SUP
 Wire Wire Line
 	3950 4950 3450 4950
 Wire Wire Line
