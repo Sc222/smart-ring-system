@@ -1,7 +1,11 @@
 package ru.sc222.smartringapp.ui.locations;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -74,6 +80,44 @@ public class LocationsFragment extends Fragment {
 
         LocationsDbLoader locationsDbLoader = new LocationsDbLoader(locationsViewModel, AppDatabase.getInstance(getContext()));
         locationsDbLoader.execute();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                //todo чисто для защиты, удалить потом
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    CharSequence name = "smartring";
+                    String description = "smart ring notification channel";
+                    int importance = NotificationManager.IMPORTANCE_HIGH;
+                    NotificationChannel channel = new NotificationChannel("channelid", name, importance);
+                    channel.setDescription(description);
+                    // Register the channel with the system; you can't change the importance
+                    // or other notification behaviors after this
+                    NotificationManager notificationManager = getContext().getSystemService(NotificationManager.class);
+                    notificationManager.createNotificationChannel(channel);
+                }
+
+
+
+
+                //todo чисто для защиты, удалить потом
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "channelid")
+                        .setSmallIcon(R.drawable.ic_ok_24dp)
+                        .setContentTitle("Кнопка нажата!")
+                        .setContentText("Свет в спальне включен")
+                        .setPriority(NotificationCompat.PRIORITY_HIGH);
+                builder.build();
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+
+// notificationId is a unique int for each notification that you must define
+                notificationManager.notify(122310, builder.build());
+                Log.e("notification","didnt show");
+
+
+            }
+        },2000);
 
         return root;
     }

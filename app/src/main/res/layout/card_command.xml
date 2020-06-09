@@ -30,8 +30,7 @@
             android:layout_weight="25"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_action_light_3"
-            app:tint="@color/colorPrimary" />
+            app:srcCompat="@drawable/ic_action_light_3" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="0dp"
