@@ -1,5 +1,6 @@
 package ru.sc222.smartringapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,13 +9,14 @@ import android.widget.ArrayAdapter;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -27,27 +29,55 @@ import ru.sc222.smartringapp.db.Location;
 public class AddLocationActivity extends AppCompatActivity {
 
     private AddLocationViewModel addLocationViewModel;
+    private Context c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
-
+        c=this;
+        addLocationViewModel =
+                ViewModelProviders.of(this).get(AddLocationViewModel.class);
         final Toolbar toolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        final LocationBgPickerDialog locationBgPickerDialog = new LocationBgPickerDialog(c,addLocationViewModel);
 
-        final AppCompatSpinner spinnerBackground = findViewById(R.id.spinner_background);
-        //backgrounds.add("Поле");
-        setupSpinner(spinnerBackground, Location.backgroundNames);
+        final LinearLayoutCompat linearLayoutLocationBg = findViewById(R.id.location_bg);
+        linearLayoutLocationBg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                locationBgPickerDialog.show();
+            }
+        });
+
+
+        addLocationViewModel.getIsLocationAdded().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLocationAdded) {
+                if(isLocationAdded)
+                {
+                    //todo workaround, use go back to parent
+                    Intent parent = new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(parent);
+                    // AddLocationActivity.super.onBackPressed();
+                    // finish(); //todo is it ok or i should launch parent activity manually?
+                }
+            }
+        });
+
+        final AppCompatImageView imageViewCurrentLocation = findViewById(R.id.location_selected_bg);
+
+        addLocationViewModel.getSelectedBackground().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                imageViewCurrentLocation.setImageResource(Location.backgroundIcons[integer]);
+            }
+        });
 
         final AppCompatSpinner spinnerSingleClick = findViewById(R.id.spinner_single_click);
         final AppCompatSpinner spinnerDoubleClick = findViewById(R.id.spinner_double_click);
@@ -55,9 +85,6 @@ public class AddLocationActivity extends AppCompatActivity {
         final AppCompatSpinner spinnerLongPress = findViewById(R.id.spinner_long_press);
 
 
-        //get actions
-        addLocationViewModel =
-                ViewModelProviders.of(this).get(AddLocationViewModel.class);
 
         addLocationViewModel.getActions().observe(this, new Observer<List<Action>>() {
             @Override
@@ -119,7 +146,7 @@ public class AddLocationActivity extends AppCompatActivity {
                     Location location = new Location(
                             name,
                             address,
-                            Location.backgrounds[spinnerBackground.getSelectedItemPosition()],
+                            Location.backgrounds[addLocationViewModel.getSelectedBackground().getValue()],
                             spinnerSingleClick.getSelectedItem().toString(),
                             spinnerDoubleClick.getSelectedItem().toString(),
                             spinnerTripleClick.getSelectedItem().toString(),
@@ -128,10 +155,6 @@ public class AddLocationActivity extends AppCompatActivity {
                     AddLocationDbSaver addLocationDbSaver = new AddLocationDbSaver(addLocationViewModel,AppDatabase.getInstance(getApplicationContext()));
                     addLocationDbSaver.execute(location);
                 }
-
-                //processInput();
-               // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-               //         .setAction("Action", null).show();
             }
         });
     }

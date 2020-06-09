@@ -28,4 +28,6 @@
     <string name="triple_click">Тройное нажатие</string>
     <string name="used_actions">Используемые действия</string>
     <string name="format_commands_count">%d команды</string>
+    <string name="location_background_image">Фоновое изображение</string>
+    <string name="location_bg_picker_title">Выберите фон локации</string>
 </resources>

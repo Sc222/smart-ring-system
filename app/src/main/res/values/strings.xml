@@ -33,4 +33,6 @@
     <string name="input_helper_location_geoposition">Where location is situated</string>
     <string name="input_helper_location_name">Name of the location</string>
     <string name="format_commands_count">%d commands</string>
+    <string name="location_background_image">Background image</string>
+    <string name="location_bg_picker_title">Choose location background</string>
 </resources>

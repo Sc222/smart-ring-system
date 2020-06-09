@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+<androidx.appcompat.widget.AppCompatImageButton app:srcCompat="@drawable/location_outside_bg_ic"
+    android:scaleType="centerInside"
+    android:id="@+id/location_bg_ic"
+    android:layout_width="wrap_content"
+    android:layout_height="100dp"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:padding="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+</androidx.appcompat.widget.AppCompatImageButton>
+</LinearLayout>

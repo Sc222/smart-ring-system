@@ -16,10 +16,51 @@ public class Location {
 
     //todo background class or dictionary
     @Ignore
-    public static final int[] backgrounds={R.drawable.location_blue_bg,R.drawable.location_green_bg,R.drawable.location_purple_bg,R.drawable.location_outside_bg};
+    public static final int[] backgrounds={
+            R.drawable.location_blue_bg,
+            R.drawable.location_green_bg,
+            R.drawable.location_purple_bg,
+            R.drawable.location_orange_bg,
+            R.drawable.location_home_outside_bg,
+            R.drawable.location_home_inside_bg,
+            R.drawable.location_office_outside_bg,
+            R.drawable.location_office_inside_bg,
+            R.drawable.location_garden_outside_bg,
+            R.drawable.location_garden_inside_bg,
+            R.drawable.location_outside_bg,
+            R.drawable.location_outside_city_bg,
+    };
+
+    @Ignore
+    public static final int[] backgroundIcons={
+            R.drawable.location_blue_bg_ic,
+            R.drawable.location_green_bg_ic,
+            R.drawable.location_purple_bg_ic,
+            R.drawable.location_orange_bg_ic,
+            R.drawable.location_home_outside_bg_ic,
+            R.drawable.location_home_inside_bg_ic,
+            R.drawable.location_office_outside_bg_ic,
+            R.drawable.location_office_inside_bg_ic,
+            R.drawable.location_garden_outside_bg_ic,
+            R.drawable.location_garden_inside_bg_ic,
+            R.drawable.location_outside_bg_ic,
+            R.drawable.location_outside_city_bg_ic,
+    };
 
     @Ignore //todo pictures
-    public static final List<String> backgroundNames= Arrays.asList("Голубой цвет", "Зеленый цвет","Фиолетовый цвет", "Лес");
+    public static final List<String> backgroundNames= Arrays.asList( //Todo string resources
+            "Голубой цвет",
+            "Зеленый цвет",
+            "Фиолетовый цвет",
+            "Оранжевый цвет",
+            "Многоквартирный дом",
+            "Гостиная",
+            "Офисное здание",
+            "Комната в офисе",
+            "Дачный поселок",
+            "Комната в саду",
+            "Лес"
+    );
 
     @PrimaryKey(autoGenerate = true)
     public long locationId;

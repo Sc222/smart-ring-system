@@ -12,12 +12,15 @@ import ru.sc222.smartringapp.db.Action;
 public class AddLocationViewModel extends ViewModel {
     private MutableLiveData<List<Action>> actions;
     private MutableLiveData<Boolean> isLocationAdded; //exit activity when location is added
+    private MutableLiveData<Integer> selectedBackground;
 
     public AddLocationViewModel() {
         actions= new MutableLiveData<>();
         actions.setValue(new ArrayList<Action>());
         isLocationAdded=new MutableLiveData<>();
         isLocationAdded.setValue(false);
+        selectedBackground = new MutableLiveData<>();
+        selectedBackground.setValue(0);
     }
 
     public void setActions(List<Action> actions) {
@@ -34,5 +37,13 @@ public class AddLocationViewModel extends ViewModel {
 
     public LiveData<Boolean> getIsLocationAdded() {
        return isLocationAdded;
+    }
+
+    public MutableLiveData<Integer> getSelectedBackground() {
+        return selectedBackground;
+    }
+
+    public void setSelectedBackground(int background) {
+        selectedBackground.setValue(background);
     }
 }

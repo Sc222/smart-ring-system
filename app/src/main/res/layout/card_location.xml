@@ -64,6 +64,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+               android:textColor="@android:color/white"
                 android:text="Address"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse" />
 
@@ -80,6 +81,7 @@
                 android:drawableLeft="@drawable/ic_action_secondary_24dp"
                 android:gravity="center_vertical"
                 android:text="@string/format_commands_count"
+                android:textColor="@android:color/white"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
