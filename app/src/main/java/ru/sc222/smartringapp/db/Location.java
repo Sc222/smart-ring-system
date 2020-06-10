@@ -61,6 +61,7 @@ public class Location {
 
     @PrimaryKey(autoGenerate = true)
     public long locationId;
+    public int radius;
     public String locationName;
     public String locationAddress; //string address
     public double locationLongitude;
@@ -73,8 +74,9 @@ public class Location {
     public String tripleClickAction;
     public String longClickAction;
 
-    public Location(long locationId, String locationName, String locationAddress, double locationLongitude, double locationLatitude, int locationBackground, String singleClickAction, String doubleClickAction, String tripleClickAction, String longClickAction) {
+    public Location(long locationId,int radius, String locationName, String locationAddress, double locationLongitude, double locationLatitude, int locationBackground, String singleClickAction, String doubleClickAction, String tripleClickAction, String longClickAction) {
         this.locationId = locationId;
+        this.radius=radius;
         this.locationName = locationName;
         this.locationAddress = locationAddress;
         this.locationLongitude = locationLongitude;
@@ -88,6 +90,7 @@ public class Location {
 
     public Location(String locationName, Geoposition geoposition, int locationBackground, String singleClickAction, String doubleClickAction, String tripleClickAction, String longClickAction) {
         this.locationName = locationName;
+        this.radius=geoposition.getRadius();
         this.locationAddress = geoposition.getAddress();
         this.locationLongitude = geoposition.getLongitude();
         this.locationLatitude = geoposition.getLatitude();

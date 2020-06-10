@@ -69,6 +69,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static void InsertOutsideLocation(SupportSQLiteDatabase db) {
         ContentValues cv = new ContentValues();
         cv.put("locationName","На улице");
+        cv.put("radius",0);
         cv.put("locationAddress","Вне других локаций");
         cv.put("locationLongitude",0d);
         cv.put("locationLatitude",0d);
@@ -77,7 +78,6 @@ public abstract class AppDatabase extends RoomDatabase {
         cv.put("doubleClickAction", "Включить телевизор"); //todo это чисто для защиты
         cv.put("tripleClickAction",  Action.NOT_DEFINED);
         cv.put("longClickAction", Action.NOT_DEFINED);
-
         db.insert("Location",CONFLICT_IGNORE,cv);
         /*ContentValues cv = new ContentValues();
         cv.put("locationName","Сад (текущая)");

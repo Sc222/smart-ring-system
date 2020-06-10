@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 
 import ru.sc222.smartringapp.R;
+import ru.sc222.smartringapp.db.Location;
 
 public class MapUtils {
 
@@ -38,5 +39,20 @@ public class MapUtils {
             return addresses.get(0).getAddressLine(0);
         }
         return c.getResources().getString(R.string.unknown_address);
+    }
+
+    public static int getCurrentLocation(List<Location> locations, android.location.Location current) {
+        for (int i=1;i<locations.size();i++) {//i=1 cause we skip street location
+            float[] distance = new float[2];
+            Location location=locations.get(i);
+
+            android.location.Location.distanceBetween(current.getLatitude(),current.getLongitude(),
+                    location.locationLatitude,location.locationLongitude, distance);
+            if(distance[0]<location.radius)
+            {
+                return i;
+            }
+        }
+        return 0;//!!! TODO locations 0 is always STREET LOCATION
     }
 }

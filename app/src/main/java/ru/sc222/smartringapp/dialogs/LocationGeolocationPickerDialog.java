@@ -86,7 +86,7 @@ public class LocationGeolocationPickerDialog extends DialogFragment
             @Override
             public void onClick(View v) {
                 if (geopositionMarker != null) {
-                    addOrEditLocationViewModel.setGeoposition(new Geoposition(locationName,geopositionMarker.getPosition()));
+                    addOrEditLocationViewModel.setGeoposition(new Geoposition(radius,locationName,geopositionMarker.getPosition()));
                         dismiss();
                 }else {
                     Snackbar.make(fab, R.string.choose_location, Snackbar.LENGTH_SHORT).show();

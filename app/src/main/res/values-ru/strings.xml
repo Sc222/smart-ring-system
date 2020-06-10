@@ -37,4 +37,5 @@
     <string name="ok">OK</string>
     <string name="permission_denied">Приложение не будет работать без доступа к локации</string>
     <string name="location_geolocation_picker_title">Укажите местоположение</string>
+    <string name="current_location">Текущая локация</string>
 </resources>
