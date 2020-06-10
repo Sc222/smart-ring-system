@@ -35,4 +35,11 @@
     <string name="format_commands_count">%d commands</string>
     <string name="location_background_image">Background image</string>
     <string name="location_bg_picker_title">Choose location background</string>
+    <string name="title_activity_mapsmapsmaps">Location geoposition</string>
+    <string name="location_radius">Radius: %dm</string>
+    <string name="unknown_address">Unknown place</string>
+    <string name="choose_location">Choose location geoposition</string>
+    <string name="location_geolocation_picker_title">Choose geolocation</string>
+    <string name="ok">OK</string>
+    <string name="permission_denied">App won\'t work without location permission</string>
 </resources>

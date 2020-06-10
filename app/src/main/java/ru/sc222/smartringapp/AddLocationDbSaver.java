@@ -2,19 +2,15 @@ package ru.sc222.smartringapp;
 
 import android.os.AsyncTask;
 
-import java.util.List;
-
-import ru.sc222.smartringapp.db.Action;
 import ru.sc222.smartringapp.db.AppDatabase;
 import ru.sc222.smartringapp.db.Location;
-import ru.sc222.smartringapp.ui.commands.CommandsViewModel;
 
 public class AddLocationDbSaver extends AsyncTask<Location,Integer,Boolean> {
 
-    private AddLocationViewModel model;
+    private AddOrEditLocationViewModel model;
     private AppDatabase db;
 
-    public AddLocationDbSaver(AddLocationViewModel model, AppDatabase db)
+    public AddLocationDbSaver(AddOrEditLocationViewModel model, AppDatabase db)
     {
         this.model=model;
         this.db=db;

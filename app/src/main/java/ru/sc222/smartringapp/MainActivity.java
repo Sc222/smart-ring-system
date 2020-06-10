@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //TODO !!! BLUETOOTH, LOCATION AND OTHER PERMISSIONS REQUEST DIALOG !!!
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

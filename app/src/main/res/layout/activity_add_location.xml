@@ -83,6 +83,12 @@
                         app:helperText="@string/input_helper_location_geoposition">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/text_input_location"
+                            android:focusableInTouchMode="false"
+                            android:clickable="false"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:ellipsize="end"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 

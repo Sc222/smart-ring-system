@@ -4,11 +4,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import ru.sc222.smartringapp.R;
+import ru.sc222.smartringapp.core.Geoposition;
 
 
 @Entity
@@ -47,7 +44,7 @@ public class Location {
             R.drawable.location_outside_city_bg_ic,
     };
 
-    @Ignore //todo pictures
+    /*@Ignore //todo pictures
     public static final List<String> backgroundNames= Arrays.asList( //Todo string resources
             "Голубой цвет",
             "Зеленый цвет",
@@ -60,12 +57,14 @@ public class Location {
             "Дачный поселок",
             "Комната в саду",
             "Лес"
-    );
+    );*/
 
     @PrimaryKey(autoGenerate = true)
     public long locationId;
     public String locationName;
-    public String locationAddress; //todo create special address class
+    public String locationAddress; //string address
+    public double locationLongitude;
+    public double locationLatitude;
     public int locationBackground; //id of background drawable
 
     //todo create many-to-many relation and replace with list
@@ -74,9 +73,24 @@ public class Location {
     public String tripleClickAction;
     public String longClickAction;
 
-    public Location(String locationName, String locationAddress, int locationBackground, String singleClickAction, String doubleClickAction, String tripleClickAction, String longClickAction) {
+    public Location(long locationId, String locationName, String locationAddress, double locationLongitude, double locationLatitude, int locationBackground, String singleClickAction, String doubleClickAction, String tripleClickAction, String longClickAction) {
+        this.locationId = locationId;
         this.locationName = locationName;
         this.locationAddress = locationAddress;
+        this.locationLongitude = locationLongitude;
+        this.locationLatitude = locationLatitude;
+        this.locationBackground = locationBackground;
+        this.singleClickAction = singleClickAction;
+        this.doubleClickAction = doubleClickAction;
+        this.tripleClickAction = tripleClickAction;
+        this.longClickAction = longClickAction;
+    }
+
+    public Location(String locationName, Geoposition geoposition, int locationBackground, String singleClickAction, String doubleClickAction, String tripleClickAction, String longClickAction) {
+        this.locationName = locationName;
+        this.locationAddress = geoposition.getAddress();
+        this.locationLongitude = geoposition.getLongitude();
+        this.locationLatitude = geoposition.getLatitude();
         this.locationBackground = locationBackground;
         this.singleClickAction = singleClickAction;
         this.doubleClickAction = doubleClickAction;

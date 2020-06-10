@@ -6,14 +6,13 @@ import java.util.List;
 
 import ru.sc222.smartringapp.db.Action;
 import ru.sc222.smartringapp.db.AppDatabase;
-import ru.sc222.smartringapp.ui.commands.CommandsViewModel;
 
 public class AddLocationDbLoader extends AsyncTask<String,Integer,List<Action>> {
 
-    private AddLocationViewModel model;
+    private AddOrEditLocationViewModel model;
     private AppDatabase db;
 
-    public AddLocationDbLoader(AddLocationViewModel model, AppDatabase db)
+    public AddLocationDbLoader(AddOrEditLocationViewModel model, AppDatabase db)
     {
         this.model=model;
         this.db=db;

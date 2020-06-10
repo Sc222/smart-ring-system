@@ -68,9 +68,21 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static void InsertOutsideLocation(SupportSQLiteDatabase db) {
         ContentValues cv = new ContentValues();
+        cv.put("locationName","На улице");
+        cv.put("locationAddress","Вне других локаций");
+        cv.put("locationLongitude",0d);
+        cv.put("locationLatitude",0d);
+        cv.put("locationBackground", 10);
+        cv.put("singleClickAction", Action.NOT_DEFINED);
+        cv.put("doubleClickAction", "Включить телевизор"); //todo это чисто для защиты
+        cv.put("tripleClickAction",  Action.NOT_DEFINED);
+        cv.put("longClickAction", Action.NOT_DEFINED);
+
+        db.insert("Location",CONFLICT_IGNORE,cv);
+        /*ContentValues cv = new ContentValues();
         cv.put("locationName","Сад (текущая)");
         cv.put("locationAddress","пер. Замятина, 45, Екатеринбург, Свердловская обл., Россия");
-        cv.put("locationBackground", R.drawable.location_green_bg);
+        cv.put("locationBackground", 9);
         cv.put("singleClickAction", "Включить телевизор");
         cv.put("doubleClickAction", "Включить телевизор"); //todo это чисто для защиты
         cv.put("tripleClickAction",  Action.NOT_DEFINED);
@@ -80,12 +92,10 @@ public abstract class AppDatabase extends RoomDatabase {
 
 
 
-
-
         cv = new ContentValues();
         cv.put("locationName","На улице");
         cv.put("locationAddress","Вне других локаций");
-        cv.put("locationBackground", R.drawable.location_outside_bg);
+        cv.put("locationBackground", 10);
         cv.put("singleClickAction", Action.NOT_DEFINED);
         cv.put("doubleClickAction", "Включить телевизор"); //todo это чисто для защиты
         cv.put("tripleClickAction",  Action.NOT_DEFINED);
@@ -95,13 +105,13 @@ public abstract class AppDatabase extends RoomDatabase {
 
         cv.put("locationName","Дом");
         cv.put("locationAddress","ул. Стачек, 59, Екатеринбург, Свердловская обл., Россия");
-        cv.put("locationBackground", R.drawable.location_purple_bg);
+        cv.put("locationBackground", 5);
         cv.put("singleClickAction", "Включить телевизор");
         cv.put("doubleClickAction", "Включить телевизор"); //todo это чисто для защиты
         cv.put("tripleClickAction",  "Включить телевизор");
         cv.put("longClickAction", "Включить телевизор");
 
-        db.insert("Location",CONFLICT_IGNORE,cv);
+        db.insert("Location",CONFLICT_IGNORE,cv);*/
     }
 
 

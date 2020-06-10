@@ -66,7 +66,7 @@ public class LocationsFragment extends Fragment {
                     AppCompatTextView textViewName=card.findViewById(R.id.text_name);
                     AppCompatTextView textViewAddress=card.findViewById(R.id.text_address);
                     AppCompatTextView textViewCommandsCount=card.findViewById(R.id.text_commands_count);
-                    imageView.setImageResource(location.locationBackground);
+                    imageView.setImageResource(Location.backgrounds[location.locationBackground]);
                     textViewName.setText(location.locationName);
                     textViewAddress.setText(location.locationAddress);
                     if(location.getCommandsCount()==0) //todo workaround remove later
@@ -110,8 +110,6 @@ public class LocationsFragment extends Fragment {
                 builder.build();
 
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-
-// notificationId is a unique int for each notification that you must define
                 notificationManager.notify(122310, builder.build());
                 Log.e("notification","didnt show");
 
@@ -121,10 +119,4 @@ public class LocationsFragment extends Fragment {
 
         return root;
     }
-
-    // View view = getLayoutInflater().inflate(R.layout.add_location_fragment, null);
-
-    // AddLocationFragment dialog = new AddLocationFragment(this);
-    //     dialog.setContentView(view);
-    //     dialog.show();
 }
