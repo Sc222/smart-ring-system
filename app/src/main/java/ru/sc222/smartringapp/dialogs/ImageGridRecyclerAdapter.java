@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ru.sc222.smartringapp.R;
 
-public class LocationBgRecyclerAdapter extends RecyclerView.Adapter<LocationBgRecyclerAdapter.ViewHolder> {
+public class ImageGridRecyclerAdapter extends RecyclerView.Adapter<ImageGridRecyclerAdapter.ViewHolder> {
 
     private int[] mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    LocationBgRecyclerAdapter(Context context, int[] data) {
+    ImageGridRecyclerAdapter(Context context, int[] data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }

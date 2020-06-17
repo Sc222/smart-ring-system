@@ -55,4 +55,8 @@ public class MapUtils {
         }
         return 0;//!!! TODO locations 0 is always STREET LOCATION
     }
+
+    public static String getLocationMapsLink(Context c, double latitude, double longitude) {
+        return c.getString(R.string.google_maps_location_link)+latitude+","+longitude;
+    }
 }

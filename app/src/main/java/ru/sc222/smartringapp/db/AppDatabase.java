@@ -38,13 +38,13 @@ public abstract class AppDatabase extends RoomDatabase {
             // todo prepopulate here
             Log.e("oncreate","prepopulate");
             Action[] actions = new Action[]{
-                    new Action("Тревога","Отправить сообщение родственникам",R.drawable.ic_action_danger),
-                    new Action("Развлечения","Включить телевизор",R.drawable.ic_action_tv),
-                    new Action("Работа","Включить компьютер",R.drawable.ic_action_pc),
-                    new Action("Освещение","Включить свет в прихожей",R.drawable.ic_action_light_1),
-                    new Action("Освещение","Включить свет в гостиной",R.drawable.ic_action_light_2),
-                    new Action("Освещение","Включить свет в спальне",R.drawable.ic_action_light_3),
-                    new Action("Питание","Включить чайник",R.drawable.ic_action_kettle)
+                    new Action("Тревога","Отправить тревожное сообщение отцу",0,Action.TYPE_ALERT,"+78005553535"),
+                    new Action("Развлечения","Включить телевизор",1,Action.TYPE_HOME_CONTROL,""),
+                    new Action("Работа","Включить компьютер",2,Action.TYPE_HOME_CONTROL,""),
+                    new Action("Освещение","Включить свет в прихожей",3,Action.TYPE_HOME_CONTROL,""),
+                    new Action("Освещение","Включить свет в гостиной",4,Action.TYPE_HOME_CONTROL,""),
+                    new Action("Освещение","Включить свет в спальне",5,Action.TYPE_HOME_CONTROL,""),
+                    new Action("Питание","Включить чайник",6,Action.TYPE_HOME_CONTROL,"")
             };
             for (Action action:actions) {
                 InsertAction(db, action);
@@ -62,6 +62,8 @@ public abstract class AppDatabase extends RoomDatabase {
         ContentValues cv = new ContentValues();
         cv.put("actionCategory",action.actionCategory);
         cv.put("actionDescription",action.actionDescription);
+        cv.put("actionType",action.actionType);
+        cv.put("phoneNumber",action.phoneNumber);
         cv.put("icon",action.icon);
         db.insert("Action",CONFLICT_IGNORE,cv);
     }

@@ -2,7 +2,6 @@ package ru.sc222.smartringapp.dialogs;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
@@ -32,9 +31,9 @@ public class LocationBgPickerDialog extends AlertDialog {
         RecyclerView recyclerView = layout.findViewById(R.id.recyclerViewLocationBg);
         int numberOfColumns = 2;
         recyclerView.setLayoutManager(new GridLayoutManager(c, numberOfColumns));
-        final LocationBgRecyclerAdapter adapter = new LocationBgRecyclerAdapter(c, Location.backgroundIcons);
+        final ImageGridRecyclerAdapter adapter = new ImageGridRecyclerAdapter(c, Location.backgroundIcons);
         recyclerView.setAdapter(adapter);
-        adapter.setClickListener(new LocationBgRecyclerAdapter.ItemClickListener() {
+        adapter.setClickListener(new ImageGridRecyclerAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 dismiss();
