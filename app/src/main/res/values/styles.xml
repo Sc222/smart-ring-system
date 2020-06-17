@@ -38,14 +38,4 @@
     <style name="TextAppearance.BottomNavigationView.Active">
         <item name="android:textSize">@dimen/design_bottom_navigation_active_text_size</item>
     </style>
-
-    <style name="AppTheme.Light.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.Light.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.Light.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 </resources>

@@ -36,10 +36,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
-
-        // navView.setSelectedItemId(R.id.navigation_device);
-       // navController.navigate(PreferenceUtils.getCurrentNavigationItem(this));
+        int currItem = PreferenceUtils.getCurrentNavigationItem(this);
+        switch (currItem) {
+            case R.id.navigation_location:
+            case R.id.navigation_commands:
+            case R.id.navigation_device:
+                navController.navigate(currItem);
+                break;
+        }
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
