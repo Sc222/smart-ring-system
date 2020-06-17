@@ -1,5 +1,8 @@
 *.iml
 .gradle
+.directory
+/app/src/debug/
+/my resources
 /local.properties
 /.idea/caches
 /.idea/libraries
@@ -21,4 +24,3 @@ device/external/
 device/documentation/
 device/config/
 device/components/
-device/examples/

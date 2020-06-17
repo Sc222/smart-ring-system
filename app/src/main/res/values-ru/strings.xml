@@ -38,4 +38,14 @@
     <string name="permission_denied">Приложение не будет работать без доступа к локации</string>
     <string name="location_geolocation_picker_title">Укажите местоположение</string>
     <string name="current_location">Текущая локация</string>
+    <string name="title_activity_add_command">Новая команда</string>
+    <string name="command_icon">Иконка команды</string>
+    <string name="action_type">Тип действия</string>
+    <string name="action_info">Информация о команде</string>
+    <string name="description">Описание</string>
+    <string name="input_helper_action_description">Описание команды</string>
+    <string name="input_helper_action_name">Название команды</string>
+    <string name="input_helper_action_phone">Получатель тревожного сигнала</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="command_icon_picker_title">Выберите иконку действия</string>
 </resources>
