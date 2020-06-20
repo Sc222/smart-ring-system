@@ -23,12 +23,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //TODO !!! BLUETOOTH, LOCATION AND OTHER PERMISSIONS REQUEST DIALOG !!!
-        //todo override onbackpressed
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //TODO SHOW CONNECT TO DEVICE DIALOG if not set
+        //TODO !!! BLUETOOTH, LOCATION AND OTHER PERMISSIONS REQUEST DIALOG !!!
+        //todo override onbackpressed
+        //if (deviceIsNotSet()){showConnectToDeviceDialog()}
+        //requestPermissions()'
+        setupNavigation();
+
+    }
+
+    private void setupNavigation() {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_location, R.id.navigation_commands, R.id.navigation_device)

@@ -23,6 +23,8 @@ public class SettingsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        //TODO SHOW CONNECT TO DEVICE DIALOG on preference click
     }
 
     //todo move to separate file

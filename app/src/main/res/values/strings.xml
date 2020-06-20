@@ -54,4 +54,5 @@
     <string name="input_helper_action_phone">Phone where alert is sent</string>
     <string name="phone_number">Phone number</string>
     <string name="command_icon_picker_title">Choose command icon</string>
+    <string name="device_address">Device Bluetooth address</string>
 </resources>

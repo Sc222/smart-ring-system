@@ -48,4 +48,5 @@
     <string name="input_helper_action_phone">Получатель тревожного сигнала</string>
     <string name="phone_number">Номер телефона</string>
     <string name="command_icon_picker_title">Выберите иконку действия</string>
+    <string name="device_address">Bluetooth адрес устройства</string>
 </resources>
