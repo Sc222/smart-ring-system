@@ -24,8 +24,7 @@ import java.util.List;
 
 import ru.sc222.smartringapp.db.Action;
 import ru.sc222.smartringapp.db.AppDatabase;
-import ru.sc222.smartringapp.db.Location;
-import ru.sc222.smartringapp.dialogs.ActionIconPickerDialog;
+import ru.sc222.smartringapp.ui.dialogs.ActionIconPickerDialog;
 
 public class AddCommandActivity extends AppCompatActivity {
 

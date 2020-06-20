@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp.dialogs;
+package ru.sc222.smartringapp.ui.dialogs;
 
 import android.content.Context;
 import android.view.LayoutInflater;

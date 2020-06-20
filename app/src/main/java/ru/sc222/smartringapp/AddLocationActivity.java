@@ -27,8 +27,8 @@ import ru.sc222.smartringapp.core.Geoposition;
 import ru.sc222.smartringapp.db.Action;
 import ru.sc222.smartringapp.db.AppDatabase;
 import ru.sc222.smartringapp.db.Location;
-import ru.sc222.smartringapp.dialogs.LocationBgPickerDialog;
-import ru.sc222.smartringapp.dialogs.LocationGeolocationPickerDialog;
+import ru.sc222.smartringapp.ui.dialogs.LocationBgPickerDialog;
+import ru.sc222.smartringapp.ui.dialogs.LocationGeolocationPickerDialog;
 
 public class AddLocationActivity extends AppCompatActivity {
 

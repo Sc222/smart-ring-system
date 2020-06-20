@@ -14,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Light"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <service
+            android:name=".service.BleService"
+            android:enabled="true"
+            android:exported="true"></service>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -27,7 +30,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".AddCommandActivity"
+        <activity
+            android:name=".AddCommandActivity"
             android:label="@string/title_activity_add_command"
             android:parentActivityName=".MainActivity"
             android:windowSoftInputMode="adjustResize">
@@ -35,7 +39,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ru.sc222.smartringapp.MainActivity" />
         </activity>
-
         <activity
             android:name=".AddLocationActivity"
             android:label="@string/title_activity_add_location"
