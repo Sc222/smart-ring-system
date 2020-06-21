@@ -23,7 +23,7 @@ public class MOCK_UTILS {
             @Override
             public void run() {
 
-                //todo чисто для защиты, удалить потом
+                //todo удалить потом
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     CharSequence name = "smartring";
                     String description = "smart ring notification channel";
@@ -39,7 +39,7 @@ public class MOCK_UTILS {
 
 
 
-                //todo чисто для защиты, удалить потом
+                //todo удалить потом
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "channelid")
                         .setSmallIcon(R.drawable.ic_ok_24dp)
                         .setContentTitle("Кнопка нажата!")

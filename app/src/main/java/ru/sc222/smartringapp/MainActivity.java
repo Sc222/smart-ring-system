@@ -17,6 +17,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import ru.sc222.smartringapp.ble.BleService;
 import ru.sc222.smartringapp.utils.PreferenceUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +35,14 @@ public class MainActivity extends AppCompatActivity {
         //if (deviceIsNotSet()){showConnectToDeviceDialog()}
         //requestPermissions()'
         setupNavigation();
+        startService();
 
+    }
+
+    private void startService() {
+        Intent intent = new Intent(MainActivity.this, BleService.class);
+        intent.setAction(BleService.ACTION_START_FOREGROUND_SERVICE);
+        startService(intent);
     }
 
     private void setupNavigation() {
