@@ -4,13 +4,14 @@
     <PreferenceCategory app:title="@string/category_main">
 
         <!--TODO ITS TEMPORARY: SHOW SELECT DEVICE DIALOG ON PREFERENCE CLICK AND REMOVE DEFAULT VALUE-->
+        <!--TODO EXTRACT DEFAULT BLE ADDRESS-->
         <EditTextPreference
             android:defaultValue="Default value"
             android:key="device_address"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/device_address"
-            app:defaultValue="Smart Ring"
+            app:defaultValue="C1:7F:8C:F6:B1:3B"
             app:icon="@drawable/ic_bluetooth_24dp"
             app:useSimpleSummaryProvider="true" />
         <SwitchPreferenceCompat

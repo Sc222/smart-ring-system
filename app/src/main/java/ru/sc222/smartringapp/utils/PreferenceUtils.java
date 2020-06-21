@@ -25,15 +25,16 @@ public class PreferenceUtils {
         return sp.getInt(NAV_ITEM, R.id.navigation_device);
     }
 
+    //TODO FIX: TEMPORARY NAME USAGE, BUT WE SHOULD USE 6bit address
+    public static String getCurrentDevice(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(DEVICE_ADDRESS, "Smart Ring");
+    }
    /* public static void saveCurrentDevice(Context context, String deviceId) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putInt(NAV_ITEM, deviceId).apply();
     }
 
-    //TODO FIX: NOW WE ARE USING NAME, BUT WE SHOULD USE
-    public static int getCurrentDevice(Context context) {
-        Log.e("GET: ", "item");
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getInt(NAV_ITEM, "Smart Ring");
-    }*/
+    //
+*/
 }
