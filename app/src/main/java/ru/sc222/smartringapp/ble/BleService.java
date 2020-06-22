@@ -5,24 +5,21 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -38,16 +35,20 @@ public class BleService extends Service {
     private static final String TAG_FOREGROUND_SERVICE = "FOREGROUND_SERVICE";
     public static final String ACTION_START_FOREGROUND_SERVICE = "ACTION_START_FOREGROUND_SERVICE";
     public static final String ACTION_STOP_FOREGROUND_SERVICE = "ACTION_STOP_FOREGROUND_SERVICE";
-    public static final String CHANNEL_NAME="smart_ring_channel";
-    public static final String CHANNEL_DESCRIPTION="Smart Ring notification channel";
+    public static final String CHANNEL_NAME = "smart_ring_channel";
+    public static final String CHANNEL_DESCRIPTION = "Smart Ring notification channel";
 
-    private static final String NOTIFICATION_CHANNEL_ID="notification_ble";
-    private static final int NOTIFICATION_ID=1337;
+    private static final String NOTIFICATION_CHANNEL_ID = "notification_ble";
+    private static final int NOTIFICATION_ID = 1337;
+    private static final int BUFFER_CLEAR_FREQUENCY=10;
+    private int bufferCount=0;
 
 
     //TODO USE VIEWMODEL
     //address and device
-    private Map<String,BluetoothDevice> devices = new HashMap<String,BluetoothDevice>();
+    private Map<String, BluetoothDevice> devices = new HashMap<String, BluetoothDevice>();
+    private HashSet<String> devicesBuffer = new HashSet<>();//to clear unvisible devices
+
     private ButtonBleManager buttonBleManager;
     private String[] buttonStates = { //TODO ВРЕМЕННЫЙ ПОЗОР
             "Обычное нажатие",
@@ -55,20 +56,33 @@ public class BleService extends Service {
             "Длинное нажатие"
     };
     private boolean isScannerStarted = false;
+    private BleServiceSharedViewModel bleServiceSharedViewModel;
 
-    public BleService() {
+    //for binding
+    private final IBinder binder = new BleServiceBinder();
+
+    public class BleServiceBinder extends Binder {
+        public BleService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return BleService.this;
+        }
+    }
+
+    public BleServiceSharedViewModel getViewModel() {
+        return bleServiceSharedViewModel;
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+        return binder;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        buttonBleManager = new ButtonBleManager(this);
+        Log.e("service","oncreate");
+        bleServiceSharedViewModel = new BleServiceSharedViewModel(getApplicationContext());
+        buttonBleManager = new ButtonBleManager(getApplicationContext());
         buttonBleManager.getButtonState().observeForever(new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
@@ -92,19 +106,36 @@ public class BleService extends Service {
 
         @Override
         public void onBatchScanResults(@NonNull final List<ScanResult> results) {
+            bufferCount++;
+            if(bufferCount==BUFFER_CLEAR_FREQUENCY) {
+                bufferCount = 0;
+                devicesBuffer.clear();
+            }
+
             for (ScanResult result : results) {
+                devicesBuffer.add(result.getDevice().getAddress());
                 BluetoothDevice device = result.getDevice();
-                if (!devices.containsKey(device.getAddress())){
-                    devices.put(device.getAddress(),device);
+                if (!devices.containsKey(device.getAddress())) {
+                    devices.put(device.getAddress(), device);
                 }
             }
-            Log.e("ble","scan accomplished: "+results.size());
+
+            for(Iterator<Map.Entry<String, BluetoothDevice>> it = devices.entrySet().iterator(); it.hasNext(); ) {
+                Map.Entry<String, BluetoothDevice> entry = it.next();
+                if(!devicesBuffer.contains(entry.getKey()))
+                    it.remove();
+            }
+
+            //update model for application communication
+            bleServiceSharedViewModel.setDevicesMap(devices);
+            //Log.e("ble","scan accomplished: "+results.size());
             connectToDevice();//todo is connected bool
+            //todo disconnect when changed device
         }
 
         @Override
         public void onScanFailed(final int errorCode) {
-            Toast.makeText(getApplicationContext(), "SCANNING FAILED", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "SCANNING FAILED", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -128,14 +159,20 @@ public class BleService extends Service {
         }
     }
 
-    private void connectToDevice() {
-        String savedDeviceAddress=PreferenceUtils.getCurrentDevice(this);
-        Log.e("save: ",savedDeviceAddress);
+    //used by binder
+    public void connectToDevice() {
+        String savedDeviceAddress=PreferenceUtils.getCurrentDeviceAddress(this);
+        //Log.e("saved",savedDeviceAddress);
         if(devices.containsKey(savedDeviceAddress))
         {
             Log.e("ble","device found");
             BluetoothDevice device=devices.get(savedDeviceAddress);
             assert device != null;
+            if(!device.getName().equals("Smart Ring")) {
+                //wrong device
+                Log.e("ble", "wrong device");
+                return;
+            }
             buttonBleManager.connect(device)
                     .retry(3, 100)
                     .useAutoConnect(false)
@@ -174,7 +211,7 @@ public class BleService extends Service {
        Notification notification = CreateServiceNotification("Device not connected");
        Notify(notification);
        startForeground(NOTIFICATION_ID, notification);
-       startScanning();
+       startScanning(); //todo restart scanning when location turned on
     }
 
     private void Notify(Notification notification) {
