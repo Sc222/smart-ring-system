@@ -26,9 +26,9 @@ public class ActionIconPickerDialog extends AlertDialog {
 
     @Override
     public void show() {
-        final View layout = ((Activity) c).getLayoutInflater().inflate(R.layout.location_bg_dialog, null);
+        final View layout = ((Activity) c).getLayoutInflater().inflate(R.layout.recycler_view_dialog, null);
         setTitle(R.string.command_icon_picker_title);
-        RecyclerView recyclerView = layout.findViewById(R.id.recyclerViewLocationBg);
+        RecyclerView recyclerView = layout.findViewById(R.id.recyclerViewDialog);
         int numberOfColumns = 2;
         recyclerView.setLayoutManager(new GridLayoutManager(c, numberOfColumns));
         final ImageGridRecyclerAdapter adapter = new ImageGridRecyclerAdapter(c, Action.icons);
