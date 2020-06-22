@@ -9,7 +9,7 @@
         android:paddingLeft="16dp"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
-        android:id="@+id/recyclerViewLocationBg"
+        android:id="@+id/recyclerViewDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

@@ -1,0 +1,36 @@
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp"
+    android:id="@+id/card_container"
+    android:foreground="?android:attr/selectableItemBackground"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/card_horizontal_padding"
+        android:paddingRight="@dimen/card_horizontal_padding"
+        android:paddingBottom="@dimen/card_vertical_padding">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/device_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="Smart ring"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorAccent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/device_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C6:C8:T9:B1:E1:A2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.cardview.widget.CardView>

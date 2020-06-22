@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#5499c7</color>64d32f2f
+    <color name="colorPrimary">#5499c7</color>
     <color name="colorPrimaryDark">#2471a3</color>
     <color name="colorPrimaryTransparent">#645499c7</color>
     <color name="colorPrimaryDarkTransparent">#642471a3</color>
     <color name="colorAccent">#5499c7</color> <!--#45b39d-->
+    <color name="colorGreen">#48c9b0</color>
     <color name="colorWarning">#ec7063</color>
     <color name="separator_color">#e6e6e6</color>
     <color name="light_gray">#848484</color>

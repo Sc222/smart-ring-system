@@ -5,7 +5,7 @@
 
         <!--TODO ITS TEMPORARY: SHOW SELECT DEVICE DIALOG ON PREFERENCE CLICK AND REMOVE DEFAULT VALUE-->
         <!--TODO EXTRACT DEFAULT BLE ADDRESS-->
-        <EditTextPreference
+        <Preference
             android:defaultValue="Default value"
             android:key="device_address"
             android:selectAllOnFocus="true"
@@ -13,7 +13,7 @@
             android:title="@string/device_address"
             app:defaultValue="C1:7F:8C:F6:B1:3B"
             app:icon="@drawable/ic_bluetooth_24dp"
-            app:useSimpleSummaryProvider="true" />
+            />
         <SwitchPreferenceCompat
             app:icon="@drawable/ic_theme_24dp"
             app:key="dark_mode"

@@ -55,4 +55,6 @@
     <string name="phone_number">Phone number</string>
     <string name="command_icon_picker_title">Choose command icon</string>
     <string name="device_address">Device Bluetooth address</string>
+    <string name="select_device_dialog_title">Select device</string>
+    <string name="unknown_device">Unknown device</string>
 </resources>
