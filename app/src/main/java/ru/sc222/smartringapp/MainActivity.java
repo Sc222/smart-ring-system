@@ -19,6 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import ru.sc222.smartringapp.ble.BleService;
 import ru.sc222.smartringapp.utils.PreferenceUtils;
+import ru.sc222.smartringapp.utils.ServiceUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,21 +29,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         //TODO SHOW CONNECT TO DEVICE DIALOG if not set
         //TODO !!! BLUETOOTH, LOCATION AND OTHER PERMISSIONS REQUEST DIALOG !!!
+        //todo turn on bluetooth and location
+
         //todo override onbackpressed
         //if (deviceIsNotSet()){showConnectToDeviceDialog()}
         //requestPermissions()'
         setupNavigation();
         startService();
-
     }
 
     private void startService() {
-        Intent intent = new Intent(MainActivity.this, BleService.class);
-        intent.setAction(BleService.ACTION_START_FOREGROUND_SERVICE);
-        startService(intent);
+        if(!ServiceUtils.isServiceRunning(this,BleService.class)) {
+            Intent intent = new Intent(getApplicationContext(), BleService.class);
+            intent.setAction(BleService.ACTION_START_FOREGROUND_SERVICE);
+            startService(intent);
+        }
     }
 
     private void setupNavigation() {
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         int currItem = PreferenceUtils.getCurrentNavigationItem(this);
+
         switch (currItem) {
             case R.id.navigation_location:
             case R.id.navigation_commands:

@@ -1,24 +1,24 @@
 package ru.sc222.smartringapp.ui.device;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import ru.sc222.smartringapp.R;
+import ru.sc222.smartringapp.ui.dialogs.SelectBluetoothDeviceDialog;
+import ru.sc222.smartringapp.utils.PreferenceUtils;
 
 public class DeviceFragment extends Fragment {
+    private  SelectBluetoothDeviceDialog dialog;
 
-    private DeviceViewModel deviceViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        deviceViewModel =
-                ViewModelProviders.of(this).get(DeviceViewModel.class);
         View root = inflater.inflate(R.layout.fragment_device, container, false);
         // final CardView mainCard = root.findViewById(R.id.main_card);
         //mainCard.setEnabled(false); //changes main device color tint
@@ -29,6 +29,21 @@ public class DeviceFragment extends Fragment {
                 textView.setText(s);
             }
         });*/
+        if(PreferenceUtils.getCurrentDeviceAddress(getContext()).equals(PreferenceUtils.DEVICE_DEF_VALUE))
+        {
+            dialog = new SelectBluetoothDeviceDialog(false,getActivity(),getActivity().getApplicationContext(),getViewLifecycleOwner());
+            dialog.show();
+        }
+
         return root;
     }
+
+    @Override
+    public void onStop() {
+        Log.e("sdfsdf","asdasd");
+        if(dialog!=null)
+            dialog.dismiss();
+        super.onStop();
+    }
+
 }

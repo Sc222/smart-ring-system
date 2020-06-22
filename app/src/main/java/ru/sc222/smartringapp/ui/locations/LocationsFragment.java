@@ -75,7 +75,6 @@ public class LocationsFragment extends Fragment {
 
         //TODO !!! simple way of getting current location, ПОСЛЕ ЗАЩИТЫ ЗАПИХАТЬ В СЕРВИС
         LocationManager mLocationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
@@ -91,8 +90,6 @@ public class LocationsFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddLocationActivity.class);
                 startActivity(intent);
-                // AddLocationFragment bottomSheetFragment = new AddLocationFragment();
-                // bottomSheetFragment.show(getFragmentManager(), bottomSheetFragment.getTag());
             }
         });
 

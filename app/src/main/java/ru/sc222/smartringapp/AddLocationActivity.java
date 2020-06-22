@@ -88,8 +88,6 @@ public class AddLocationActivity extends AppCompatActivity {
         final AppCompatSpinner spinnerTripleClick = findViewById(R.id.spinner_triple_click);
         final AppCompatSpinner spinnerLongPress = findViewById(R.id.spinner_long_press);
 
-
-
         addOrEditLocationViewModel.getActions().observe(this, new Observer<List<Action>>() {
             @Override
             public void onChanged(@Nullable List<Action> actions) {
