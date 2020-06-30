@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp.ble;
+package ru.sc222.smartringapp.services;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -28,10 +28,11 @@ import no.nordicsemi.android.support.v18.scanner.ScanCallback;
 import no.nordicsemi.android.support.v18.scanner.ScanResult;
 import no.nordicsemi.android.support.v18.scanner.ScanSettings;
 import ru.sc222.smartringapp.R;
+import ru.sc222.smartringapp.ble.ButtonBleManager;
 import ru.sc222.smartringapp.utils.PreferenceUtils;
 import ru.sc222.smartringapp.viewmodels.BleServiceSharedViewModel;
 
-public class BleService extends Service {
+public class SmartRingService extends Service {
 
     private static final String TAG_FOREGROUND_SERVICE = "FOREGROUND_SERVICE";
     public static final String ACTION_START_FOREGROUND_SERVICE = "ACTION_START_FOREGROUND_SERVICE";
@@ -63,9 +64,9 @@ public class BleService extends Service {
     private final IBinder binder = new BleServiceBinder();
 
     public class BleServiceBinder extends Binder {
-        public BleService getService() {
+        public SmartRingService getService() {
             // Return this instance of LocalService so clients can call public methods
-            return BleService.this;
+            return SmartRingService.this;
         }
     }
 

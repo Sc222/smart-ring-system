@@ -32,8 +32,6 @@ public class Action {
     public String actionDescription;  //включить чайник и так далее (сделать какой-то класс???)
     public String actionType; //сделать enum
     public String phoneNumber;
-    //todo ---long action code or something like this
-
     public int icon; //id of icon drawable
 
     public Action(String actionCategory, String actionDescription, int icon, String actionType,String phoneNumber) {

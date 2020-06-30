@@ -44,21 +44,6 @@ public class Location {
             R.drawable.location_outside_city_bg_ic,
     };
 
-    /*@Ignore //todo pictures
-    public static final List<String> backgroundNames= Arrays.asList( //Todo string resources
-            "Голубой цвет",
-            "Зеленый цвет",
-            "Фиолетовый цвет",
-            "Оранжевый цвет",
-            "Многоквартирный дом",
-            "Гостиная",
-            "Офисное здание",
-            "Комната в офисе",
-            "Дачный поселок",
-            "Комната в саду",
-            "Лес"
-    );*/
-
     @PrimaryKey(autoGenerate = true)
     public long locationId;
     public int radius;

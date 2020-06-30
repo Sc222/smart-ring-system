@@ -5,7 +5,7 @@ android {
     buildToolsVersion "30.0.0"
     defaultConfig {
         applicationId "ru.sc222.smartringapp"
-        minSdkVersion 18 //todo deal with nordic and set minsdk - 18
+        minSdkVersion 18
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"

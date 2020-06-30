@@ -9,8 +9,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import ru.sc222.smartringapp.R;
-
 import static android.database.sqlite.SQLiteDatabase.CONFLICT_IGNORE;
 
 
@@ -77,45 +75,11 @@ public abstract class AppDatabase extends RoomDatabase {
         cv.put("locationLatitude",0d);
         cv.put("locationBackground", 10);
         cv.put("singleClickAction", Action.NOT_DEFINED);
-        cv.put("doubleClickAction", "Включить телевизор"); //todo это чисто для защиты
+        cv.put("doubleClickAction", "Включить телевизор");
         cv.put("tripleClickAction",  Action.NOT_DEFINED);
         cv.put("longClickAction", Action.NOT_DEFINED);
         db.insert("Location",CONFLICT_IGNORE,cv);
-        /*ContentValues cv = new ContentValues();
-        cv.put("locationName","Сад (текущая)");
-        cv.put("locationAddress","пер. Замятина, 45, Екатеринбург, Свердловская обл., Россия");
-        cv.put("locationBackground", 9);
-        cv.put("singleClickAction", "Включить телевизор");
-        cv.put("doubleClickAction", "Включить телевизор"); //todo это чисто для защиты
-        cv.put("tripleClickAction",  Action.NOT_DEFINED);
-        cv.put("longClickAction", "Включить телевизор");
-
-        db.insert("Location",CONFLICT_IGNORE,cv);
-
-
-
-        cv = new ContentValues();
-        cv.put("locationName","На улице");
-        cv.put("locationAddress","Вне других локаций");
-        cv.put("locationBackground", 10);
-        cv.put("singleClickAction", Action.NOT_DEFINED);
-        cv.put("doubleClickAction", "Включить телевизор"); //todo это чисто для защиты
-        cv.put("tripleClickAction",  Action.NOT_DEFINED);
-        cv.put("longClickAction", Action.NOT_DEFINED);
-
-        db.insert("Location",CONFLICT_IGNORE,cv);
-
-        cv.put("locationName","Дом");
-        cv.put("locationAddress","ул. Стачек, 59, Екатеринбург, Свердловская обл., Россия");
-        cv.put("locationBackground", 5);
-        cv.put("singleClickAction", "Включить телевизор");
-        cv.put("doubleClickAction", "Включить телевизор"); //todo это чисто для защиты
-        cv.put("tripleClickAction",  "Включить телевизор");
-        cv.put("longClickAction", "Включить телевизор");
-
-        db.insert("Location",CONFLICT_IGNORE,cv);*/
     }
-
 
     public abstract ActionDao actionDao();
 

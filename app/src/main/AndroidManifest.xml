@@ -24,7 +24,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <service
-            android:name=".ble.BleService"
+            android:name=".services.SmartRingService"
             android:enabled="true"
             android:exported="true"/>
         <!--

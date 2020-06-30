@@ -12,7 +12,6 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <!--todo check constraintlayout guides and remove bottom padding-->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/card_container"
                 android:layout_width="match_parent"

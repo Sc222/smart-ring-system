@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Map;
 
 import ru.sc222.smartringapp.R;
-import ru.sc222.smartringapp.ble.BleService;
 import ru.sc222.smartringapp.dto.AdapterBluetoothDevice;
+import ru.sc222.smartringapp.services.SmartRingService;
 import ru.sc222.smartringapp.utils.PreferenceUtils;
 import ru.sc222.smartringapp.viewmodels.BleServiceSharedViewModel;
 
@@ -47,10 +47,10 @@ public class SelectBluetoothDeviceDialog extends AlertDialog {
         @Override
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
-            BleService.BleServiceBinder binder = ( BleService.BleServiceBinder) service;
-            BleService bleService = binder.getService();
+            SmartRingService.BleServiceBinder binder = (SmartRingService.BleServiceBinder) service;
+            SmartRingService smartRingService = binder.getService();
             isServiceBound = true;
-            BleServiceSharedViewModel bleServiceSharedViewModel = bleService.getViewModel();
+            BleServiceSharedViewModel bleServiceSharedViewModel = smartRingService.getViewModel();
 
             adapter = new BluetoothDevicesAdapter(appContext, bleServiceSharedViewModel.getDevicesList());
             recyclerView.setAdapter(adapter);
@@ -98,7 +98,7 @@ public class SelectBluetoothDeviceDialog extends AlertDialog {
         recyclerView.setLayoutManager(new LinearLayoutManager(appContext,RecyclerView.VERTICAL,false));
 
         //bind service
-        Intent serviceIntent = new Intent(appContext, BleService.class);
+        Intent serviceIntent = new Intent(appContext, SmartRingService.class);
         appContext.bindService(serviceIntent,connection,Context.BIND_AUTO_CREATE);
      // .getInstance().bindService(intent, connection, Context.BIND_AUTO_CREATE);
 

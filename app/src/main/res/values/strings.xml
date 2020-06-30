@@ -59,4 +59,5 @@
     <string name="unknown_device">Unknown device</string>
     <string name="app_wont_work_without_permissions">App won\'t work without required permissions</string>
     <string name="app_wont_work_if_bluetooth_and_location_are_disabled">App won\'t work if Bluetooth and Location are disabled</string>
+    <string name="zero_commands">%d commands</string>
 </resources>

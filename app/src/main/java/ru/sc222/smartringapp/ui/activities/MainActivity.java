@@ -19,7 +19,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import ru.sc222.smartringapp.R;
-import ru.sc222.smartringapp.ble.BleService;
+import ru.sc222.smartringapp.services.SmartRingService;
 import ru.sc222.smartringapp.utils.BluetoothUtils;
 import ru.sc222.smartringapp.utils.LocationUtils;
 import ru.sc222.smartringapp.utils.PermissionsUtils;
@@ -72,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startService() {
-        if(!ServiceUtils.isServiceRunning(this,BleService.class)) {
-            Intent intent = new Intent(getApplicationContext(), BleService.class);
-            intent.setAction(BleService.ACTION_START_FOREGROUND_SERVICE);
+        if (!ServiceUtils.isServiceRunning(this, SmartRingService.class)) {
+            Intent intent = new Intent(getApplicationContext(), SmartRingService.class);
+            intent.setAction(SmartRingService.ACTION_START_FOREGROUND_SERVICE);
             startService(intent);
         }
     }

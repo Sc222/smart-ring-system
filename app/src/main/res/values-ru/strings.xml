@@ -53,4 +53,5 @@
     <string name="unknown_device">Неизвестное устройство</string>
     <string name="app_wont_work_without_permissions">Приложение не будет работать без указанных разрешений</string>
     <string name="app_wont_work_if_bluetooth_and_location_are_disabled">Приложение не будет работать, если Bluetooth и Геопозиция выключены</string>
+    <string name="zero_commands">%d команд</string>
 </resources>
