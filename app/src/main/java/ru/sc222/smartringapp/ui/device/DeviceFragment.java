@@ -29,10 +29,11 @@ public class DeviceFragment extends Fragment {
                 textView.setText(s);
             }
         });*/
-        if(PreferenceUtils.getCurrentDeviceAddress(getContext()).equals(PreferenceUtils.DEVICE_DEF_VALUE))
+        if(PreferenceUtils.getCurrentDeviceAddress(getContext()).equals(PreferenceUtils.DEVICE_ADDRESS_DEFAULT))
         {
-            dialog = new SelectBluetoothDeviceDialog(false,getActivity(),getActivity().getApplicationContext(),getViewLifecycleOwner());
-            dialog.show();
+            //show dialog when device is not set
+            //dialog = new SelectBluetoothDeviceDialog(false,getActivity(),getActivity().getApplicationContext(),getViewLifecycleOwner());
+            //dialog.show();
         }
 
         return root;

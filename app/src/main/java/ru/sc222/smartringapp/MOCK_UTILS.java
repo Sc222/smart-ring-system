@@ -56,77 +56,49 @@ public class MOCK_UTILS {
         },delay);
     }
 
-    public static void sendMessage(final String text,int delay) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage("+79222941329", null, text, null, null);
-                Log.e("works&","idk");
-            }
-        },delay);
-        }
 
     public static void sendSMS(final Context c,String phoneNumber, String message)
     {
         String SENT = "SMS_SENT";
-        String DELIVERED = "SMS_DELIVERED";
-
         PendingIntent sentPI = PendingIntent.getBroadcast(c, 0,
                 new Intent(SENT), 0);
 
-        PendingIntent deliveredPI = PendingIntent.getBroadcast(c, 0,
-                new Intent(DELIVERED), 0);
-
-        //---when the SMS has been sent---
-        ((Activity)c).registerReceiver(new BroadcastReceiver(){
+        c.registerReceiver(new BroadcastReceiver(){
             @Override
             public void onReceive(Context arg0, Intent arg1) {
                 switch (getResultCode())
                 {
                     case Activity.RESULT_OK:
                         MOCK_UTILS.showNotification(c,0,"Тревожное сообщение отправлено");
-                        //Toast.makeText(c, "SMS sent",
-                        //        Toast.LENGTH_SHORT).show();
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        Toast.makeText(c, "Generic failure",
-                                Toast.LENGTH_SHORT).show();
-                        break;
                     case SmsManager.RESULT_ERROR_NO_SERVICE:
-                        Toast.makeText(c, "No service",
-                                Toast.LENGTH_SHORT).show();
-                        break;
                     case SmsManager.RESULT_ERROR_NULL_PDU:
-                        Toast.makeText(c, "Null PDU",
-                                Toast.LENGTH_SHORT).show();
-                        break;
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
-                        Toast.makeText(c, "Radio off",
+                        Toast.makeText(c, "Error sending message",
                                 Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
         }, new IntentFilter(SENT));
 
-        //---when the SMS has been delivered---
-        /*((Activity)c).registerReceiver(new BroadcastReceiver(){
+        /* broadcast receiver for DELIVERED INTENT
+        String DELIVERED = "SMS_DELIVERED";
+        PendingIntent deliveredPI = PendingIntent.getBroadcast(c, 0,
+                new Intent(DELIVERED), 0);
+        c.registerReceiver(new BroadcastReceiver(){
             @Override
             public void onReceive(Context arg0, Intent arg1) {
                 switch (getResultCode())
                 {
                     case Activity.RESULT_OK:
-
                         break;
                     case Activity.RESULT_CANCELED:
-                        Toast.makeText(c, "Ошибка при отправке сообщения",
-                                Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
         }, new IntentFilter(DELIVERED));*/
-
         SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
+        sms.sendTextMessage(phoneNumber, null, message, sentPI, null);
     }
 }
