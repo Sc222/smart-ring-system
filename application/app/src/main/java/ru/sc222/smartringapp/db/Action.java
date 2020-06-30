@@ -27,6 +27,8 @@ public class Action {
     @PrimaryKey(autoGenerate = true)
     public long actionId;
     public String actionCategory; //Освещение, бытовая техника и т.д.
+
+    //TODO !!! action description should be unique value
     public String actionDescription;  //включить чайник и так далее (сделать какой-то класс???)
     public String actionType; //сделать enum
     public String phoneNumber;

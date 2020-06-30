@@ -24,13 +24,17 @@ import java.util.Map;
 
 import no.nordicsemi.android.support.v18.scanner.ScanCallback;
 import no.nordicsemi.android.support.v18.scanner.ScanResult;
+import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.ble.ButtonBleManager;
+import ru.sc222.smartringapp.db.Action;
 import ru.sc222.smartringapp.db.AppDatabase;
 import ru.sc222.smartringapp.db.Location;
+import ru.sc222.smartringapp.db.tasks.CommandsServiceDbLoader;
 import ru.sc222.smartringapp.db.tasks.LocationsDbLoader;
 import ru.sc222.smartringapp.utils.BluetoothUtils;
 import ru.sc222.smartringapp.utils.LocationUtils;
 import ru.sc222.smartringapp.utils.NotificationUtils;
+import ru.sc222.smartringapp.utils.SmsUtils;
 import ru.sc222.smartringapp.viewmodels.SharedBluetoothViewModel;
 import ru.sc222.smartringapp.viewmodels.SharedLocationViewModel;
 
@@ -47,6 +51,8 @@ public class SmartRingService extends Service {
     private boolean isScannerStarted = false;
     private SharedLocationViewModel sharedLocationViewModel;
     private List<Location> allLocations;
+    private HashMap<String, Action> commandsMap = new HashMap<>();
+    private android.location.Location currentLocation;
     //TODO !!! set "OUTSIDE" LOCATION WHEN GPS IS OFF
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
@@ -55,6 +61,7 @@ public class SmartRingService extends Service {
                 int currLocIndex = LocationUtils.getCurrentLocation(allLocations, location);
                 sharedLocationViewModel.setCurrentLocation(currLocIndex);
             }
+            currentLocation = location;
             //Log.e("curr loc", "loc: " + location.getLatitude() + " " + location.getLongitude());
         }
 
@@ -155,32 +162,56 @@ public class SmartRingService extends Service {
             allLocations = locations;
             Log.e("LOADED", "LOCATIONS: " + locations.size());
         });
+        sharedLocationViewModel.getActions().observeForever(actions -> {
+            commandsMap.clear();
+            for (Action action : actions)
+                commandsMap.put(action.actionDescription, action);
+            Log.e("LOADED", "ACTIONS: " + actions.size());
+        });
         loadLocationsFromDb();
+        loadActionsFromDb();
 
         sharedBluetoothViewModel = new SharedBluetoothViewModel(getApplicationContext());
         buttonBleManager = new ButtonBleManager(getApplicationContext());
         buttonBleManager
                 .getButtonState()
-                .observeForever(integer -> sendCommand(integer, buttonStates, allLocations, sharedLocationViewModel.getCurrentLocation().getValue()));
+                .observeForever(integer -> reactOnButtonStateChange(integer, buttonStates, allLocations, sharedLocationViewModel.getCurrentLocation().getValue()));
     }
 
-    private void sendCommand(int rawValue, String[] buttonStates, List<Location> allLocations, int currentLocation) {
+    private void reactOnButtonStateChange(int rawValue, String[] buttonStates, List<Location> allLocations, int currLocationIndex) {
         //TODO REFACTOR
         if (rawValue > 0 && rawValue <= buttonStates.length) {
             Log.d("ble", "ble btn state:" + buttonStates[rawValue - 1]);
-            if (currentLocation >= 0) {
-                Location location = allLocations.get(currentLocation);
-                Log.d("command", location.getCommand(rawValue - 1));
+            if (currLocationIndex >= 0) {
+                Location location = allLocations.get(currLocationIndex);
+                Action command = commandsMap.get(location.getCommand(rawValue - 1));
+                if (command != null) {
+                    //todo refactor, MOVE TO SPECIAL CALLBACK CLASS, move to string resource, MAKE ENUM
+                    //TODO !!! APP RECEIVES FAKE COMMAND ON DEVICE CONNECT, FILTER IT!!!
+                    Log.d("command", command.actionDescription + " " + command.actionType + " " + command.phoneNumber);
+                    if (command.actionType.equals(Action.TYPE_ALERT)) {
+                        String message = LocationUtils.getLocationMapsLink(getApplicationContext(), currentLocation);
+                        message = String.format(getString(R.string.msg_alert), message);
+                        SmsUtils.sendSMS(getApplicationContext(), command.phoneNumber, message);
+                    } else {
+                        //todo server post request
+                    }
+                }
             }
         } else {
             Log.e("ble", "ble btn state:" + "Состояние неизвестно");
         }
     }
 
-    //TODO !!! reload locations when database has changed (send intent from add location service)
     public void loadLocationsFromDb() {
         LocationsDbLoader locationsDbLoader = new LocationsDbLoader(sharedLocationViewModel, AppDatabase.getInstance(getApplicationContext()));
         locationsDbLoader.execute();
+    }
+
+    //TODO !!! reload actions when database has changed (send intent from add location service)
+    public void loadActionsFromDb() {
+        CommandsServiceDbLoader commandsDbLoader = new CommandsServiceDbLoader(sharedLocationViewModel, AppDatabase.getInstance(getApplicationContext()));
+        commandsDbLoader.execute();
     }
 
     @Override
@@ -206,7 +237,7 @@ public class SmartRingService extends Service {
         NotificationUtils.makeFirstNotificationSetup(getApplicationContext());
         Notification notification = NotificationUtils.createServiceNotification("Device not connected", getApplicationContext());
         NotificationUtils.notify(notification, getApplicationContext());
-        startForeground(NotificationUtils.NOTIFICATION_ID, notification);
+        startForeground(NotificationUtils.FOREGROUND_NOTIFICATION_ID, notification);
 
         //todo restart scanning when location turned on
         isScannerStarted = BluetoothUtils.startScanning(isScannerStarted, scanCallback);

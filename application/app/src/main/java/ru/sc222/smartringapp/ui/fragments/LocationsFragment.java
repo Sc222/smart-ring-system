@@ -44,12 +44,14 @@ public class LocationsFragment extends Fragment {
             SharedLocationViewModel sharedLocationViewModel = smartRingService.getLocationViewModel();
 
             //todo redraws whole list, FIX LATER
-            //todo getviewlifecycleowner crashes so i use requireActivity()
-            sharedLocationViewModel.getCurrentLocation().observe(requireActivity(), currentLocation -> redrawLocationCards(sharedLocationViewModel.getLocations().getValue(), currentLocation, cardContainer));
+            sharedLocationViewModel.getCurrentLocation().observe(getViewLifecycleOwner(), currentLocation -> redrawLocationCards(sharedLocationViewModel.getLocations().getValue(), currentLocation, cardContainer));
 
-            sharedLocationViewModel.getLocations().observe(requireActivity(), locations -> {
+            sharedLocationViewModel.getLocations().observe(getViewLifecycleOwner(), locations -> {
                 assert locations != null;
-                redrawLocationCards(locations, sharedLocationViewModel.getCurrentLocation().getValue(), cardContainer);
+                int currentLocation = 0;
+                if (sharedLocationViewModel.getCurrentLocation().getValue() != null)
+                    currentLocation = sharedLocationViewModel.getCurrentLocation().getValue();
+                redrawLocationCards(locations, currentLocation, cardContainer);
             });
 
             //TODO is used when new locations are added/deleted/edited from loc. fragment (IS IT OK?)
@@ -62,9 +64,9 @@ public class LocationsFragment extends Fragment {
         }
     };
 
-    /*private void unbindService() {
-        getContext().getApplicationContext().unbindService(connection);
-    }*/
+    private void unbindService() {
+        requireContext().getApplicationContext().unbindService(connection);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -80,29 +82,17 @@ public class LocationsFragment extends Fragment {
         cardContainer = root.findViewById(R.id.card_container);
 
         //bind service
-        if (ServiceUtils.isServiceRunning(getContext(), SmartRingService.class)) {
+        if (ServiceUtils.isServiceRunning(requireContext(), SmartRingService.class)) {
             Intent serviceIntent = new Intent(getContext().getApplicationContext(), SmartRingService.class);
             getContext().getApplicationContext().bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE);
         }
-
-        // MOCK_UTILS.showNotification(getContext(),2000);
-        // String coordinates = MapUtils.getLocationMapsLink(getContext(),57.0804465,60.5845488);
-        // final String message = "Тревога!\nАдрес:" +coordinates;
-        // MOCK_UTILS.sendMessage(message,2000);
-        // new Handler().postDelayed(new Runnable() {
-        //     @Override
-        //     public void run() {
-        //         MOCK_UTILS.sendSMS(getActivity(),"+79222941329",message);
-        //     }
-        // },3500);
 
         return root;
     }
 
 
     private void redrawLocationCards(List<Location> locations, int currentLocation, LinearLayoutCompat container) {
-        Log.e("locations updated", "!!!UPDATED!!!");
-
+        //Log.e("locations updated", "!!!UPDATED!!!");
         container.removeAllViews();
         for (int i = 0; i < locations.size(); i++) {
             Location loc = locations.get(i);

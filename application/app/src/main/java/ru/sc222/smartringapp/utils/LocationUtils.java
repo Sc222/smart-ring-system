@@ -60,8 +60,10 @@ public class LocationUtils {
         return 0;//!!! TODO locations 0 is always STREET LOCATION
     }
 
-    public static String getLocationMapsLink(Context c, double latitude, double longitude) {
-        return c.getString(R.string.google_maps_location_link) + latitude + "," + longitude;
+    public static String getLocationMapsLink(Context c, android.location.Location location) {
+        if (location == null)
+            return c.getString(R.string.coordinates_unknown);
+        return c.getString(R.string.google_maps_location_link) + location.getLatitude() + "," + location.getLongitude();
     }
 
     public static boolean isLocationEnabled(Context context) {
