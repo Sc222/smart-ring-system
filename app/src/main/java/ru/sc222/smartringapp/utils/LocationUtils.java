@@ -5,8 +5,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
 
-import androidx.core.content.ContextCompat;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -19,6 +17,10 @@ import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.db.Location;
 
 public class LocationUtils {
+
+    //todo make requests LESS FREQUENT and change mindistance (~ONCE PER 5 MINS)
+    public static final int MIN_TIME = 1000; //milliseconds
+    public static final float MIN_DISTANCE = 0;  //meters
 
     public static void drawCircle(Context c, GoogleMap mMap, LatLng location, long CircleRadius) {
         CircleOptions options = new CircleOptions();

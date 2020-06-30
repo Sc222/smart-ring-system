@@ -1,21 +1,20 @@
 package ru.sc222.smartringapp.services;
 
+import android.Manifest;
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.Service;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Binder;
-import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.lifecycle.Observer;
+import androidx.core.app.ActivityCompat;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,42 +22,44 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import no.nordicsemi.android.support.v18.scanner.BluetoothLeScannerCompat;
 import no.nordicsemi.android.support.v18.scanner.ScanCallback;
 import no.nordicsemi.android.support.v18.scanner.ScanResult;
-import no.nordicsemi.android.support.v18.scanner.ScanSettings;
-import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.ble.ButtonBleManager;
-import ru.sc222.smartringapp.utils.PreferenceUtils;
-import ru.sc222.smartringapp.viewmodels.BleServiceSharedViewModel;
+import ru.sc222.smartringapp.db.AppDatabase;
+import ru.sc222.smartringapp.db.Location;
+import ru.sc222.smartringapp.db.tasks.LocationsDbLoader;
+import ru.sc222.smartringapp.utils.BluetoothUtils;
+import ru.sc222.smartringapp.utils.LocationUtils;
+import ru.sc222.smartringapp.utils.NotificationUtils;
+import ru.sc222.smartringapp.viewmodels.SharedBluetoothViewModel;
+import ru.sc222.smartringapp.viewmodels.SharedLocationViewModel;
 
+//TODO REFACTOR SERVICE, SPLIT INTO CLASSES
 public class SmartRingService extends Service {
 
     private static final String TAG_FOREGROUND_SERVICE = "FOREGROUND_SERVICE";
     public static final String ACTION_START_FOREGROUND_SERVICE = "ACTION_START_FOREGROUND_SERVICE";
     public static final String ACTION_STOP_FOREGROUND_SERVICE = "ACTION_STOP_FOREGROUND_SERVICE";
-    public static final String CHANNEL_NAME = "smart_ring_channel";
-    public static final String CHANNEL_DESCRIPTION = "Smart Ring notification channel";
-
-    private static final String NOTIFICATION_CHANNEL_ID = "notification_ble";
-    private static final int NOTIFICATION_ID = 1337;
     private static final int BUFFER_CLEAR_FREQUENCY = 10;
     private int bufferCount = 0;
+
+    private boolean isScannerStarted = false;
+    private SharedLocationViewModel sharedLocationViewModel;
+    private List<Location> allLocations;
 
 
     //TODO USE VIEWMODEL
     //address and device
     private Map<String, BluetoothDevice> devices = new HashMap<>();
-    private HashSet<String> devicesBuffer = new HashSet<>();//to clear unvisible devices
+    private HashSet<String> devicesBuffer = new HashSet<>(); //to clear invisible devices
 
     private ButtonBleManager buttonBleManager;
-    private String[] buttonStates = { //TODO ВРЕМЕННЫЙ ПОЗОР
+    private String[] buttonStates = { //TODO fix
             "Обычное нажатие",
             "Двойное нажатие",
             "Длинное нажатие"
     };
-    private boolean isScannerStarted = false;
-    private BleServiceSharedViewModel bleServiceSharedViewModel;
+    private SharedBluetoothViewModel sharedBluetoothViewModel;
 
     //for binding
     private final IBinder binder = new BleServiceBinder();
@@ -70,8 +71,12 @@ public class SmartRingService extends Service {
         }
     }
 
-    public BleServiceSharedViewModel getViewModel() {
-        return bleServiceSharedViewModel;
+    public SharedBluetoothViewModel getBluetoothViewModel() {
+        return sharedBluetoothViewModel;
+    }
+
+    public SharedLocationViewModel getLocationViewModel() {
+        return sharedLocationViewModel;
     }
 
     @Override
@@ -83,21 +88,72 @@ public class SmartRingService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.e("service", "oncreate");
-        bleServiceSharedViewModel = new BleServiceSharedViewModel(getApplicationContext());
-        buttonBleManager = new ButtonBleManager(getApplicationContext());
-        buttonBleManager.getButtonState().observeForever(new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if (integer > 0 && integer < 4
-                ) {
-                    Log.e("ble", "ble btn state:" + buttonStates[integer - 1]);
-                } else {
-                    Log.e("ble", "ble btn state:" + "Состояние неизвестно");
-                }
-                //Toast.makeText(getApplicationContext(),"CLICKED: "+integer,Toast.LENGTH_SHORT).show();
-            }
+        sharedLocationViewModel = new SharedLocationViewModel();
+        //todo make requests LESS FREQUENT and change mindistance (~ONCE PER 5 MINS)
+        LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        assert mLocationManager != null;
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LocationUtils.MIN_TIME,
+                LocationUtils.MIN_DISTANCE, mLocationListener);
+        sharedLocationViewModel.getLocations().observeForever(locations -> {
+            allLocations = locations;
+            Log.e("LOADED", "LOCATIONS: " + locations.size());
         });
+        loadLocationsFromDb();
+
+        sharedBluetoothViewModel = new SharedBluetoothViewModel(getApplicationContext());
+        buttonBleManager = new ButtonBleManager(getApplicationContext());
+        buttonBleManager
+                .getButtonState()
+                .observeForever(integer -> sendCommand(integer, buttonStates, allLocations, sharedLocationViewModel.getCurrentLocation().getValue()));
     }
+
+    private void sendCommand(int rawValue, String[] buttonStates, List<Location> allLocations, int currentLocation) {
+        //TODO REFACTOR
+        if (rawValue > 0 && rawValue <= buttonStates.length) {
+            Log.d("ble", "ble btn state:" + buttonStates[rawValue - 1]);
+            if (currentLocation >= 0) {
+                Location location = allLocations.get(currentLocation);
+                Log.d("command", location.getCommand(rawValue - 1));
+            }
+        } else {
+            Log.e("ble", "ble btn state:" + "Состояние неизвестно");
+        }
+    }
+
+    //TODO !!! reload locations when database has changed (send intent from add location service)
+    public void loadLocationsFromDb() {
+        LocationsDbLoader locationsDbLoader = new LocationsDbLoader(sharedLocationViewModel, AppDatabase.getInstance(getApplicationContext()));
+        locationsDbLoader.execute();
+    }
+
+    //TODO !!! set "OUTSIDE" LOCATION WHEN GPS IS OFF
+    private final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(android.location.Location location) {
+            if (allLocations != null) {
+                int currLocIndex = LocationUtils.getCurrentLocation(allLocations, location);
+                sharedLocationViewModel.setCurrentLocation(currLocIndex);
+            }
+            //Log.e("curr loc", "loc: " + location.getLatitude() + " " + location.getLongitude());
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            //todo restart service
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            //todo stop service and show message "location turned off"
+        }
+    };
 
     private final ScanCallback scanCallback = new ScanCallback() {
         @Override
@@ -127,10 +183,12 @@ public class SmartRingService extends Service {
             }
 
             //update model for application communication
-            bleServiceSharedViewModel.setDevicesMap(devices);
+            sharedBluetoothViewModel.setDevicesMap(devices);
             //Log.e("ble","scan accomplished: "+results.size());
-            connectToDevice();//todo is connected bool
-            //todo disconnect when changed device
+            //todo is connected bool
+            //TODO SETUP connect/disconnect receiver
+            //todo RECONNECT when changed device in settings
+            BluetoothUtils.connectToDevice(devices, buttonBleManager, getApplicationContext());
         }
 
         @Override
@@ -139,57 +197,19 @@ public class SmartRingService extends Service {
         }
     };
 
-    private void startScanning() {
-        if (isScannerStarted)
-            return;
-        isScannerStarted = true;
-        ScanSettings settings = new ScanSettings.Builder()
-                .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-                .setReportDelay(500)
-                .setUseHardwareBatchingIfSupported(true)
-                .build();
-        BluetoothLeScannerCompat scanner = BluetoothLeScannerCompat.getScanner();
-        scanner.startScan(null, settings, scanCallback);
-    }
-
-    //used by binder
-    public void connectToDevice() {
-        String savedDeviceAddress = PreferenceUtils.getCurrentDeviceAddress(this);
-        //Log.e("saved",savedDeviceAddress);
-        if (devices.containsKey(savedDeviceAddress)) {
-            Log.e("ble", "device found");
-            BluetoothDevice device = devices.get(savedDeviceAddress);
-            assert device != null;
-            if (!device.getName().equals("Smart Ring")) {
-                //wrong device
-                Log.e("ble", "wrong device");
-                return;
-            }
-            buttonBleManager.connect(device)
-                    .retry(3, 100)
-                    .useAutoConnect(false)
-                    .enqueue();
-        } else {
-            //todo replace with notifications
-            //Log.e("ble", "device not found");
-        }
-
-    }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
             String action = intent.getAction();
             if (action != null)
-
                 switch (action) {
                     case ACTION_START_FOREGROUND_SERVICE:
                         startForegroundService();
-                        Toast.makeText(getApplicationContext(), "Foreground service is started.", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Foreground service is started.", Toast.LENGTH_LONG).show();
                         break;
                     case ACTION_STOP_FOREGROUND_SERVICE:
                         stopForegroundService();
-                        Toast.makeText(getApplicationContext(), "Foreground service is stopped.", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Foreground service is stopped.", Toast.LENGTH_LONG).show();
                         break;
                 }
         }
@@ -197,37 +217,13 @@ public class SmartRingService extends Service {
     }
 
     private void startForegroundService() {
-        MakeFirstNotificationSetup();
-        Notification notification = CreateServiceNotification("Device not connected");
-        Notify(notification);
-        startForeground(NOTIFICATION_ID, notification);
-        startScanning(); //todo restart scanning when location turned on
-    }
+        NotificationUtils.makeFirstNotificationSetup(getApplicationContext());
+        Notification notification = NotificationUtils.createServiceNotification("Device not connected", getApplicationContext());
+        NotificationUtils.notify(notification, getApplicationContext());
+        startForeground(NotificationUtils.NOTIFICATION_ID, notification);
 
-    private void Notify(Notification notification) {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(NOTIFICATION_ID, notification);
-    }
-
-    private void MakeFirstNotificationSetup() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription(CHANNEL_DESCRIPTION);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            assert notificationManager != null;
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-    private Notification CreateServiceNotification(String contentText) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_device_24dp)
-                .setContentTitle("Smart ring service")
-                .setContentText(contentText)
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
-        return builder.build();
+        //todo restart scanning when location turned on
+        isScannerStarted = BluetoothUtils.startScanning(isScannerStarted, scanCallback);
     }
 
     private void stopForegroundService() {

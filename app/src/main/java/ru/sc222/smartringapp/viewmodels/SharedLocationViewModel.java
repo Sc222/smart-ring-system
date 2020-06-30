@@ -9,15 +9,15 @@ import java.util.List;
 
 import ru.sc222.smartringapp.db.Location;
 
-public class LocationsViewModel extends ViewModel {
+public class SharedLocationViewModel extends ViewModel {
 
     private MutableLiveData<List<Location>> locations;
     private MutableLiveData<Integer> currentLocation;
 
-    public LocationsViewModel() {
+    public SharedLocationViewModel() {
 
         locations= new MutableLiveData<>();
-        locations.setValue(new ArrayList<Location>());
+        locations.setValue(new ArrayList<>());
         currentLocation= new MutableLiveData<>();
         currentLocation.setValue(-1);
     }

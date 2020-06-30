@@ -14,7 +14,7 @@ import java.util.Map;
 import ru.sc222.smartringapp.dto.AdapterBluetoothDevice;
 import ru.sc222.smartringapp.utils.PreferenceUtils;
 
-public class BleServiceSharedViewModel extends ViewModel {
+public class SharedBluetoothViewModel extends ViewModel {
 
     private MutableLiveData<Map<String, BluetoothDevice> > devicesMap;
 
@@ -22,7 +22,7 @@ public class BleServiceSharedViewModel extends ViewModel {
     private ArrayList<AdapterBluetoothDevice> devicesList = new ArrayList<>();
     private Context c;
 
-    public BleServiceSharedViewModel(Context c) {
+    public SharedBluetoothViewModel(Context c) {
         this.c=c;
         devicesMap = new MutableLiveData<>();
         devicesMap.setValue(new HashMap<>());
