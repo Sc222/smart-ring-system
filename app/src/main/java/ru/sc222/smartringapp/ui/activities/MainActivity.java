@@ -3,6 +3,7 @@ package ru.sc222.smartringapp.ui.activities;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -34,20 +35,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setupNavigation();
         if(PermissionsUtils.hasRequiredPermissions(this))
         {
-            if(BluetoothUtils.isBluetoothEnabled() && LocationUtils.isLocationEnabled(this)) {
-                setupNavigation();
-                startService();
-            }
-            else{
-                //todo register receivers and show enable bluetooth / location dialog
-                Toast.makeText(getApplicationContext(), R.string.app_wont_work_if_bluetooth_and_location_are_disabled, Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }
-        else
+            tryToStartService();
+        } else
             ActivityCompat.requestPermissions(this, PermissionsUtils.getPermissionsToRequest(this), PermissionsUtils.REQUEST_CODE);
+    }
+
+    private void tryToStartService() {
+        if (BluetoothUtils.isBluetoothEnabled() && LocationUtils.isLocationEnabled(this)) {
+            Log.e("START SERVICE", "SSS");
+            startService();
+        } else {
+            //todo register receivers and show enable bluetooth / location dialog
+            Toast.makeText(getApplicationContext(), R.string.app_wont_work_if_bluetooth_and_location_are_disabled, Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     @Override
@@ -68,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
             }
+
+            //all permissions are granted
+            tryToStartService();
         }
     }
 
