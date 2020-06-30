@@ -21,7 +21,8 @@ import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.dto.AdapterBluetoothDevice;
 import ru.sc222.smartringapp.services.SmartRingService;
 import ru.sc222.smartringapp.utils.PreferenceUtils;
-import ru.sc222.smartringapp.viewmodels.BleServiceSharedViewModel;
+import ru.sc222.smartringapp.utils.ServiceUtils;
+import ru.sc222.smartringapp.viewmodels.SharedBluetoothViewModel;
 
 //dialog should be dismissed in fragment/activity ondestroy or service wont be unbound
 public class SelectBluetoothDeviceDialog extends AlertDialog {
@@ -50,9 +51,9 @@ public class SelectBluetoothDeviceDialog extends AlertDialog {
             SmartRingService.BleServiceBinder binder = (SmartRingService.BleServiceBinder) service;
             SmartRingService smartRingService = binder.getService();
             isServiceBound = true;
-            BleServiceSharedViewModel bleServiceSharedViewModel = smartRingService.getViewModel();
+            SharedBluetoothViewModel sharedBluetoothViewModel = smartRingService.getBluetoothViewModel();
 
-            adapter = new BluetoothDevicesAdapter(appContext, bleServiceSharedViewModel.getDevicesList());
+            adapter = new BluetoothDevicesAdapter(appContext, sharedBluetoothViewModel.getDevicesList());
             recyclerView.setAdapter(adapter);
 
             adapter.setClickListener(new BluetoothDevicesAdapter.ItemClickListener() {
@@ -65,7 +66,7 @@ public class SelectBluetoothDeviceDialog extends AlertDialog {
                 }
             });
 
-            bleServiceSharedViewModel.getDevicesMap().observe(lifecycleOwner, new Observer<Map<String, BluetoothDevice>>() {
+            sharedBluetoothViewModel.getDevicesMap().observe(lifecycleOwner, new Observer<Map<String, BluetoothDevice>>() {
                 @Override
                 public void onChanged(Map<String, BluetoothDevice> deviceMap) {
                     adapter.notifyDataSetChanged();
@@ -98,10 +99,10 @@ public class SelectBluetoothDeviceDialog extends AlertDialog {
         recyclerView.setLayoutManager(new LinearLayoutManager(appContext,RecyclerView.VERTICAL,false));
 
         //bind service
-        Intent serviceIntent = new Intent(appContext, SmartRingService.class);
-        appContext.bindService(serviceIntent,connection,Context.BIND_AUTO_CREATE);
-     // .getInstance().bindService(intent, connection, Context.BIND_AUTO_CREATE);
-
+        if (ServiceUtils.isServiceRunning(getContext(), SmartRingService.class)) {
+            Intent serviceIntent = new Intent(appContext, SmartRingService.class);
+            appContext.bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE);
+        }
         setView(layout);
         super.show();
     }

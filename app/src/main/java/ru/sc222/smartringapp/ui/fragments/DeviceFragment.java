@@ -1,7 +1,6 @@
 package ru.sc222.smartringapp.ui.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +40,6 @@ public class DeviceFragment extends Fragment {
 
     @Override
     public void onStop() {
-        Log.e("sdfsdf","asdasd");
         if(dialog!=null)
             dialog.dismiss();
         super.onStop();

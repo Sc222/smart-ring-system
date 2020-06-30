@@ -1,10 +1,9 @@
 package ru.sc222.smartringapp.ui.fragments;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -13,64 +12,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 import ru.sc222.smartringapp.R;
-import ru.sc222.smartringapp.db.AppDatabase;
 import ru.sc222.smartringapp.db.Location;
-import ru.sc222.smartringapp.db.tasks.LocationsDbLoader;
 import ru.sc222.smartringapp.services.SmartRingService;
 import ru.sc222.smartringapp.ui.activities.AddLocationActivity;
-import ru.sc222.smartringapp.utils.LocationUtils;
-import ru.sc222.smartringapp.viewmodels.BleServiceSharedViewModel;
-import ru.sc222.smartringapp.viewmodels.LocationsViewModel;
-
-import static android.content.Context.LOCATION_SERVICE;
+import ru.sc222.smartringapp.utils.ServiceUtils;
+import ru.sc222.smartringapp.viewmodels.SharedLocationViewModel;
 
 public class LocationsFragment extends Fragment {
+    private LinearLayoutCompat cardContainer;
 
-    private LocationsViewModel locationsViewModel;
-    private android.location.Location currentCoordinates;
-    private List<Location> allLocations;
     private boolean isServiceBound = false;
-
-    //TODO !!! узнавать, когда gps отключен и в таком случае выставлять локацию НА УЛИЦЕ
-    private final LocationListener mLocationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(android.location.Location location) {
-            currentCoordinates = location;
-            if (allLocations != null) {
-
-                int currLocIndex = LocationUtils.getCurrentLocation(allLocations, currentCoordinates);
-                //Toast.makeText(getContext(),"Current loc: "+allLocations.get(currLocIndex).locationName,Toast.LENGTH_SHORT).show();
-                locationsViewModel.setCurrentLocation(currLocIndex); //todo redraws whole list, FIX LATER
-            }
-            Log.e("curr loc", "loc: " + location.getLatitude() + " " + location.getLongitude());
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-        }
-    };
-
 
     private ServiceConnection connection = new ServiceConnection() {
 
@@ -80,9 +41,19 @@ public class LocationsFragment extends Fragment {
             SmartRingService.BleServiceBinder binder = (SmartRingService.BleServiceBinder) service;
             SmartRingService smartRingService = binder.getService();
             isServiceBound = true;
-            BleServiceSharedViewModel bleServiceSharedViewModel = smartRingService.getViewModel();
+            SharedLocationViewModel sharedLocationViewModel = smartRingService.getLocationViewModel();
 
+            //todo redraws whole list, FIX LATER
+            //todo getviewlifecycleowner crashes so i use requireActivity()
+            sharedLocationViewModel.getCurrentLocation().observe(requireActivity(), currentLocation -> redrawLocationCards(sharedLocationViewModel.getLocations().getValue(), currentLocation, cardContainer));
 
+            sharedLocationViewModel.getLocations().observe(requireActivity(), locations -> {
+                assert locations != null;
+                redrawLocationCards(locations, sharedLocationViewModel.getCurrentLocation().getValue(), cardContainer);
+            });
+
+            //TODO is used when new locations are added/deleted/edited from loc. fragment (IS IT OK?)
+            smartRingService.loadLocationsFromDb();
         }
 
         @Override
@@ -97,45 +68,22 @@ public class LocationsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        locationsViewModel =
-                ViewModelProviders.of(this).get(LocationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_locations, container, false);
-
-        LocationManager mLocationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1 * 1000,
-                0, mLocationListener); //раз в 10 секунд
         FloatingActionButton fabAdd = root.findViewById(R.id.fab_add);
         Log.e("fragment", "RELOAD DATA");
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddLocationActivity.class);
-                startActivity(intent);
-            }
+        fabAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AddLocationActivity.class);
+            startActivity(intent);
         });
 
         //todo replace with recyclerlayout in the future
-        final LinearLayoutCompat cardContainer = root.findViewById(R.id.card_container);
+        cardContainer = root.findViewById(R.id.card_container);
 
-
-        //todo redraws whole list, FIX LATER
-        locationsViewModel.getCurrentLocation().observe(getViewLifecycleOwner(), new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer currentLocation) {
-                redrawLocationCards(locationsViewModel.getLocations().getValue(), currentLocation, cardContainer);
-            }
-        });
-
-        locationsViewModel.getLocations().observe(getViewLifecycleOwner(), new Observer<List<Location>>() {
-            @Override
-            public void onChanged(@Nullable List<Location> locations) {
-                allLocations = locations;
-                redrawLocationCards(locations, locationsViewModel.getCurrentLocation().getValue(), cardContainer);
-            }
-        });
-
-        LocationsDbLoader locationsDbLoader = new LocationsDbLoader(locationsViewModel, AppDatabase.getInstance(getContext()));
-        locationsDbLoader.execute();
+        //bind service
+        if (ServiceUtils.isServiceRunning(getContext(), SmartRingService.class)) {
+            Intent serviceIntent = new Intent(getContext().getApplicationContext(), SmartRingService.class);
+            getContext().getApplicationContext().bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE);
+        }
 
         // MOCK_UTILS.showNotification(getContext(),2000);
         // String coordinates = MapUtils.getLocationMapsLink(getContext(),57.0804465,60.5845488);
@@ -150,6 +98,7 @@ public class LocationsFragment extends Fragment {
 
         return root;
     }
+
 
     private void redrawLocationCards(List<Location> locations, int currentLocation, LinearLayoutCompat container) {
         Log.e("locations updated", "!!!UPDATED!!!");

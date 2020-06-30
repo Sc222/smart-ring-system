@@ -44,6 +44,10 @@ public class Location {
             R.drawable.location_outside_city_bg_ic,
     };
 
+    @Ignore
+    private String[] commands;
+
+
     @PrimaryKey(autoGenerate = true)
     public long locationId;
     public int radius;
@@ -71,6 +75,7 @@ public class Location {
         this.doubleClickAction = doubleClickAction;
         this.tripleClickAction = tripleClickAction;
         this.longClickAction = longClickAction;
+        this.commands = new String[]{singleClickAction, doubleClickAction, tripleClickAction, longClickAction};
     }
 
     public Location(String locationName, Geoposition geoposition, int locationBackground, String singleClickAction, String doubleClickAction, String tripleClickAction, String longClickAction) {
@@ -84,6 +89,7 @@ public class Location {
         this.doubleClickAction = doubleClickAction;
         this.tripleClickAction = tripleClickAction;
         this.longClickAction = longClickAction;
+        this.commands = new String[]{singleClickAction, doubleClickAction, tripleClickAction, longClickAction};
     }
 
     public int getCommandsCount() {
@@ -97,5 +103,11 @@ public class Location {
         if(!longClickAction.equals(Action.NOT_DEFINED))
             result++;
         return result;
+    }
+
+    public String getCommand(int value) {
+        if (value >= 0 && value < commands.length)
+            return commands[value];
+        return Action.NOT_DEFINED;
     }
 }
