@@ -49,4 +49,8 @@
     <string name="phone_number">Номер телефона</string>
     <string name="command_icon_picker_title">Выберите иконку действия</string>
     <string name="device_address">Bluetooth адрес устройства</string>
+    <string name="select_device_dialog_title">Выберите устройство</string>
+    <string name="unknown_device">Неизвестное устройство</string>
+    <string name="app_wont_work_without_permissions">Приложение не будет работать без указанных разрешений</string>
+    <string name="app_wont_work_if_bluetooth_and_location_are_disabled">Приложение не будет работать, если Bluetooth и Геопозиция выключены</string>
 </resources>

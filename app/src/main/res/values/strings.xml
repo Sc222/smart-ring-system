@@ -57,4 +57,6 @@
     <string name="device_address">Device Bluetooth address</string>
     <string name="select_device_dialog_title">Select device</string>
     <string name="unknown_device">Unknown device</string>
+    <string name="app_wont_work_without_permissions">App won\'t work without required permissions</string>
+    <string name="app_wont_work_if_bluetooth_and_location_are_disabled">App won\'t work if Bluetooth and Location are disabled</string>
 </resources>
