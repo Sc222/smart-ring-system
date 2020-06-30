@@ -15,13 +15,12 @@ public class AddOrEditCommandViewModel extends ViewModel {
         selectedIcon.setValue(0);
     }
 
+    public LiveData<Boolean> getIsCommandAdded() {
+        return isCommandAdded;
+    }
 
     public void setIsCommandAdded(boolean isCommandAdded) {
         this.isCommandAdded.setValue(isCommandAdded);
-    }
-
-    public LiveData<Boolean> getIsCommandAdded() {
-        return isCommandAdded;
     }
 
     public MutableLiveData<Integer> getSelectedIcon() {

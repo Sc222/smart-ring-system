@@ -13,7 +13,6 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -21,6 +20,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.db.Action;
@@ -32,13 +32,12 @@ import ru.sc222.smartringapp.viewmodels.AddOrEditCommandViewModel;
 public class AddCommandActivity extends AppCompatActivity {
 
     private AddOrEditCommandViewModel addOrEditCommandViewModel;
-    private Context c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_command);
-        c = this;
+        Context c = this;
         addOrEditCommandViewModel =
                 ViewModelProviders.of(this).get(AddOrEditCommandViewModel.class);
         final Toolbar toolbar = findViewById(R.id.toolbar);
@@ -51,34 +50,20 @@ public class AddCommandActivity extends AppCompatActivity {
         final ActionIconPickerDialog actionIconPickerDialog = new ActionIconPickerDialog(c, addOrEditCommandViewModel);
 
         final LinearLayoutCompat linearLayoutLocationBg = findViewById(R.id.location_bg);
-        linearLayoutLocationBg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                actionIconPickerDialog.show();
-            }
-        });
+        linearLayoutLocationBg.setOnClickListener(v -> actionIconPickerDialog.show());
 
-        addOrEditCommandViewModel.getIsCommandAdded().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isCommandAdded) {
-                if (isCommandAdded) {
-                    //todo workaround, use go back to parent
-                    Intent parent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(parent);
-                    // AddLocationActivity.super.onBackPressed();
-                    // finish(); //todo is it ok or i should launch parent activity manually?
-                }
+        addOrEditCommandViewModel.getIsCommandAdded().observe(this, isCommandAdded -> {
+            if (isCommandAdded) {
+                Intent parent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(parent);
             }
         });
 
         final AppCompatImageView imageViewCommandIcon = findViewById(R.id.command_selected_icon);
 
-        addOrEditCommandViewModel.getSelectedIcon().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                imageViewCommandIcon.setImageResource(Action.icons[integer]);
-            }
-        });
+        addOrEditCommandViewModel
+                .getSelectedIcon()
+                .observe(this, integer -> imageViewCommandIcon.setImageResource(Action.icons[integer]));
 
         final TextInputLayout textFieldName = findViewById(R.id.text_field_name);
         final TextInputLayout textFieldDescription = findViewById(R.id.text_field_description);
@@ -92,11 +77,10 @@ public class AddCommandActivity extends AppCompatActivity {
         spinnerActionType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (entries.get(position).equals(Action.TYPE_HOME_CONTROL)) {
+                if (entries.get(position).equals(Action.TYPE_HOME_CONTROL))
                     textFieldPhone.setVisibility(View.GONE);
-                } else if (entries.get(position).equals(Action.TYPE_ALERT)) {
+                else if (entries.get(position).equals(Action.TYPE_ALERT))
                     textFieldPhone.setVisibility(View.VISIBLE);
-                }
             }
 
             @Override
@@ -106,48 +90,36 @@ public class AddCommandActivity extends AppCompatActivity {
         });
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TryToAddCommand(textFieldName, textFieldDescription, textFieldPhone, spinnerActionType);
-            }
-        });
+        fab.setOnClickListener(view -> tryToAddCommand(textFieldName, textFieldDescription, textFieldPhone, spinnerActionType));
     }
 
-    private void TryToAddCommand(TextInputLayout textFieldName, TextInputLayout textFieldDescription, TextInputLayout textFieldPhone, AppCompatSpinner spinnerActionType) {
-        String name = textFieldName.getEditText().getText().toString();
-        String description = textFieldDescription.getEditText().getText().toString();
-        String phone = textFieldPhone.getEditText().getText().toString();
+    private void tryToAddCommand(TextInputLayout textFieldName, TextInputLayout textFieldDescription, TextInputLayout textFieldPhone, AppCompatSpinner spinnerActionType) {
+        String name = Objects.requireNonNull(textFieldName.getEditText()).getText().toString();
+        String description = Objects.requireNonNull(textFieldDescription.getEditText()).getText().toString();
+        String phone = Objects.requireNonNull(textFieldPhone.getEditText()).getText().toString();
 
-        if (name.equals("")) {
-            textFieldName.setError("Укажите название действия"); //todo extract strings
-        } else {
+        if (name.equals(""))
+            textFieldName.setError(getString(R.string.set_action_name));
+        else
             textFieldName.setErrorEnabled(false);
-        }
 
-        if (description.equals("")) {
-            textFieldDescription.setError("Укажите описание действия"); //todo extract strings
-        } else {
+        if (description.equals(""))
+            textFieldDescription.setError(getString(R.string.set_action_description));
+        else
             textFieldDescription.setErrorEnabled(false);
-        }
 
-        if (phone.equals("")) {
-            textFieldPhone.setError("Укажите телефон"); //todo extract strings
-        } else {
+        if (phone.equals(""))
+            textFieldPhone.setError(getString(R.string.set_action_number));
+        else
             textFieldPhone.setErrorEnabled(false);
-        }
 
         if (!name.equals("") && !description.equals("")) {
             String actionType = spinnerActionType.getSelectedItem().toString();
             Action action = null;
-            if (actionType.equals(Action.TYPE_HOME_CONTROL)) {
+            if (actionType.equals(Action.TYPE_HOME_CONTROL))
                 action = new Action(name, description, addOrEditCommandViewModel.getSelectedIcon().getValue(), actionType, "");
-            }
-            if (actionType.equals(Action.TYPE_ALERT) && !phone.equals("")) {
+            if (actionType.equals(Action.TYPE_ALERT) && !phone.equals(""))
                 action = new Action(name, description, addOrEditCommandViewModel.getSelectedIcon().getValue(), actionType, phone);
-
-            }
-
             if (action != null) {
                 AddActionDbSaver addActionDbSaver = new AddActionDbSaver(addOrEditCommandViewModel, AppDatabase.getInstance(getApplicationContext()));
                 addActionDbSaver.execute(action);

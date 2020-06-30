@@ -64,9 +64,8 @@ public class LocationGeolocationPickerDialog extends DialogFragment
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 radius = progress + MIN_RADIUS;
                 textViewRadius.setText(String.format(c.getResources().getString(R.string.location_radius), radius));
-                if (geopositionMarker != null) {
+                if (geopositionMarker != null)
                     UpdateLocationIndicator(geopositionMarker.getPosition());
-                }
             }
 
             @Override
@@ -80,16 +79,12 @@ public class LocationGeolocationPickerDialog extends DialogFragment
             }
         });
         fab = rootView.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (geopositionMarker != null) {
-                    addOrEditLocationViewModel.setGeoposition(new Geoposition(radius, locationName, geopositionMarker.getPosition()));
-                    dismiss();
-                } else {
-                    Snackbar.make(fab, R.string.choose_location, Snackbar.LENGTH_SHORT).show();
-                }
-            }
+        fab.setOnClickListener(v -> {
+            if (geopositionMarker != null) {
+                addOrEditLocationViewModel.setGeoposition(new Geoposition(radius, locationName, geopositionMarker.getPosition()));
+                dismiss();
+            } else
+                Snackbar.make(fab, R.string.choose_location, Snackbar.LENGTH_SHORT).show();
         });
 
 
@@ -119,7 +114,6 @@ public class LocationGeolocationPickerDialog extends DialogFragment
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMapToolbarEnabled(false);
-            //MapUtils.setupMyLocationButton(c, mMap, mapView);
         } else {
             //!!!TODO REQUEST PERMISSIONS ON RESULT CODE!!!
             ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -141,6 +135,7 @@ public class LocationGeolocationPickerDialog extends DialogFragment
         LocationUtils.drawCircle(c, mMap, latLng, radius);
     }
 
+    //todo remove permissions request from here
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (permissions.length == 1 &&
@@ -152,12 +147,9 @@ public class LocationGeolocationPickerDialog extends DialogFragment
             }
         } else {
             final Snackbar snackBar = Snackbar.make(fab, R.string.permission_denied, Snackbar.LENGTH_INDEFINITE);
-            snackBar.setAction(getString(R.string.ok), new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    snackBar.dismiss();
-                    dismiss();
-                }
+            snackBar.setAction(getString(R.string.ok), v -> {
+                snackBar.dismiss();
+                dismiss();
             });
             snackBar.show();
         }

@@ -27,20 +27,20 @@ public class AddOrEditLocationViewModel extends ViewModel {
         geoposition.setValue(null);
     }
 
-    public void setActions(List<Action> actions) {
-        this.actions.setValue(actions);
-    }
-
     public LiveData<List<Action>> getActions() {
         return actions;
     }
 
-    public void setIsLocationAdded(boolean isLocationAdded) {
-        this.isLocationAdded.setValue(isLocationAdded);
+    public void setActions(List<Action> actions) {
+        this.actions.setValue(actions);
     }
 
     public LiveData<Boolean> getIsLocationAdded() {
         return isLocationAdded;
+    }
+
+    public void setIsLocationAdded(boolean isLocationAdded) {
+        this.isLocationAdded.setValue(isLocationAdded);
     }
 
     public MutableLiveData<Integer> getSelectedBackground() {

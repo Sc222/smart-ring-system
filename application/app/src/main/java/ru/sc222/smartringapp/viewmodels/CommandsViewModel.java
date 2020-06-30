@@ -19,7 +19,7 @@ public class CommandsViewModel extends ViewModel {
         mText.setValue("This is commands fragment");
 
         actions = new MutableLiveData<>();
-        actions.setValue(new ArrayList<Action>());
+        actions.setValue(new ArrayList<>());
     }
 
     public LiveData<String> getText() {

@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp.ui.dialogs;
+package ru.sc222.smartringapp.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -25,7 +25,7 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
     private String currentDeviceAddress;
 
     // data is passed into the constructor
-    BluetoothDevicesAdapter(Context context, List<AdapterBluetoothDevice> data) {
+    public BluetoothDevicesAdapter(Context context, List<AdapterBluetoothDevice> data) {
         c = context;
         currentDeviceAddress = PreferenceUtils.getCurrentDeviceAddress(c);
         this.mInflater = LayoutInflater.from(context);
@@ -86,12 +86,12 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
     }
 
     // convenience method for getting data at click position
-    AdapterBluetoothDevice getItem(int id) {
+    public AdapterBluetoothDevice getItem(int id) {
         return mData.get(id);
     }
 
     // allows clicks events to be caught
-    void setClickListener(BluetoothDevicesAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(BluetoothDevicesAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

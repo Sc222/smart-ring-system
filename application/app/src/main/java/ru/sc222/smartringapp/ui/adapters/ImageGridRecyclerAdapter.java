@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp.ui.dialogs;
+package ru.sc222.smartringapp.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,7 +18,7 @@ public class ImageGridRecyclerAdapter extends RecyclerView.Adapter<ImageGridRecy
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    ImageGridRecyclerAdapter(Context context, int[] data) {
+    public ImageGridRecyclerAdapter(Context context, int[] data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -66,7 +66,7 @@ public class ImageGridRecyclerAdapter extends RecyclerView.Adapter<ImageGridRecy
     }
 
     // allows clicks events to be caught
-    void setClickListener(ItemClickListener itemClickListener) {
+    public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

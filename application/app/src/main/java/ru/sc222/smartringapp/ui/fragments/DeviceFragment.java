@@ -19,15 +19,9 @@ public class DeviceFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_device, container, false);
-        // final CardView mainCard = root.findViewById(R.id.main_card);
-        //mainCard.setEnabled(false); //changes main device color tint
-        // final TextView textView = root.findViewById(R.id.text_device);
-      /*  deviceViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
+
+        //todo device activity code here
+
         if (PreferenceUtils.getCurrentDeviceAddress(getContext()).equals(PreferenceUtils.DEVICE_ADDRESS_DEFAULT)) {
             //show dialog when device is not set
             //dialog = new SelectBluetoothDeviceDialog(false,getActivity(),getActivity().getApplicationContext(),getViewLifecycleOwner());

@@ -1,6 +1,5 @@
 package ru.sc222.smartringapp.ui.activities;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
@@ -41,21 +40,14 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences, rootKey);
 
-            Preference deviceAddress = (Preference) findPreference(PreferenceUtils.DEVICE_ADDRESS);
+            Preference deviceAddress = findPreference(PreferenceUtils.DEVICE_ADDRESS);
             assert deviceAddress != null;
             deviceAddress.setSummary(PreferenceUtils.getCurrentDeviceAddress(getContext()));
-            deviceAddress.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference preference) {
-                    dialog = new SelectBluetoothDeviceDialog(true, getActivity(), getActivity().getApplicationContext(), getViewLifecycleOwner());
-                    dialog.show();
-                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            deviceAddress.setSummary(PreferenceUtils.getCurrentDeviceAddress(getContext()));
-                        }
-                    });
-                    return true;
-                }
+            deviceAddress.setOnPreferenceClickListener(preference -> {
+                dialog = new SelectBluetoothDeviceDialog(true, getActivity(), requireActivity().getApplicationContext(), getViewLifecycleOwner());
+                dialog.show();
+                dialog.setOnDismissListener(dialog -> deviceAddress.setSummary(PreferenceUtils.getCurrentDeviceAddress(getContext())));
+                return true;
             });
         }
 

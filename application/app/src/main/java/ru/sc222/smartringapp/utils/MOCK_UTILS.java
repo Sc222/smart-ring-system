@@ -21,38 +21,35 @@ import ru.sc222.smartringapp.R;
 
 public class MOCK_UTILS {
     public static void showNotification(final Context context, int delay, final String msg) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        new Handler().postDelayed(() -> {
 
-                //todo удалить потом
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    CharSequence name = "smartring";
-                    String description = "smart ring notification channel";
-                    int importance = NotificationManager.IMPORTANCE_HIGH;
-                    NotificationChannel channel = new NotificationChannel("channelid", name, importance);
-                    channel.setDescription(description);
-                    // Register the channel with the system; you can't change the importance
-                    // or other notification behaviors after this
-                    NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-                    notificationManager.createNotificationChannel(channel);
-                }
-
-
-                //todo удалить потом
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "channelid")
-                        .setSmallIcon(R.drawable.ic_ok_24dp)
-                        .setContentTitle("Кнопка нажата!")
-                        .setContentText(msg)
-                        .setPriority(NotificationCompat.PRIORITY_HIGH);
-                builder.build();
-
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-                notificationManager.notify(122310, builder.build());
-                Log.e("notification", "didnt show");
-
-
+            //todo удалить потом
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                CharSequence name = "smartring";
+                String description = "smart ring notification channel";
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel channel = new NotificationChannel("channelid", name, importance);
+                channel.setDescription(description);
+                // Register the channel with the system; you can't change the importance
+                // or other notification behaviors after this
+                NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+                notificationManager.createNotificationChannel(channel);
             }
+
+
+            //todo удалить потом
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "channelid")
+                    .setSmallIcon(R.drawable.ic_ok_24dp)
+                    .setContentTitle("Кнопка нажата!")
+                    .setContentText(msg)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH);
+            builder.build();
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            notificationManager.notify(122310, builder.build());
+            Log.e("notification", "didnt show");
+
+
         }, delay);
     }
 

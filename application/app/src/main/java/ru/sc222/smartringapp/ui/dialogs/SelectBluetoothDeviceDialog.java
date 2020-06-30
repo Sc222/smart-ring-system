@@ -1,7 +1,6 @@
 package ru.sc222.smartringapp.ui.dialogs;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothDevice;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -11,15 +10,13 @@ import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.Map;
 
 import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.dto.AdapterBluetoothDevice;
 import ru.sc222.smartringapp.services.SmartRingService;
+import ru.sc222.smartringapp.ui.adapters.BluetoothDevicesAdapter;
 import ru.sc222.smartringapp.utils.PreferenceUtils;
 import ru.sc222.smartringapp.utils.ServiceUtils;
 import ru.sc222.smartringapp.viewmodels.SharedBluetoothViewModel;
@@ -31,7 +28,7 @@ public class SelectBluetoothDeviceDialog extends AlertDialog {
     private boolean isCancelable;
     private Activity activity;
     private Context appContext;
-    boolean isServiceBound = false;
+    private boolean isServiceBound = false;
     private RecyclerView recyclerView;
     private BluetoothDevicesAdapter adapter;
 
@@ -56,22 +53,14 @@ public class SelectBluetoothDeviceDialog extends AlertDialog {
             adapter = new BluetoothDevicesAdapter(appContext, sharedBluetoothViewModel.getDevicesList());
             recyclerView.setAdapter(adapter);
 
-            adapter.setClickListener(new BluetoothDevicesAdapter.ItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    AdapterBluetoothDevice item = adapter.getItem(position);
-                    PreferenceUtils.saveCurrentDevice(appContext, item.getAddress(), item.getName());
-                    dismiss();
-                    // unbindService();
-                }
+            adapter.setClickListener((view, position) -> {
+                AdapterBluetoothDevice item = adapter.getItem(position);
+                PreferenceUtils.saveCurrentDevice(appContext, item.getAddress(), item.getName());
+                dismiss();
+                // unbindService();
             });
 
-            sharedBluetoothViewModel.getDevicesMap().observe(lifecycleOwner, new Observer<Map<String, BluetoothDevice>>() {
-                @Override
-                public void onChanged(Map<String, BluetoothDevice> deviceMap) {
-                    adapter.notifyDataSetChanged();
-                }
-            });
+            sharedBluetoothViewModel.getDevicesMap().observe(lifecycleOwner, deviceMap -> adapter.notifyDataSetChanged());
         }
 
         @Override
