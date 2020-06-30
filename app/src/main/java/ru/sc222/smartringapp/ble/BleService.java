@@ -40,13 +40,13 @@ public class BleService extends Service {
 
     private static final String NOTIFICATION_CHANNEL_ID = "notification_ble";
     private static final int NOTIFICATION_ID = 1337;
-    private static final int BUFFER_CLEAR_FREQUENCY=10;
-    private int bufferCount=0;
+    private static final int BUFFER_CLEAR_FREQUENCY = 10;
+    private int bufferCount = 0;
 
 
     //TODO USE VIEWMODEL
     //address and device
-    private Map<String, BluetoothDevice> devices = new HashMap<String, BluetoothDevice>();
+    private Map<String, BluetoothDevice> devices = new HashMap<>();
     private HashSet<String> devicesBuffer = new HashSet<>();//to clear unvisible devices
 
     private ButtonBleManager buttonBleManager;
@@ -80,7 +80,7 @@ public class BleService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e("service","oncreate");
+        Log.e("service", "oncreate");
         bleServiceSharedViewModel = new BleServiceSharedViewModel(getApplicationContext());
         buttonBleManager = new ButtonBleManager(getApplicationContext());
         buttonBleManager.getButtonState().observeForever(new Observer<Integer>() {
@@ -88,9 +88,9 @@ public class BleService extends Service {
             public void onChanged(Integer integer) {
                 if (integer > 0 && integer < 4
                 ) {
-                    Log.e("ble","ble btn state:"+buttonStates[integer - 1]);
+                    Log.e("ble", "ble btn state:" + buttonStates[integer - 1]);
                 } else {
-                    Log.e("ble","ble btn state:"+"Состояние неизвестно");
+                    Log.e("ble", "ble btn state:" + "Состояние неизвестно");
                 }
                 //Toast.makeText(getApplicationContext(),"CLICKED: "+integer,Toast.LENGTH_SHORT).show();
             }
@@ -100,14 +100,12 @@ public class BleService extends Service {
     private final ScanCallback scanCallback = new ScanCallback() {
         @Override
         public void onScanResult(final int callbackType, @NonNull final ScanResult result) {
-            // This callback will be called only if the scan report delay is not set or is set to 0.
-            Toast.makeText(getApplicationContext(), "THIS METHOD SHOULD BE HANDLED", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onBatchScanResults(@NonNull final List<ScanResult> results) {
             bufferCount++;
-            if(bufferCount==BUFFER_CLEAR_FREQUENCY) {
+            if (bufferCount == BUFFER_CLEAR_FREQUENCY) {
                 bufferCount = 0;
                 devicesBuffer.clear();
             }
@@ -120,9 +118,9 @@ public class BleService extends Service {
                 }
             }
 
-            for(Iterator<Map.Entry<String, BluetoothDevice>> it = devices.entrySet().iterator(); it.hasNext(); ) {
+            for (Iterator<Map.Entry<String, BluetoothDevice>> it = devices.entrySet().iterator(); it.hasNext(); ) {
                 Map.Entry<String, BluetoothDevice> entry = it.next();
-                if(!devicesBuffer.contains(entry.getKey()))
+                if (!devicesBuffer.contains(entry.getKey()))
                     it.remove();
             }
 
@@ -142,33 +140,25 @@ public class BleService extends Service {
     private void startScanning() {
         if (isScannerStarted)
             return;
-        //todo CHECK PERMISSIONS BEFORE SCANNING AND SHOW ERRORS
-        if (BleUtils.isLocationPermissionsGranted(this)) {
-
-            isScannerStarted = true;
-            ScanSettings settings = new ScanSettings.Builder()
-                    .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-                    .setReportDelay(500)
-                    .setUseHardwareBatchingIfSupported(true)
-                    .build();
-            BluetoothLeScannerCompat scanner = BluetoothLeScannerCompat.getScanner();
-            scanner.startScan(null, settings, scanCallback);
-
-        } else {
-            Toast.makeText(this, "NO LOCATION PERMISSION", Toast.LENGTH_SHORT).show();
-        }
+        isScannerStarted = true;
+        ScanSettings settings = new ScanSettings.Builder()
+                .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
+                .setReportDelay(500)
+                .setUseHardwareBatchingIfSupported(true)
+                .build();
+        BluetoothLeScannerCompat scanner = BluetoothLeScannerCompat.getScanner();
+        scanner.startScan(null, settings, scanCallback);
     }
 
     //used by binder
     public void connectToDevice() {
-        String savedDeviceAddress=PreferenceUtils.getCurrentDeviceAddress(this);
+        String savedDeviceAddress = PreferenceUtils.getCurrentDeviceAddress(this);
         //Log.e("saved",savedDeviceAddress);
-        if(devices.containsKey(savedDeviceAddress))
-        {
-            Log.e("ble","device found");
-            BluetoothDevice device=devices.get(savedDeviceAddress);
+        if (devices.containsKey(savedDeviceAddress)) {
+            Log.e("ble", "device found");
+            BluetoothDevice device = devices.get(savedDeviceAddress);
             assert device != null;
-            if(!device.getName().equals("Smart Ring")) {
+            if (!device.getName().equals("Smart Ring")) {
                 //wrong device
                 Log.e("ble", "wrong device");
                 return;
@@ -177,10 +167,9 @@ public class BleService extends Service {
                     .retry(3, 100)
                     .useAutoConnect(false)
                     .enqueue();
-        }
-        else {
+        } else {
             //todo replace with notifications
-            Log.e("ble","device not found");
+            //Log.e("ble", "device not found");
         }
 
     }
@@ -200,18 +189,17 @@ public class BleService extends Service {
                         stopForegroundService();
                         Toast.makeText(getApplicationContext(), "Foreground service is stopped.", Toast.LENGTH_LONG).show();
                         break;
-                    //todo action connect device
                 }
         }
         return super.onStartCommand(intent, flags, startId);
     }
 
     private void startForegroundService() {
-       MakeFirstNotificationSetup();
-       Notification notification = CreateServiceNotification("Device not connected");
-       Notify(notification);
-       startForeground(NOTIFICATION_ID, notification);
-       startScanning(); //todo restart scanning when location turned on
+        MakeFirstNotificationSetup();
+        Notification notification = CreateServiceNotification("Device not connected");
+        Notify(notification);
+        startForeground(NOTIFICATION_ID, notification);
+        startScanning(); //todo restart scanning when location turned on
     }
 
     private void Notify(Notification notification) {
@@ -240,43 +228,9 @@ public class BleService extends Service {
         return builder.build();
     }
 
-    /*@RequiresApi(Build.VERSION_CODES.O)
-    private void createNotificationChannel(String channelId, String channelName) {
-        Intent resultIntent = new Intent(this, MainActivity.class);
-// Create the TaskStackBuilder and add the intent, which inflates the back stack
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addNextIntentWithParentStack(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        NotificationChannel chan = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
-        chan.setLightColor(Color.BLUE);
-        chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        assert manager != null;
-        manager.createNotificationChannel(chan);
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId);
-        Notification notification = notificationBuilder.setOngoing(true)
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("App is running in background")
-                .setPriority(NotificationManager.IMPORTANCE_MIN)
-                .setCategory(Notification.CATEGORY_SERVICE)
-                .setContentIntent(resultPendingIntent) //intent
-                .build();
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1, notificationBuilder.build());
-        startForeground(1, notification);
-    }*/
-
-
     private void stopForegroundService() {
         Log.d(TAG_FOREGROUND_SERVICE, "Stop foreground service.");
-
-        // Stop foreground mode and remove the notification.
         stopForeground(true);
-
-        // Stop the foreground service.
         stopSelf();
     }
 }

@@ -13,7 +13,8 @@ public class PreferenceUtils {
     public static final String NAV_ITEM = "current_nav_item";
     public static final String DEVICE_ADDRESS = "device_address";
     public static final String DEVICE_NAME = "device_name";
-    public static final String DEVICE_DEF_VALUE = "";
+    public static final String DEVICE_ADDRESS_DEFAULT = "C1:7F:8C:F6:B1:3B";
+    public static final String DEVICE_NAME_DEFAULT = "Smart Ring";
 
     public static void saveCurrentNavigationItem(Context context, int itemId) {
         Log.e("SAVE: ", "item");
@@ -29,12 +30,12 @@ public class PreferenceUtils {
 
     public static String getCurrentDeviceAddress(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getString(DEVICE_ADDRESS, DEVICE_DEF_VALUE);
+        return sp.getString(DEVICE_ADDRESS, DEVICE_ADDRESS_DEFAULT);
     }
 
     public static String getCurrentDeviceName(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getString(DEVICE_NAME, DEVICE_DEF_VALUE);
+        return sp.getString(DEVICE_NAME, DEVICE_NAME_DEFAULT);
     }
 
     public static void saveCurrentDevice(Context c, String address, String name) {

@@ -30,7 +30,6 @@ import androidx.annotation.NonNull;
 import no.nordicsemi.android.ble.callback.profile.ProfileDataCallback;
 import no.nordicsemi.android.ble.data.Data;
 
-@SuppressWarnings("ConstantConditions")
 public abstract class ButtonDataCallback implements ProfileDataCallback, BleButtonCallback {
     private static final int STATE_RELEASED = 0x00;
     private static final int STATE_PRESSED = 0x01;
