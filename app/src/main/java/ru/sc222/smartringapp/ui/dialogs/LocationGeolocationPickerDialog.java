@@ -31,7 +31,7 @@ import com.google.android.material.snackbar.Snackbar;
 import ru.sc222.smartringapp.AddOrEditLocationViewModel;
 import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.core.Geoposition;
-import ru.sc222.smartringapp.utils.MapUtils;
+import ru.sc222.smartringapp.utils.LocationUtils;
 
 public class LocationGeolocationPickerDialog extends DialogFragment
         implements OnMapReadyCallback, GoogleMap.OnMapClickListener{
@@ -130,7 +130,7 @@ public class LocationGeolocationPickerDialog extends DialogFragment
     @Override
     public void onMapClick(LatLng latLng) {
         geopositionMarker = new MarkerOptions().position(latLng);
-        locationName = MapUtils.getLocationString(c, latLng);
+        locationName = LocationUtils.getLocationString(c, latLng);
         textViewLocationName.setText(locationName);
         UpdateLocationIndicator(latLng);
     }
@@ -138,7 +138,7 @@ public class LocationGeolocationPickerDialog extends DialogFragment
     private void UpdateLocationIndicator(LatLng latLng) {
         mMap.clear();
         mMap.addMarker(geopositionMarker);
-        MapUtils.drawCircle(c, mMap, latLng, radius);
+        LocationUtils.drawCircle(c, mMap, latLng, radius);
     }
 
     @Override

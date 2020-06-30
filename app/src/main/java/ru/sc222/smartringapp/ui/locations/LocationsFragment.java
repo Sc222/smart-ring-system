@@ -29,7 +29,7 @@ import ru.sc222.smartringapp.AddLocationActivity;
 import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.db.AppDatabase;
 import ru.sc222.smartringapp.db.Location;
-import ru.sc222.smartringapp.utils.MapUtils;
+import ru.sc222.smartringapp.utils.LocationUtils;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -47,7 +47,7 @@ public class LocationsFragment extends Fragment {
             currentCoordinates = location;
             if (allLocations != null) {
 
-                int currLocIndex = MapUtils.getCurrentLocation(allLocations, currentCoordinates);
+                int currLocIndex = LocationUtils.getCurrentLocation(allLocations, currentCoordinates);
                 //Toast.makeText(getContext(),"Current loc: "+allLocations.get(currLocIndex).locationName,Toast.LENGTH_SHORT).show();
                 locationsViewModel.setCurrentLocation(currLocIndex); //todo redraws whole list, FIX LATER
             }
