@@ -26,11 +26,11 @@ public class CommandsViewModel extends ViewModel {
         return mText;
     }
 
-    public void setActions(List<Action> actions) {
-        this.actions.setValue(actions);
-    }
-
     public LiveData<List<Action>> getActions() {
         return actions;
+    }
+
+    public void setActions(List<Action> actions) {
+        this.actions.setValue(actions);
     }
 }

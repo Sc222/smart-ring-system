@@ -26,7 +26,15 @@ public class ButtonBleManager extends ObservableBleManager {
     private final static UUID LBS_UUID_BUTTON_CHAR = UUID.fromString("00001524-1212-efde-1523-785feabcd123");
 
     private final MutableLiveData<Integer> buttonState = new MutableLiveData<>();
-
+    private final DataReceivedCallback buttonCallback = (device, data) -> {
+        if (data.size() != 1) {
+            Log.e("ble", "invalid data received");
+            return;
+        }
+        final int state = data.getIntValue(Data.FORMAT_UINT8, 0);
+        Log.e("test", "received value: " + state);
+        buttonState.setValue(state);
+    };
     private BluetoothGattCharacteristic buttonCharacteristic;
     private boolean supported;
 
@@ -45,23 +53,10 @@ public class ButtonBleManager extends ObservableBleManager {
         return new SimpleBleManagerGattCallback();
     }
 
-
     @Override
     protected boolean shouldClearCacheWhenDisconnected() {
         return !supported;
     }
-
-
-    private final DataReceivedCallback buttonCallback = (device, data) -> {
-        if (data.size() != 1) {
-            Log.e("ble", "invalid data received");
-            return;
-        }
-        final int state = data.getIntValue(Data.FORMAT_UINT8, 0);
-        Log.e("test", "received value: " + state);
-        buttonState.setValue(state);
-    };
-
 
     private class SimpleBleManagerGattCallback extends BleManagerGattCallback {
         @Override

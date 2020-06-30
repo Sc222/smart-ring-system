@@ -22,13 +22,12 @@ public class SharedLocationViewModel extends ViewModel {
         currentLocation.setValue(-1);
     }
 
+    public LiveData<List<Location>> getLocations() {
+        return locations;
+    }
 
     public void setLocations(List<Location> locations) {
         this.locations.setValue(locations);
-    }
-
-    public LiveData<List<Location>> getLocations() {
-        return locations;
     }
 
     public LiveData<Integer> getCurrentLocation() {

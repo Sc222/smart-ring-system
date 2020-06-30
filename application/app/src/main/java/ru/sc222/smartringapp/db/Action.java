@@ -8,13 +8,6 @@ import ru.sc222.smartringapp.R;
 
 @Entity
 public class Action {
-    @Ignore //todo refactor, move to string resource
-    public static String NOT_DEFINED = "Не назначено";
-    @Ignore //todo refactor, move to string resource, MAKE ENUM
-    public static String TYPE_ALERT = "Тревожный сигнал";
-    @Ignore //todo refactor, move to string resource, MAKE ENUM
-    public static String TYPE_HOME_CONTROL = "Управление умным домом";
-
     @Ignore
     public static final int[] icons = {
             R.drawable.ic_action_danger,
@@ -25,7 +18,12 @@ public class Action {
             R.drawable.ic_action_light_3,
             R.drawable.ic_action_kettle,
     };
-
+    @Ignore //todo refactor, move to string resource
+    public static String NOT_DEFINED = "Не назначено";
+    @Ignore //todo refactor, move to string resource, MAKE ENUM
+    public static String TYPE_ALERT = "Тревожный сигнал";
+    @Ignore //todo refactor, move to string resource, MAKE ENUM
+    public static String TYPE_HOME_CONTROL = "Управление умным домом";
     @PrimaryKey(autoGenerate = true)
     public long actionId;
     public String actionCategory; //Освещение, бытовая техника и т.д.

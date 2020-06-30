@@ -31,15 +31,6 @@ public class SelectBluetoothDeviceDialog extends AlertDialog {
     private boolean isServiceBound = false;
     private RecyclerView recyclerView;
     private BluetoothDevicesAdapter adapter;
-
-    public SelectBluetoothDeviceDialog(boolean isCancelable, Activity activity, Context appContext, LifecycleOwner lifecycleOwner) {
-        super(activity);
-        this.isCancelable = isCancelable;
-        this.activity = activity;
-        this.appContext = appContext;
-        this.lifecycleOwner = lifecycleOwner;
-    }
-
     private ServiceConnection connection = new ServiceConnection() {
 
         @Override
@@ -68,6 +59,14 @@ public class SelectBluetoothDeviceDialog extends AlertDialog {
             isServiceBound = false;
         }
     };
+
+    public SelectBluetoothDeviceDialog(boolean isCancelable, Activity activity, Context appContext, LifecycleOwner lifecycleOwner) {
+        super(activity);
+        this.isCancelable = isCancelable;
+        this.activity = activity;
+        this.appContext = appContext;
+        this.lifecycleOwner = lifecycleOwner;
+    }
 
     @Override
     public void dismiss() {

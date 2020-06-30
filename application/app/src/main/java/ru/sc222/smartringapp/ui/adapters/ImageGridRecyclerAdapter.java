@@ -43,6 +43,20 @@ public class ImageGridRecyclerAdapter extends RecyclerView.Adapter<ImageGridRecy
         return mData.length;
     }
 
+    // convenience method for getting data at click position
+    int getItem(int id) {
+        return mData[id];
+    }
+
+    // allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
+    }
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -58,20 +72,5 @@ public class ImageGridRecyclerAdapter extends RecyclerView.Adapter<ImageGridRecy
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
-    }
-
-    // convenience method for getting data at click position
-    int getItem(int id) {
-        return mData[id];
-    }
-
-    // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
-
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
     }
 }

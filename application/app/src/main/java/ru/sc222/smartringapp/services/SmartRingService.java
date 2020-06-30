@@ -37,22 +37,45 @@ import ru.sc222.smartringapp.viewmodels.SharedLocationViewModel;
 //TODO REFACTOR SERVICE, SPLIT INTO CLASSES
 public class SmartRingService extends Service {
 
-    private static final String TAG_FOREGROUND_SERVICE = "FOREGROUND_SERVICE";
     public static final String ACTION_START_FOREGROUND_SERVICE = "ACTION_START_FOREGROUND_SERVICE";
     public static final String ACTION_STOP_FOREGROUND_SERVICE = "ACTION_STOP_FOREGROUND_SERVICE";
+    private static final String TAG_FOREGROUND_SERVICE = "FOREGROUND_SERVICE";
     private static final int BUFFER_CLEAR_FREQUENCY = 10;
+    //for binding
+    private final IBinder binder = new BleServiceBinder();
     private int bufferCount = 0;
-
     private boolean isScannerStarted = false;
     private SharedLocationViewModel sharedLocationViewModel;
     private List<Location> allLocations;
+    //TODO !!! set "OUTSIDE" LOCATION WHEN GPS IS OFF
+    private final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(android.location.Location location) {
+            if (allLocations != null) {
+                int currLocIndex = LocationUtils.getCurrentLocation(allLocations, location);
+                sharedLocationViewModel.setCurrentLocation(currLocIndex);
+            }
+            //Log.e("curr loc", "loc: " + location.getLatitude() + " " + location.getLongitude());
+        }
 
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
 
+        @Override
+        public void onProviderEnabled(String provider) {
+            //todo restart service
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            //todo stop service and show message "location turned off"
+        }
+    };
     //TODO USE VIEWMODEL
     //address and device
     private Map<String, BluetoothDevice> devices = new HashMap<>();
     private HashSet<String> devicesBuffer = new HashSet<>(); //to clear invisible devices
-
     private ButtonBleManager buttonBleManager;
     private String[] buttonStates = { //TODO fix
             "Обычное нажатие",
@@ -60,16 +83,47 @@ public class SmartRingService extends Service {
             "Длинное нажатие"
     };
     private SharedBluetoothViewModel sharedBluetoothViewModel;
-
-    //for binding
-    private final IBinder binder = new BleServiceBinder();
-
-    public class BleServiceBinder extends Binder {
-        public SmartRingService getService() {
-            // Return this instance of LocalService so clients can call public methods
-            return SmartRingService.this;
+    private final ScanCallback scanCallback = new ScanCallback() {
+        @Override
+        public void onScanResult(final int callbackType, @NonNull final ScanResult result) {
         }
-    }
+
+        @Override
+        public void onBatchScanResults(@NonNull final List<ScanResult> results) {
+            bufferCount++;
+            if (bufferCount == BUFFER_CLEAR_FREQUENCY) {
+                bufferCount = 0;
+                devicesBuffer.clear();
+            }
+
+            for (ScanResult result : results) {
+                devicesBuffer.add(result.getDevice().getAddress());
+                BluetoothDevice device = result.getDevice();
+                if (!devices.containsKey(device.getAddress())) {
+                    devices.put(device.getAddress(), device);
+                }
+            }
+
+            for (Iterator<Map.Entry<String, BluetoothDevice>> it = devices.entrySet().iterator(); it.hasNext(); ) {
+                Map.Entry<String, BluetoothDevice> entry = it.next();
+                if (!devicesBuffer.contains(entry.getKey()))
+                    it.remove();
+            }
+
+            //update model for application communication
+            sharedBluetoothViewModel.setDevicesMap(devices);
+            //Log.e("ble","scan accomplished: "+results.size());
+            //todo is connected bool
+            //TODO SETUP connect/disconnect receiver
+            //todo RECONNECT when changed device in settings
+            BluetoothUtils.connectToDevice(devices, buttonBleManager, getApplicationContext());
+        }
+
+        @Override
+        public void onScanFailed(final int errorCode) {
+            //Toast.makeText(getApplicationContext(), "SCANNING FAILED", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     public SharedBluetoothViewModel getBluetoothViewModel() {
         return sharedBluetoothViewModel;
@@ -129,74 +183,6 @@ public class SmartRingService extends Service {
         locationsDbLoader.execute();
     }
 
-    //TODO !!! set "OUTSIDE" LOCATION WHEN GPS IS OFF
-    private final LocationListener mLocationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(android.location.Location location) {
-            if (allLocations != null) {
-                int currLocIndex = LocationUtils.getCurrentLocation(allLocations, location);
-                sharedLocationViewModel.setCurrentLocation(currLocIndex);
-            }
-            //Log.e("curr loc", "loc: " + location.getLatitude() + " " + location.getLongitude());
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-            //todo restart service
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-            //todo stop service and show message "location turned off"
-        }
-    };
-
-    private final ScanCallback scanCallback = new ScanCallback() {
-        @Override
-        public void onScanResult(final int callbackType, @NonNull final ScanResult result) {
-        }
-
-        @Override
-        public void onBatchScanResults(@NonNull final List<ScanResult> results) {
-            bufferCount++;
-            if (bufferCount == BUFFER_CLEAR_FREQUENCY) {
-                bufferCount = 0;
-                devicesBuffer.clear();
-            }
-
-            for (ScanResult result : results) {
-                devicesBuffer.add(result.getDevice().getAddress());
-                BluetoothDevice device = result.getDevice();
-                if (!devices.containsKey(device.getAddress())) {
-                    devices.put(device.getAddress(), device);
-                }
-            }
-
-            for (Iterator<Map.Entry<String, BluetoothDevice>> it = devices.entrySet().iterator(); it.hasNext(); ) {
-                Map.Entry<String, BluetoothDevice> entry = it.next();
-                if (!devicesBuffer.contains(entry.getKey()))
-                    it.remove();
-            }
-
-            //update model for application communication
-            sharedBluetoothViewModel.setDevicesMap(devices);
-            //Log.e("ble","scan accomplished: "+results.size());
-            //todo is connected bool
-            //TODO SETUP connect/disconnect receiver
-            //todo RECONNECT when changed device in settings
-            BluetoothUtils.connectToDevice(devices, buttonBleManager, getApplicationContext());
-        }
-
-        @Override
-        public void onScanFailed(final int errorCode) {
-            //Toast.makeText(getApplicationContext(), "SCANNING FAILED", Toast.LENGTH_SHORT).show();
-        }
-    };
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
@@ -230,5 +216,12 @@ public class SmartRingService extends Service {
         Log.d(TAG_FOREGROUND_SERVICE, "Stop foreground service.");
         stopForeground(true);
         stopSelf();
+    }
+
+    public class BleServiceBinder extends Binder {
+        public SmartRingService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return SmartRingService.this;
+        }
     }
 }

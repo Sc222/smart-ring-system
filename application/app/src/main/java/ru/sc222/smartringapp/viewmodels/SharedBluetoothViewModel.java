@@ -32,15 +32,6 @@ public class SharedBluetoothViewModel extends ViewModel {
         return devicesList;
     }
 
-    public LiveData<Map<String, BluetoothDevice>> getDevicesMap() {
-        return devicesMap;
-    }
-
-    public void setDevicesMap(Map<String, BluetoothDevice> bluetoothDevicesMap) {
-        setDevicesList(bluetoothDevicesMap);
-        this.devicesMap.setValue(bluetoothDevicesMap);
-    }
-
     private void setDevicesList(Map<String, BluetoothDevice> bluetoothDevicesMap) {
         devicesList.clear();
 
@@ -54,5 +45,14 @@ public class SharedBluetoothViewModel extends ViewModel {
         for (BluetoothDevice device : bluetoothDevicesMap.values()) {
             devicesList.add(new AdapterBluetoothDevice(device.getAddress(), device.getName()));
         }
+    }
+
+    public LiveData<Map<String, BluetoothDevice>> getDevicesMap() {
+        return devicesMap;
+    }
+
+    public void setDevicesMap(Map<String, BluetoothDevice> bluetoothDevicesMap) {
+        setDevicesList(bluetoothDevicesMap);
+        this.devicesMap.setValue(bluetoothDevicesMap);
     }
 }

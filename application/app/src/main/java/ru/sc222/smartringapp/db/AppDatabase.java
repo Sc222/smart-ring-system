@@ -16,21 +16,6 @@ import static android.database.sqlite.SQLiteDatabase.CONFLICT_IGNORE;
 @Database(entities = {Action.class, Location.class}, version = 1, exportSchema = true)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase ourInstance = null;
-
-    public static AppDatabase getInstance(Context context) {
-        if (ourInstance == null) {
-            ourInstance = buildDatabase(context);
-        }
-        return ourInstance;
-    }
-
-    private static AppDatabase buildDatabase(final Context context) {
-        return Room.databaseBuilder(context,
-                AppDatabase.class,
-                "my-database")
-                .addCallback(callback).build();
-    }
-
     private static RoomDatabase.Callback callback = new RoomDatabase.Callback() {
         public void onCreate(SupportSQLiteDatabase db) {
             // todo prepopulate here
@@ -55,6 +40,20 @@ public abstract class AppDatabase extends RoomDatabase {
             // do something every time database is open
         }
     };
+
+    public static AppDatabase getInstance(Context context) {
+        if (ourInstance == null) {
+            ourInstance = buildDatabase(context);
+        }
+        return ourInstance;
+    }
+
+    private static AppDatabase buildDatabase(final Context context) {
+        return Room.databaseBuilder(context,
+                AppDatabase.class,
+                "my-database")
+                .addCallback(callback).build();
+    }
 
     //todo refactor
     private static void InsertAction(SupportSQLiteDatabase db, Action action) {

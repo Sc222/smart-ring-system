@@ -43,11 +43,6 @@ public class Location {
             R.drawable.location_outside_bg_ic,
             R.drawable.location_outside_city_bg_ic,
     };
-
-    @Ignore
-    private String[] commands;
-
-
     @PrimaryKey(autoGenerate = true)
     public long locationId;
     public int radius;
@@ -56,12 +51,13 @@ public class Location {
     public double locationLongitude;
     public double locationLatitude;
     public int locationBackground; //id of background drawable
-
     //todo create many-to-many relation and replace with list
     public String singleClickAction;
     public String doubleClickAction;
     public String tripleClickAction;
     public String longClickAction;
+    @Ignore
+    private String[] commands;
 
     public Location(long locationId, int radius, String locationName, String locationAddress, double locationLongitude, double locationLatitude, int locationBackground, String singleClickAction, String doubleClickAction, String tripleClickAction, String longClickAction) {
         this.locationId = locationId;

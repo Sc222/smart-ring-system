@@ -36,9 +36,9 @@ import ru.sc222.smartringapp.viewmodels.AddOrEditLocationViewModel;
 public class LocationGeolocationPickerDialog extends DialogFragment
         implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
+    private static final int MIN_RADIUS = 100;
     private Context c;
     private AddOrEditLocationViewModel addOrEditLocationViewModel;
-    private static final int MIN_RADIUS = 100;
     private int radius = MIN_RADIUS;
     private String locationName = "";
     private GoogleMap mMap;
