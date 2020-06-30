@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/card_vertical_margin"
-                android:orientation="vertical"></androidx.appcompat.widget.LinearLayoutCompat>
+                android:orientation="vertical" />
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 
