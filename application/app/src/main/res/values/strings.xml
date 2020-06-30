@@ -65,4 +65,7 @@
     <string name="set_action_description">Enter action description</string>
     <string name="set_location_name">Enter location name</string>
     <string name="set_location_geoposition">Enter location description</string>
+    <string name="coordinates_unknown">Geoposition is unknown</string>
+    <string name="alert_has_been_sent">Alert message has been sent!</string>
+    <string name="msg_alert">Alert! %s</string>
 </resources>

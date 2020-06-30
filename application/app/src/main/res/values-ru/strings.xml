@@ -59,4 +59,7 @@
     <string name="set_location_name">Укажите название локации</string>
     <string name="set_location_geoposition">Укажите местоположение локации</string>
     <string name="set_action_number">Укажите телефон</string>
+    <string name="coordinates_unknown">Местоположение неизвестно</string>
+    <string name="msg_alert">Тревога! %s</string>
+    <string name="alert_has_been_sent">Тревожное сообщение отправлено!</string>
 </resources>
