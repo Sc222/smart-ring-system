@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp.ble;
+package ru.sc222.smartringapp.viewmodels;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import ru.sc222.smartringapp.core.AdapterBluetoothDevice;
+import ru.sc222.smartringapp.dto.AdapterBluetoothDevice;
 import ru.sc222.smartringapp.utils.PreferenceUtils;
 
 public class BleServiceSharedViewModel extends ViewModel {

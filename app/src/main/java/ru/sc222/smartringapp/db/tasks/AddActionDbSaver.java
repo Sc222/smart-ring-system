@@ -1,9 +1,10 @@
-package ru.sc222.smartringapp;
+package ru.sc222.smartringapp.db.tasks;
 
 import android.os.AsyncTask;
 
 import ru.sc222.smartringapp.db.Action;
 import ru.sc222.smartringapp.db.AppDatabase;
+import ru.sc222.smartringapp.viewmodels.AddOrEditCommandViewModel;
 
 public class AddActionDbSaver extends AsyncTask<Action,Integer,Boolean> {
 

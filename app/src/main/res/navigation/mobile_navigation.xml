@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_location"
-        android:name="ru.sc222.smartringapp.ui.locations.LocationsFragment"
+        android:name="ru.sc222.smartringapp.ui.fragments.LocationsFragment"
         android:label="@string/title_locations"
         tools:layout="@layout/fragment_locations" />
 
     <fragment
         android:id="@+id/navigation_commands"
-        android:name="ru.sc222.smartringapp.ui.commands.CommandsFragment"
+        android:name="ru.sc222.smartringapp.ui.fragments.CommandsFragment"
         android:label="@string/title_commands"
         tools:layout="@layout/fragment_commands" />
 
     <fragment
         android:id="@+id/navigation_device"
-        android:name="ru.sc222.smartringapp.ui.device.DeviceFragment"
+        android:name="ru.sc222.smartringapp.ui.fragments.DeviceFragment"
         android:label="@string/title_device"
         tools:layout="@layout/fragment_device" />
 </navigation>

@@ -1,6 +1,5 @@
 package ru.sc222.smartringapp.ui.dialogs;
 
-import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ru.sc222.smartringapp.R;
-import ru.sc222.smartringapp.core.AdapterBluetoothDevice;
+import ru.sc222.smartringapp.dto.AdapterBluetoothDevice;
 import ru.sc222.smartringapp.utils.PreferenceUtils;
 
 public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevicesAdapter.ViewHolder> {

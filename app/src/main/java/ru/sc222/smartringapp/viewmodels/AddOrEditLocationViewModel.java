@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp;
+package ru.sc222.smartringapp.viewmodels;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.sc222.smartringapp.core.Geoposition;
 import ru.sc222.smartringapp.db.Action;
+import ru.sc222.smartringapp.dto.Geoposition;
 
 public class AddOrEditLocationViewModel extends ViewModel {
     private MutableLiveData<List<Action>> actions;

@@ -9,9 +9,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import ru.sc222.smartringapp.AddOrEditLocationViewModel;
 import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.db.Location;
+import ru.sc222.smartringapp.viewmodels.AddOrEditLocationViewModel;
 
 public class LocationBgPickerDialog extends AlertDialog {
 

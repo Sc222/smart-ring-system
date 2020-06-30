@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp;
+package ru.sc222.smartringapp.utils;
 
 import android.app.Activity;
 import android.app.NotificationChannel;
@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+
+import ru.sc222.smartringapp.R;
 
 public class MOCK_UTILS {
     public static void showNotification(final Context context, int delay, final String msg) {

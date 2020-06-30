@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp.ui.device;
+package ru.sc222.smartringapp.ui.fragments;
 
 import android.os.Bundle;
 import android.util.Log;

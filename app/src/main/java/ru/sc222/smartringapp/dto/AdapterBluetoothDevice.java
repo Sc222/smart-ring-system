@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp.core;
+package ru.sc222.smartringapp.dto;
 
 public class AdapterBluetoothDevice {
     private String address;

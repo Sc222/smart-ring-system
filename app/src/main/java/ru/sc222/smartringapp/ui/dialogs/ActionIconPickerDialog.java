@@ -9,9 +9,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import ru.sc222.smartringapp.AddOrEditCommandViewModel;
 import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.db.Action;
+import ru.sc222.smartringapp.viewmodels.AddOrEditCommandViewModel;
 
 public class ActionIconPickerDialog extends AlertDialog {
 

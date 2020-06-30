@@ -1,8 +1,7 @@
-package ru.sc222.smartringapp.ui.commands;
+package ru.sc222.smartringapp.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -21,11 +19,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-import ru.sc222.smartringapp.AddCommandActivity;
-import ru.sc222.smartringapp.AddLocationActivity;
 import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.db.Action;
 import ru.sc222.smartringapp.db.AppDatabase;
+import ru.sc222.smartringapp.db.tasks.CommandsDbLoader;
+import ru.sc222.smartringapp.ui.activities.AddCommandActivity;
+import ru.sc222.smartringapp.viewmodels.CommandsViewModel;
 
 public class CommandsFragment extends Fragment {
 

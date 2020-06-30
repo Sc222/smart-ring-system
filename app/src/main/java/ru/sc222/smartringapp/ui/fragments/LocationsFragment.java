@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp.ui.locations;
+package ru.sc222.smartringapp.ui.fragments;
 
 import android.Manifest;
 import android.content.Intent;
@@ -25,11 +25,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-import ru.sc222.smartringapp.AddLocationActivity;
 import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.db.AppDatabase;
 import ru.sc222.smartringapp.db.Location;
+import ru.sc222.smartringapp.db.tasks.LocationsDbLoader;
+import ru.sc222.smartringapp.ui.activities.AddLocationActivity;
 import ru.sc222.smartringapp.utils.LocationUtils;
+import ru.sc222.smartringapp.viewmodels.LocationsViewModel;
 
 import static android.content.Context.LOCATION_SERVICE;
 

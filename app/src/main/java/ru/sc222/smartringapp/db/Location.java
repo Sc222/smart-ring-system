@@ -5,7 +5,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import ru.sc222.smartringapp.R;
-import ru.sc222.smartringapp.core.Geoposition;
+import ru.sc222.smartringapp.dto.Geoposition;
 
 
 @Entity

@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp;
+package ru.sc222.smartringapp.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,12 +23,16 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.sc222.smartringapp.core.Geoposition;
+import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.db.Action;
 import ru.sc222.smartringapp.db.AppDatabase;
 import ru.sc222.smartringapp.db.Location;
+import ru.sc222.smartringapp.db.tasks.AddLocationDbLoader;
+import ru.sc222.smartringapp.db.tasks.AddLocationDbSaver;
+import ru.sc222.smartringapp.dto.Geoposition;
 import ru.sc222.smartringapp.ui.dialogs.LocationBgPickerDialog;
 import ru.sc222.smartringapp.ui.dialogs.LocationGeolocationPickerDialog;
+import ru.sc222.smartringapp.viewmodels.AddOrEditLocationViewModel;
 
 public class AddLocationActivity extends AppCompatActivity {
 
@@ -66,7 +70,7 @@ public class AddLocationActivity extends AppCompatActivity {
                 if(isLocationAdded)
                 {
                     //todo workaround, use go back to parent
-                    Intent parent = new Intent(getApplicationContext(),MainActivity.class);
+                    Intent parent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(parent);
                     // AddLocationActivity.super.onBackPressed();
                     // finish(); //todo is it ok or i should launch parent activity manually?

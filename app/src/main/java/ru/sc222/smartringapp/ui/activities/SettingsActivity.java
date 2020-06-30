@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp;
+package ru.sc222.smartringapp.ui.activities;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.ui.dialogs.SelectBluetoothDeviceDialog;
 import ru.sc222.smartringapp.utils.PreferenceUtils;
 

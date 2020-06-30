@@ -29,6 +29,7 @@ import no.nordicsemi.android.support.v18.scanner.ScanResult;
 import no.nordicsemi.android.support.v18.scanner.ScanSettings;
 import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.utils.PreferenceUtils;
+import ru.sc222.smartringapp.viewmodels.BleServiceSharedViewModel;
 
 public class BleService extends Service {
 

@@ -28,10 +28,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import ru.sc222.smartringapp.AddOrEditLocationViewModel;
 import ru.sc222.smartringapp.R;
-import ru.sc222.smartringapp.core.Geoposition;
+import ru.sc222.smartringapp.dto.Geoposition;
 import ru.sc222.smartringapp.utils.LocationUtils;
+import ru.sc222.smartringapp.viewmodels.AddOrEditLocationViewModel;
 
 public class LocationGeolocationPickerDialog extends DialogFragment
         implements OnMapReadyCallback, GoogleMap.OnMapClickListener{

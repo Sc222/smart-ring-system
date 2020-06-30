@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp;
+package ru.sc222.smartringapp.ui.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,18 +8,17 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.ble.BleService;
 import ru.sc222.smartringapp.utils.BluetoothUtils;
 import ru.sc222.smartringapp.utils.LocationUtils;
@@ -98,16 +97,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                switch (destination.getId()) {
-                    case R.id.navigation_location:
-                    case R.id.navigation_commands:
-                    case R.id.navigation_device:
-                        PreferenceUtils.saveCurrentNavigationItem(getApplicationContext(), destination.getId());
-                        break;
-                }
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            switch (destination.getId()) {
+                case R.id.navigation_location:
+                case R.id.navigation_commands:
+                case R.id.navigation_device:
+                    PreferenceUtils.saveCurrentNavigationItem(getApplicationContext(), destination.getId());
+                    break;
             }
         });
     }

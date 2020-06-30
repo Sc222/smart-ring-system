@@ -19,9 +19,9 @@ import java.util.Map;
 
 import ru.sc222.smartringapp.R;
 import ru.sc222.smartringapp.ble.BleService;
-import ru.sc222.smartringapp.ble.BleServiceSharedViewModel;
-import ru.sc222.smartringapp.core.AdapterBluetoothDevice;
+import ru.sc222.smartringapp.dto.AdapterBluetoothDevice;
 import ru.sc222.smartringapp.utils.PreferenceUtils;
+import ru.sc222.smartringapp.viewmodels.BleServiceSharedViewModel;
 
 //dialog should be dismissed in fragment/activity ondestroy or service wont be unbound
 public class SelectBluetoothDeviceDialog extends AlertDialog {

@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp.ui.locations;
+package ru.sc222.smartringapp.db.tasks;
 
 import android.os.AsyncTask;
 
@@ -6,6 +6,7 @@ import java.util.List;
 
 import ru.sc222.smartringapp.db.AppDatabase;
 import ru.sc222.smartringapp.db.Location;
+import ru.sc222.smartringapp.viewmodels.LocationsViewModel;
 
 public class LocationsDbLoader extends AsyncTask<String, Integer, List<Location>> {
     //todo use interfaces and merge "loaders" into one class

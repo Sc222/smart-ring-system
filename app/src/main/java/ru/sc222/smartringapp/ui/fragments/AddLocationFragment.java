@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp;
+package ru.sc222.smartringapp.ui.fragments;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 

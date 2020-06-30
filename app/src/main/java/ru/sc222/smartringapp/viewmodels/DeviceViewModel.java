@@ -1,4 +1,4 @@
-package ru.sc222.smartringapp.ui.device;
+package ru.sc222.smartringapp.viewmodels;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
