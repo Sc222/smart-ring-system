@@ -12,7 +12,7 @@ Smart Ring - система для управления умным домом, �
 - [Схемотехника](https://github.com/Sc222/SmartRingApp/tree/master/schematics)
 
 ##### Установка
-Для комплиции прошивки требуется установить [nRF5 SDK 15.0.0](https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK/Download#infotabs) в папку [/device](https://github.com/Sc222/SmartRingApp/tree/master/device).
+Для компиляции прошивки требуется установить [nRF5 SDK 15.0.0](https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK/Download#infotabs) в папку [/device](https://github.com/Sc222/SmartRingApp/tree/master/device).
 ## Мобильное приложение
 ##### Описание
 Мобильное приложение используется для настройки устройства, обработки нажатий на его кнопку и отправки данных на сервер.
