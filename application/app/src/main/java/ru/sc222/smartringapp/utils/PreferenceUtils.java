@@ -9,6 +9,7 @@ import androidx.preference.PreferenceManager;
 import ru.sc222.smartringapp.R;
 
 public class PreferenceUtils {
+    //todo turn off notifications settings
 
     public static final String NAV_ITEM = "current_nav_item";
     public static final String DEVICE_ADDRESS = "device_address";

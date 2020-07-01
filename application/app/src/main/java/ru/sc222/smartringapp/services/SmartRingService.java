@@ -33,6 +33,7 @@ import ru.sc222.smartringapp.db.tasks.CommandsServiceDbLoader;
 import ru.sc222.smartringapp.db.tasks.LocationsDbLoader;
 import ru.sc222.smartringapp.utils.BluetoothUtils;
 import ru.sc222.smartringapp.utils.LocationUtils;
+import ru.sc222.smartringapp.utils.NetworkUtils;
 import ru.sc222.smartringapp.utils.NotificationUtils;
 import ru.sc222.smartringapp.utils.SmsUtils;
 import ru.sc222.smartringapp.viewmodels.SharedBluetoothViewModel;
@@ -85,9 +86,9 @@ public class SmartRingService extends Service {
     private HashSet<String> devicesBuffer = new HashSet<>(); //to clear invisible devices
     private ButtonBleManager buttonBleManager;
     private String[] buttonStates = { //TODO fix
-            "Обычное нажатие",
-            "Двойное нажатие",
-            "Длинное нажатие"
+            "pushed",
+            "double",
+            "held"
     };
     private SharedBluetoothViewModel sharedBluetoothViewModel;
     private final ScanCallback scanCallback = new ScanCallback() {
@@ -194,7 +195,10 @@ public class SmartRingService extends Service {
                         message = String.format(getString(R.string.msg_alert), message);
                         SmsUtils.sendSMS(getApplicationContext(), command.phoneNumber, message);
                     } else {
-                        //todo server post request
+                        //todo MAKE IT BETTER: PUT LOCATION AS ID
+                        String msg = getString(R.string.smart_home_command_sent);
+                        NotificationUtils.showNotification(getApplicationContext(), msg, msg);
+                        NetworkUtils.updateButtonState(buttonStates[rawValue - 1], getApplicationContext());
                     }
                 }
             }

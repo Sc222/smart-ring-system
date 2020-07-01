@@ -62,4 +62,5 @@
     <string name="coordinates_unknown">Местоположение неизвестно</string>
     <string name="msg_alert">Тревога! %s</string>
     <string name="alert_has_been_sent">Тревожное сообщение отправлено!</string>
+    <string name="smart_home_command_sent">Команда для умного дома была отправлена!</string>
 </resources>

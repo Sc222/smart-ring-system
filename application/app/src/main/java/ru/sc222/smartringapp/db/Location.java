@@ -52,6 +52,7 @@ public class Location {
     public double locationLatitude;
     public int locationBackground; //id of background drawable
     //todo create many-to-many relation and replace with list
+    //TODO MORE ACTIONS (GET THEM FROM SERVER LIST OR SMARTTHINGS BUTTON DOCS)
     public String singleClickAction;
     public String doubleClickAction;
     public String tripleClickAction;
