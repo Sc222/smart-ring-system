@@ -45,13 +45,17 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
+    //http requests
+    implementation 'com.android.volley:volley:1.1.1'
+
     //ble scanner for old apis
     implementation 'no.nordicsemi.android.support.v18:scanner:1.4.3'
+
     // Log Bluetooth LE events in nRF Logger
     implementation 'no.nordicsemi.android:log:2.2.0'
+
     //ble helper
     implementation 'no.nordicsemi.android:ble-livedata:2.2.0'
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
