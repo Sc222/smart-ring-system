@@ -1,0 +1,21 @@
+{
+  "name": "st-schema-virtual-glitch",
+  "version": "1.0.0",
+  "description": "Virtual ST schema implementation",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "ST-schema-Virtual-Glitch"
+  ],
+  "author": "SmartThings",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.13.4",
+    "fs": "0.0.1-security",
+    "st-schema": "^1.0.5",
+    "request": "^2.88.2"
+  }
+}

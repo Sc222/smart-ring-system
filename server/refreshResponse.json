@@ -1,0 +1,17 @@
+{
+  "externalDeviceId": "smart-ring",
+  "states": [
+    {
+      "component": "main",
+      "capability": "st.button",
+      "attribute": "button",
+      "value": "pushed"
+    },
+    {
+      "component": "main",
+      "capability": "st.healthCheck",
+      "attribute": "healthStatus",
+      "value": "online"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "headers": {
+    "schema": "st-schema",
+    "version": "1.0",
+    "interactionType": "grantCallbackAccess",
+    "requestId": "18aa6478-6dde-4a0e-be00-da617968b23d"
+  },
+  "authentication": { "tokenType": "Bearer", "token": "ACCT-HXvu9k" },
+  "callbackAuthentication": {
+    "grantType": "authorization_code",
+    "scope": "callback-access",
+    "code": "eyJhbGciOiJIUzM4NCJ9.MzcwOTM5NzMtYTgyOS00MzI0LWI1NmItNjE2MzNlMDRkNDQz.qI9ADDRHQA-IpcXPAfNIqnH6WZgG3E3Ia-7dvh1LHHWFwmfre-wiWN0GexNEfa88",
+    "clientId": "64b10d0d-875f-4109-b96c-8ef98273d5cf"
+  },
+  "callbackUrls": {
+    "oauthToken": "https://c2c-eu.smartthings.com/oauth/token",
+    "stateCallback": "https://c2c-eu.smartthings.com/device/events"
+  }
+}

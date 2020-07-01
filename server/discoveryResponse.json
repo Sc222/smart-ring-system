@@ -1,0 +1,21 @@
+{
+    "headers": {
+        "schema": "st-schema",
+        "version": "1.0",
+        "interactionType": "discoveryResponse",
+        "requestId": "abc-123-456"
+    },
+    "devices": [
+      {
+            "externalDeviceId": "smart-ring",
+            "friendlyName": "Smart Ring",
+            "deviceHandlerType": "c2c-button",
+            "manufacturerInfo": {
+                "manufacturerName": "Sc222",
+                "modelName": "Smart Ring",
+                "hwVersion": "v1",
+                "swVersion": "1.0"
+            }
+        }
+    ]
+}
