@@ -16,13 +16,13 @@ $EndDescr
 $Comp
 L Device:Antenna_Chip AE1
 U 1 1 5EF389ED
-P 6800 3550
-F 0 "AE1" H 6980 3722 50  0000 L CNN
-F 1 "2.4 GHz" H 6980 3631 50  0000 L CNN
-F 2 "RF_Antenna:Johanson_2450AT43F0100" H 6700 3725 50  0001 C CNN
-F 3 "https://www.johansontechnology.com/datasheets/2450AT18A100/2450AT18A100.pdf" H 6700 3725 50  0001 C CNN
-F 4 "2450AT18A100E" H 6980 3540 50  0000 L CNN "Part Number"
-	1    6800 3550
+P 7000 3550
+F 0 "AE1" H 7180 3722 50  0000 L CNN
+F 1 "2.4 GHz" H 7180 3631 50  0000 L CNN
+F 2 "chrns_rf_antennas:BLE_ARCH_1MM" H 6900 3725 50  0001 C CNN
+F 3 "https://www.johansontechnology.com/datasheets/2450AT18A100/2450AT18A100.pdf" H 6900 3725 50  0001 C CNN
+F 4 "2450AT18A100E" H 7180 3540 50  0000 L CNN "Part Number"
+	1    7000 3550
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -69,9 +69,7 @@ Wire Wire Line
 	6900 3750 7000 3750
 Connection ~ 7000 3750
 Wire Wire Line
-	6700 3650 6700 4250
-Wire Wire Line
-	7000 4150 7000 4250
+	7000 4150 7000 4200
 Text Label 8000 3750 2    50   ~ 0
 NRF_ANT
 $Comp
@@ -83,28 +81,6 @@ F 1 "GND" H 7005 4077 50  0000 C CNN
 F 2 "" H 7000 4250 50  0001 C CNN
 F 3 "" H 7000 4250 50  0001 C CNN
 	1    7000 4250
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR028
-U 1 1 5EF4CA91
-P 6700 4250
-F 0 "#PWR028" H 6700 4000 50  0001 C CNN
-F 1 "GND" H 6705 4077 50  0000 C CNN
-F 2 "" H 6700 4250 50  0001 C CNN
-F 3 "" H 6700 4250 50  0001 C CNN
-	1    6700 4250
-	1    0    0    -1  
-$EndComp
-$Comp
-L Mechanical:Fiducial FID1
-U 1 1 5EF50F73
-P 6500 7500
-F 0 "FID1" H 6585 7546 50  0000 L CNN
-F 1 "Fiducial" H 6585 7455 50  0000 L CNN
-F 2 "Fiducial:Fiducial_0.5mm_Mask1mm" H 6500 7500 50  0001 C CNN
-F 3 "~" H 6500 7500 50  0001 C CNN
-	1    6500 7500
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -369,7 +345,7 @@ F 3 "" H 5600 1000 50  0001 C CNN
 	1    5600 1000
 	0    -1   -1   0   
 $EndComp
-Text Notes 3450 2050 0    50   ~ 0
+Text Notes 3900 2350 1    50   ~ 0
 4.2V (VSEL1 = 1, VSEL2 = 0)\n10 mA (ISEL1 = 0, ISEL2 = 0)\n3.2V disconnect (LBSEL = 1)
 NoConn ~ 5400 1500
 Wire Wire Line
@@ -390,17 +366,6 @@ Wire Wire Line
 Connection ~ 5500 1200
 Wire Wire Line
 	3800 1000 3800 900 
-$Comp
-L power:VDD #PWR035
-U 1 1 5F015659
-P 10400 5500
-F 0 "#PWR035" H 10400 5350 50  0001 C CNN
-F 1 "VDD" H 10415 5673 50  0000 C CNN
-F 2 "" H 10400 5500 50  0001 C CNN
-F 3 "" H 10400 5500 50  0001 C CNN
-	1    10400 5500
-	1    0    0    -1  
-$EndComp
 $Comp
 L power:VDD #PWR020
 U 1 1 5F015918
@@ -834,13 +799,13 @@ Wire Wire Line
 $Comp
 L Connector_Generic:Conn_01x02 J1
 U 1 1 5F1B6795
-P 800 1600
-F 0 "J1" H 800 1400 50  0000 C CNN
-F 1 "Charger" V 900 1550 50  0000 C CNN
-F 2 "chrns_rf_connector:pogo_2x_in" H 800 1600 50  0001 C CNN
-F 3 "~" H 800 1600 50  0001 C CNN
-	1    800  1600
-	-1   0    0    1   
+P 800 1500
+F 0 "J1" H 800 1600 50  0000 C CNN
+F 1 "Charger" V 900 1450 50  0000 C CNN
+F 2 "chrns_rf_connector:pogo_2x_in" H 800 1500 50  0001 C CNN
+F 3 "~" H 800 1500 50  0001 C CNN
+	1    800  1500
+	-1   0    0    -1  
 $EndComp
 Wire Wire Line
 	1100 1600 1100 1700
@@ -866,7 +831,7 @@ L Connector_Generic:Conn_01x01 J3
 U 1 1 5F1E394B
 P 2550 1500
 F 0 "J3" H 2550 1600 50  0000 C CNN
-F 1 "L+" H 2700 1500 50  0000 C CNN
+F 1 "L-" H 2700 1500 50  0000 C CNN
 F 2 "Connector_Pin:Pin_D1.0mm_L10.0mm_LooseFit" H 2550 1500 50  0001 C CNN
 F 3 "~" H 2550 1500 50  0001 C CNN
 	1    2550 1500
@@ -1135,18 +1100,18 @@ Wire Wire Line
 	3300 4000 4000 4000
 Text Label 4000 4000 2    50   ~ 0
 NRF_BAT_LVL
-Text Label 4000 4200 2    50   ~ 0
+Text Label 4000 4300 2    50   ~ 0
 NRF_LED
+Wire Wire Line
+	4000 4300 3300 4300
+Text Label 4000 4200 2    50   ~ 0
+NRF_BTN
 Wire Wire Line
 	4000 4200 3300 4200
 Text Label 4000 4100 2    50   ~ 0
-NRF_BTN
-Wire Wire Line
-	4000 4100 3300 4100
-Text Label 4000 4300 2    50   ~ 0
 NRF_PWR
 Wire Wire Line
-	4000 4300 3300 4300
+	4000 4100 3300 4100
 NoConn ~ 3300 3800
 NoConn ~ 3300 3900
 NoConn ~ 3300 6800
@@ -1281,7 +1246,7 @@ Wire Wire Line
 Wire Wire Line
 	6850 2100 6750 2100
 Wire Wire Line
-	4800 2250 4800 2350
+	4800 2250 4800 2300
 $Comp
 L chrns_ldo:NCP170AXV330T2G U4
 U 1 1 5F041FC9
@@ -1385,4 +1350,34 @@ Wire Wire Line
 Wire Wire Line
 	4800 1900 4800 1950
 Connection ~ 4800 1900
+Wire Wire Line
+	4800 2300 4100 2300
+Wire Wire Line
+	4100 2300 4100 1700
+Connection ~ 4800 2300
+Wire Wire Line
+	4800 2300 4800 2350
+Connection ~ 4100 1700
+$Comp
+L power:VDD #PWR?
+U 1 1 5F9C2DAD
+P 10400 5500
+F 0 "#PWR?" H 10400 5350 50  0001 C CNN
+F 1 "VDD" H 10415 5673 50  0000 C CNN
+F 2 "" H 10400 5500 50  0001 C CNN
+F 3 "" H 10400 5500 50  0001 C CNN
+	1    10400 5500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7100 3650 7100 3850
+Wire Wire Line
+	7100 3850 7300 3850
+Wire Wire Line
+	7300 3850 7300 4200
+Wire Wire Line
+	7300 4200 7000 4200
+Connection ~ 7000 4200
+Wire Wire Line
+	7000 4200 7000 4250
 $EndSCHEMATC
